@@ -1,0 +1,21 @@
+[debug] [2024-06-03T07:08:23.496Z] ----------------------------------------------------------------------
+[debug] [2024-06-03T07:08:23.502Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rzt03\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-06-03T07:08:23.503Z] CLI Version:   13.10.2
+[debug] [2024-06-03T07:08:23.504Z] Platform:      win32
+[debug] [2024-06-03T07:08:23.505Z] Node Version:  v20.12.0
+[debug] [2024-06-03T07:08:23.505Z] Time:          Mon Jun 03 2024 16:08:23 GMT+0900 (대한민국 표준시)
+[debug] [2024-06-03T07:08:23.505Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-06-03T07:08:23.518Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-06-03T07:08:23.519Z] > authorizing via signed-in user (rzt0357@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\rzt03\Documents\what\bagpack
+
