@@ -1,7 +1,26 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
   "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
   "rules": {
-    "prettier/prettier": "error"
-  }
+    "prettier/prettier": "error",
+    "no-console": "off",
+    "eqeqeq": "error",
+    "indent": ["error", 2]
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }
