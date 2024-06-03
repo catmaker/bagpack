@@ -10,7 +10,12 @@
     "sourceType": "module"
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "no-console": "off",
     "eqeqeq": "error",
     "indent": ["error", 2]
