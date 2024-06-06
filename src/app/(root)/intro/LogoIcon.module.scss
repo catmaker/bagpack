@@ -5,4 +5,15 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  background-color: #f7f1f0;
+}
+.logoCut {
+  position: absolute;
+}
+.contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }

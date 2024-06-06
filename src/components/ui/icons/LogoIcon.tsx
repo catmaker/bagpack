@@ -8,7 +8,7 @@ type LogoIconProps = {
 
 const LogoIcon = ({ width, height }: LogoIconProps) => {
   return (
-    <div style={{ width, height }}>
+    <div>
       <Image
         src="/bagPackIcon/Logo.svg"
         alt="Logo"
