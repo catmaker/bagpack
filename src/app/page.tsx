@@ -1,8 +1,9 @@
 import React from "react";
+import "./reset.css";
+import "./globals.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../lib/firebase/firebaseDB";
 import Intro from "./(root)/intro/page";
-import "./reset.css";
 const page = async () => {
   const querySnapshot = await getDocs(collection(db, "user"));
   querySnapshot.forEach((doc) => {
