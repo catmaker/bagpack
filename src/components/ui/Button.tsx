@@ -11,6 +11,7 @@ type ButtonProps = {
   margin?: number | string;
   className?: string;
   backgroundColor?: string;
+  onClick?: () => void;
 };
 const Button = ({
   children = "Button",
@@ -24,10 +25,12 @@ const Button = ({
   cursor = "pointer",
   className,
   backgroundColor = "#FFFFFF",
+  onClick,
 }: ButtonProps) => {
   return (
     <button
       className={className}
+      onClick={onClick}
       style={{
         width: width,
         height: height,
