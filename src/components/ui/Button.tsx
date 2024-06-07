@@ -4,10 +4,13 @@ type ButtonProps = {
   width?: number | string;
   height?: number | string;
   borderRadius?: number;
-  padding?: number;
+  padding?: number | string;
   border?: string;
   boxShadow?: string;
   cursor?: string;
+  margin?: number | string;
+  className?: string;
+  backgroundColor?: string;
 };
 const Button = ({
   children = "Button",
@@ -15,22 +18,27 @@ const Button = ({
   height = 50,
   borderRadius = 15,
   padding,
+  margin,
   border = "none",
   boxShadow = "0px 4px 4px rgba(0, 0, 0, 0.25)",
   cursor = "pointer",
+  className,
+  backgroundColor = "#FFFFFF",
 }: ButtonProps) => {
   return (
     <button
+      className={className}
       style={{
         width: width,
         height: height,
         borderRadius: borderRadius,
         padding: padding,
-        backgroundColor: "#F7F1F0",
+        backgroundColor: backgroundColor,
         color: "black",
         border: border,
         boxShadow: boxShadow,
         cursor: cursor,
+        margin: margin,
       }}
     >
       {children}

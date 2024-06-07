@@ -7,6 +7,13 @@
   overflow: hidden;
   background-color: #f7f1f0;
 }
+.next_button:hover {
+  background-color: #838383 !important;
+  transition: 0.1s all ease-in-out !important;
+}
+.next_button:active {
+  scale: 0.9;
+}
 .logoCut {
   position: absolute;
 }
@@ -16,4 +23,11 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.title {
+  padding-bottom: 50px;
+  font-size: 1.2rem;
+}
+.subtitle {
+  padding-bottom: 10px;
 }

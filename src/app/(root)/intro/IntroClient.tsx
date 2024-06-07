@@ -5,7 +5,7 @@ import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
-import styles from "./LogoIcon.module.scss";
+import styles from "./IntroClient.module.scss";
 import { useRouter } from "next/navigation";
 const paragraphs = [
   "여행은 우리 삶의 여정에서 가장 소중한 순간들을 만들어내는 시간입니다.",
@@ -60,11 +60,21 @@ const IntroClient = () => {
               height={60}
             />
             <div className={styles.contents}>
-              <h1>BagPack - 당신의 인생 여정을 기록하는 특별한 공간</h1>
+              <h1 className={styles.title}>
+                BagPack - 당신의 인생 여정을 기록하는 특별한 공간
+              </h1>
               {paragraphs.map((text, index) => (
-                <p key={index}>{text}</p>
+                <p key={index} className={styles.subtitle}>
+                  {text}
+                </p>
               ))}
-              <Button>NEXT</Button>
+              <Button
+                margin="30px 0 0 0"
+                backgroundColor="#F7F1F0"
+                className={styles.next_button}
+              >
+                NEXT
+              </Button>
             </div>
           </Card>
         </motion.div>
