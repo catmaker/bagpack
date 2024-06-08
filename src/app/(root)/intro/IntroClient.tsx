@@ -6,15 +6,20 @@ import Button from "@/components/ui/Button";
 import Image from "next/image";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import styles from "./IntroClient.module.scss";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 const initialParagraphs = [
   [
     "여행은 우리 삶의 여정에서 가장 소중한 순간들을 만들어내는 시간입니다.",
     "그 순간들을 기록하고 간직하는 것은 우리의 삶을 더욱 풍요롭게 만들어줍니다.",
   ],
   [
-    "여행 일기장 웹사이트는 사용자 여러분의 소중한 여행 경험을 안전하고 아름답게 기록할 수 있는 특별한 공간입니다.",
-    "사진, 동영상, 오디오 등 다양한 멀티미디어 콘텐츠를 통해 여행의 감동을 생생하게 기록할 수 있습니다.",
+    "저희 BagPack 웹사이트는 여행 중 느낀 감정과 경험을 자유롭게 표현할 수 있는 공간입니다.",
+    "여러분의 이야기를 공유하고 다른 이들과 소통하며, 새로운 여행의 동기부여를 찾을 수 있습니다. ",
+    "함께 여행하는 동료들과의 추억을 공유하고, 새로운 여행 계획을 세우는 데도 도움이 될 것입니다.",
+  ],
+  [
+    "여행의 추억을 만들고 기록해보세요.",
+    "로그인하거나 간편하게 회원가입하세요.",
   ],
 ];
 const IntroClient = () => {
@@ -77,21 +82,46 @@ const IntroClient = () => {
                       {sentence}
                       <br />
                     </p>
-                  )
+                  ),
                 )}
               </div>
-              <Button
-                margin="30px 0 0 0"
-                backgroundColor="#F7F1F0"
-                className={styles.next_button}
-                onClick={() =>
-                  setCurrentParagraphIndex((prevIndex) => {
-                    return (prevIndex + 1) % initialParagraphs.length;
-                  })
-                }
-              >
-                NEXT
-              </Button>
+              {currentParagraphIndex === initialParagraphs.length - 1 ? (
+                <div className={styles.signup_box}>
+                  <Button
+                    margin="30px 0 0 0"
+                    backgroundColor="#F7F1F0"
+                    className={styles.login_button}
+                    onClick={() => {
+                      router.push("/login");
+                    }}
+                  >
+                    로그인
+                  </Button>
+                  <Button
+                    margin="30px 0 0 0"
+                    backgroundColor="#F7F1F0"
+                    className={styles.signup_button}
+                    onClick={() => {
+                      router.push("/signup");
+                    }}
+                  >
+                    회원가입
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  margin="30px 0 0 0"
+                  backgroundColor="#F7F1F0"
+                  className={styles.next_button}
+                  onClick={() =>
+                    setCurrentParagraphIndex((prevIndex) => {
+                      return (prevIndex + 1) % initialParagraphs.length;
+                    })
+                  }
+                >
+                  NEXT
+                </Button>
+              )}
             </div>
           </Card>
         </motion.div>
