@@ -62,10 +62,16 @@ const LoginClient = () => {
               />
             </div>
 
-            <Button>로그인</Button>
+            <Button backgroundColor="#F7F1F0" className={styles.login_button}>
+              로그인
+            </Button>
           </form>
-          <Link href={"/"}>소셜로그인</Link>
-          <Link href={"/forgot"}>아이디 혹은 비밀번호를 잊으셨나요?</Link>
+          <Link href={"/"} className={styles.sns_login}>
+            소셜로그인
+          </Link>
+          <Link href={"/forgot"} className={styles.forgot}>
+            아이디 혹은 비밀번호를 잊으셨나요?
+          </Link>
         </div>
       </Card>
     </div>
