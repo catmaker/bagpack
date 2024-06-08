@@ -13,7 +13,7 @@ type CardProps = {
 
 const Card = ({
   width = 864,
-  height = 444,
+  height = 508,
   borderRadius = 30,
   children,
   padding = 28,
