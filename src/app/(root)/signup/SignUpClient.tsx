@@ -7,7 +7,18 @@ import LoginInput from "@/components/ui/LoginInput";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useRouter } from "next/navigation";
+type saveUserProps = {
+  id: string;
+  email: string;
+  password: string;
+};
 const SignUpClient = () => {
+  const router = useRouter();
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
@@ -15,7 +26,7 @@ const SignUpClient = () => {
   return (
     <div>
       <div className={styles.container}>
-        <Card>
+        <Card height={570}>
           <div className={styles.contents}>
             <div className={styles.login_header}>
               <h1>Register</h1>
@@ -27,6 +38,8 @@ const SignUpClient = () => {
                   type="text"
                   placeholder="ID"
                   className={styles.input}
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
                 />
                 <Image
                   className={styles.icon}
@@ -41,6 +54,8 @@ const SignUpClient = () => {
                   type="text"
                   placeholder="Email"
                   className={styles.input}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <Image
                   className={styles.icon}
@@ -55,6 +70,8 @@ const SignUpClient = () => {
                   type={passwordVisible ? "text" : "password"}
                   placeholder="Password"
                   className={styles.input}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <Image
                   className={styles.icon}

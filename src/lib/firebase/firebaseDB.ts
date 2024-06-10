@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -12,7 +12,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseDB = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseDB);
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
 
-export { db, firebaseDB };
+export { db, auth };
