@@ -8,11 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
-type saveUserProps = {
-  id: string;
-  email: string;
-  password: string;
-};
+
 const SignUpClient = () => {
   const router = useRouter();
   const [id, setId] = useState("");
@@ -23,32 +19,45 @@ const SignUpClient = () => {
   const togglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
   };
+  const registerHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("/api/user/signUp", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        alert("이미 존재하는 이메일입니다.");
+        throw new Error("signUp return 데이터가 비어있습니다.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      alert("회원가입이 완료되었습니다.");
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <div className={styles.container}>
-        <Card height={570}>
+        <Card>
           <div className={styles.contents}>
             <div className={styles.login_header}>
               <h1>Register</h1>
               <p>Create your new account</p>
             </div>
-            <form className={styles.form}>
-              <div className={styles.input_box}>
-                <LoginInput
-                  type="text"
-                  placeholder="ID"
-                  className={styles.input}
-                  value={id}
-                  onChange={(e) => setId(e.target.value)}
-                />
-                <Image
-                  className={styles.icon}
-                  src={"/bagpackIcon/user.svg"}
-                  alt="email"
-                  width={20}
-                  height={20}
-                />
-              </div>
+            <form className={styles.form} onSubmit={registerHandler}>
               <div className={styles.input_box}>
                 <LoginInput
                   type="text"
