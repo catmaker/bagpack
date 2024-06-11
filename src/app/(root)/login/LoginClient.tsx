@@ -6,11 +6,40 @@ import Button from "@/components/ui/Button";
 import LoginInput from "@/components/ui/LoginInput";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 const LoginClient = () => {
+  const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const togglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
+  };
+  const loginHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("/api/user/signIn", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        alert("이메일 혹은 비밀번호가 일치하지 않습니다.");
+        throw new Error("signIn return 데이터가 비어있습니다.");
+      }
+      const data = await response.json();
+      console.log(data);
+      alert("로그인이 완료되었습니다.");
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className={styles.container}>
@@ -20,12 +49,14 @@ const LoginClient = () => {
             <h1>Login</h1>
             <p>Login to your account</p>
           </div>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={loginHandler}>
             <div className={styles.input_box}>
               <LoginInput
                 type="text"
                 placeholder="Email"
                 className={styles.email_input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Image
                 className={styles.icon}
@@ -40,6 +71,8 @@ const LoginClient = () => {
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
                 className={styles.email_input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Image
                 className={styles.icon}
