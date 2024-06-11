@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { FirebaseError, initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
@@ -6,7 +6,15 @@ import {
   where,
   getDocs,
   addDoc,
+  setDoc,
+  doc,
+  Timestamp,
 } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -53,21 +61,52 @@ export async function getUsers() {
   return fetchedUsers;
 }
 
-module.exports = { getUsers };
-
 // 유저 추가하기
-type saveUserProps = {
-  id: string;
-  email: string;
-  password: string;
-};
-export async function saveUser({ id, email, password }: saveUserProps) {
-  await addDoc(collection(db, "users"), {
-    id,
-    email,
-    password,
-    created_at: new Date(),
-  });
+
+export async function signUp(email: string, password: string) {
+  const auth = getAuth();
+  const db = getFirestore();
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const user = userCredential.user;
+    if (user) {
+      const userDoc = doc(db, "users", user.uid);
+      await setDoc(userDoc, {
+        email: user.email,
+        created_at: Timestamp.now(),
+        password: password,
+      });
+    }
+    return user;
+  } catch (error) {
+    const firebaseError = error as FirebaseError;
+    console.error(
+      `Error: ${firebaseError.code}, Message: ${firebaseError.message}`,
+    );
+    return null;
+  }
 }
 
-module.exports = { saveUser };
+export async function signIn(email: string, password: string) {
+  const auth = getAuth();
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    return userCredential.user;
+  } catch (error) {
+    const firebaseError = error as FirebaseError;
+    console.error(
+      `Error: ${firebaseError.code}, Message: ${firebaseError.message}`,
+    );
+    return null;
+  }
+}
+
+module.exports = { getUsers, signUp, signIn };
