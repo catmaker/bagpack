@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signUp, signIn } from "@/lib/firebase/firestore";
+import { signIn } from "@/lib/firebase/firestore";
 
 export async function POST(request: NextRequest) {
   const { email, password } = await request.json();
   const user = await signIn(email, password);
+  if (!user) {
+    return NextResponse.json(
+      { message: "이메일 혹은 비밀번호가 일치하지 않습니다." },
+      { status: 404 },
+    );
+  }
 
-  const response = {
-    status: 200,
-    data: user,
-  };
-  return NextResponse.json(response, { status: response.status });
+  return NextResponse.json({ status: 200, data: user });
 }

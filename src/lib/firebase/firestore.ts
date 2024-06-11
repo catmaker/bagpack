@@ -90,7 +90,7 @@ export async function signUp(email: string, password: string) {
     return null;
   }
 }
-
+// 유저 로그인
 export async function signIn(email: string, password: string) {
   const auth = getAuth();
   try {
