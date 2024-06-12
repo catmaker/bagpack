@@ -7,6 +7,7 @@ import {
   getDocs,
   addDoc,
   setDoc,
+  getDoc,
   doc,
   Timestamp,
 } from "firebase/firestore";
@@ -35,6 +36,7 @@ type User = {
   email: string;
   password: string;
   created_at: string;
+  isDone: boolean;
 };
 
 // 유저 추가하기
@@ -54,6 +56,7 @@ export async function signUp(email: string, password: string) {
         email: user.email,
         created_at: Timestamp.now(),
         password: password,
+        isDone: false,
       });
     }
     return user;
@@ -85,4 +88,34 @@ export async function signIn(email: string, password: string) {
   }
 }
 
-module.exports = { signUp, signIn };
+// 유저 정보 가져오기
+export async function getUser(uid: string): Promise<User> {
+  const db = getFirestore();
+  const docSnap = await getDoc(doc(db, "users", uid));
+
+  if (docSnap.exists()) {
+    return docSnap.data() as User;
+  } else {
+    throw new Error("No such user!");
+  }
+}
+// 유저 정보 확인
+export function getCurrentUser(): Promise<User | null> {
+  return new Promise((resolve) => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userData = await getUser(user.uid);
+          resolve(userData);
+        } catch (error) {
+          resolve(null);
+        }
+      } else {
+        resolve(null);
+      }
+    });
+  });
+}
+
+module.exports = { signUp, signIn, getCurrentUser, getUser };
