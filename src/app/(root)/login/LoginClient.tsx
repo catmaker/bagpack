@@ -24,11 +24,15 @@ const LoginClient = () => {
       const response = await signIn(email, password);
       if (response) {
         console.log("로그인 성공", response);
+        alert("로그인이 완료되었습니다.");
+        router.push("/home");
       } else {
         console.log("로그인 실패");
+        alert(
+          `로그인에 실패하였습니다.
+존재하지 않는 계정이거나 비밀번호가 틀렸습니다.`,
+        );
       }
-      alert("로그인이 완료되었습니다.");
-      router.push("/home");
     } catch (error) {
       console.error(error);
     }
