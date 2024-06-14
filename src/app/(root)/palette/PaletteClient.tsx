@@ -6,15 +6,21 @@ import Card from "@/components/ui/Card";
 import Pallette from "@/components/ui/Pallette";
 import Circle from "@/components/ui/Circle";
 import styles from "./PalletteClient.module.scss";
-import TerribleSvg from "@/components/ui/icons/moods/TerribleSvg";
+// icon
+import TerribleIcon from "@/asset/svg/terrible.svg";
+import HappyIcon from "@/asset/svg/happy.svg";
+import NaturalIcon from "@/asset/svg/natural.svg";
+import SmileIcon from "@/asset/svg/smile.svg";
+import SadIcon from "@/asset/svg/sad.svg";
 const PaletteClient = () => {
   const user = useContext(UserContext);
   const palletteColors = [
-    ["#CDB4DB", "#FFC8DD", "#FFAFCC", "#BDE0FE", "#A2D2FF"],
+    ["#CDB4DB", "#FFC8DD", "#FFAFCC", "#BDE0FE", "#324251"],
     ["#1D3557", "#457B9D", "#A8DADC", "#A7FF8A", "#E63946"],
     ["#0081A7", "#00AFB9", "#EEEA75", "#FED9B7", "#F07167"],
     ["#E4C1F9", "#A9DEF9", "#D0F4DE", "#DFD9A2", "#FF99C8"],
   ];
+  const iconStyle = { width: "25px", height: "25px" };
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -40,8 +46,26 @@ const PaletteClient = () => {
             </Pallette>
           ))}
         </div>
-        <div className={styles.icon}>
-          <TerribleSvg color="red" size="40px"></TerribleSvg>
+        <div className={styles.drawing_box}>
+          {palletteColors.map((colors, palletteIndex) => (
+            <div key={palletteIndex} className={styles.pallette_container}>
+              <div style={{ color: colors[0] }}>
+                <HappyIcon style={iconStyle} viewBox="0 0 478.125 478.125" />
+              </div>
+              <div style={{ color: colors[1] }}>
+                <SmileIcon style={iconStyle} viewBox="0 0 478.125 478.125" />
+              </div>
+              <div style={{ color: colors[2] }}>
+                <NaturalIcon style={iconStyle} viewBox="0 0 478.125 478.125" />
+              </div>
+              <div style={{ color: colors[3] }}>
+                <SadIcon style={iconStyle} viewBox="0 0 478.125 478.125" />
+              </div>
+              <div style={{ color: colors[4] }}>
+                <TerribleIcon style={iconStyle} viewBox="0 0 478.125 478.125" />
+              </div>
+            </div>
+          ))}
         </div>
       </Card>
     </div>
