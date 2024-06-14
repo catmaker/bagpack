@@ -35,6 +35,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  transition: all 0.15s ease-in-out;
 }
 .icon {
   fill: #ff0000;
@@ -59,21 +60,7 @@
   padding: 5px;
   width: 500px;
   cursor: pointer;
-}
-.palette:hover {
-  transition: all 0.1s ease-in-out;
-  transform: scale(1.04);
-}
-.palette:hover > * {
-  transform: scale(1 / 1.04);
-}
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(1turn);
-  }
+  transition: all 0.15s ease-in-out;
 }
 
 .selected_palette {
@@ -86,6 +73,10 @@
     0 0 0 3px #ff9999,
     0 0 0 3px #ffcccc !important;
   transform: scale(1.04) !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 .button_container {
   display: flex;
