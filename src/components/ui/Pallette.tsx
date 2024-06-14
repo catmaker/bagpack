@@ -9,6 +9,7 @@ type PalletteProps = {
   border?: string; // 테두리
   borderRadius?: number; // 테두리 둥글기
   boxShadow?: string; // 그림자
+  onClick?: () => void; // 클릭 이벤트
 };
 
 const Pallette = ({
@@ -20,6 +21,7 @@ const Pallette = ({
   border = "1px solid #C3C3C3",
   borderRadius = 15,
   boxShadow = "1px 3px 3px 1px rgba(0, 0, 0, 0.25)",
+  onClick,
 }: PalletteProps) => {
   const style = {
     backgroundColor: color,
@@ -31,7 +33,7 @@ const Pallette = ({
   };
 
   return (
-    <div className={className} style={style}>
+    <div className={className} style={style} onClick={onClick}>
       {children}
     </div>
   );
