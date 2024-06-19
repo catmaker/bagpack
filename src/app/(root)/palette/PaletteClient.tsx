@@ -24,6 +24,10 @@ const PaletteClient = () => {
   const iconStyle = { width: "25px", height: "25px" };
   // 팔레트 추적 상태
   const [selectedPalette, setSelectedPalette] = useState(-1);
+  useEffect(() => {
+    console.log("selectedPalette:", selectedPalette);
+  }, [selectedPalette]);
+
   const handlePaletteClick = (paletteIndex: number) => {
     setSelectedPalette(paletteIndex);
   };

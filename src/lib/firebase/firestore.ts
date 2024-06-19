@@ -29,6 +29,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 export default app;
 // 모든 유저 가져오기
 type User = {
@@ -117,5 +119,23 @@ export function getCurrentUser(): Promise<User | null> {
     });
   });
 }
+// 팔레트 색상 저장하기
+type Palette = {
+  colors: string[];
+};
+export async function savePalette(
+  userId: string,
+  palette: Palette,
+): Promise<string> {
+  const palettesCollection = collection(db, "palettes");
+  const paletteData = {
+    userId,
+    ...palette,
+    created_at: Timestamp.now(),
+  };
 
+  const docRef = await addDoc(palettesCollection, paletteData);
+
+  return docRef.id;
+}
 module.exports = { signUp, signIn, getCurrentUser, getUser };
