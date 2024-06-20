@@ -67,7 +67,7 @@ const LoginClient = () => {
               />
               <Image
                 className={styles.icon}
-                src={"/bagpackIcon/user.svg"}
+                src={"/bagpackIcon/mail.svg"}
                 alt="email"
                 width={20}
                 height={20}
@@ -106,8 +106,8 @@ const LoginClient = () => {
               로그인
             </Button>
           </form>
-          <Link href={"/"} className={styles.sns_login}>
-            소셜로그인
+          <Link href={"/signup"} className={styles.signup}>
+            회원가입
           </Link>
           <Link href={"/forgot"} className={styles.forgot}>
             아이디 혹은 비밀번호를 잊으셨나요?

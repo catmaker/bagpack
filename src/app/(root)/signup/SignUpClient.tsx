@@ -112,11 +112,11 @@ const SignUpClient = () => {
               </div>
 
               <Button backgroundColor="#F7F1F0" className={styles.login_button}>
-                로그인
+                회원가입
               </Button>
             </form>
-            <Link href={"/"} className={styles.sns_login}>
-              소셜 로그인
+            <Link href={"/login"} className={styles.login}>
+              로그인
             </Link>
             <Link href={"/forgot"} className={styles.forgot}>
               아이디 혹은 비밀번호를 잊으셨나요?
