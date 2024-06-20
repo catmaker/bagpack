@@ -9,9 +9,11 @@ type CardProps = {
   boxShadow?: string;
   border?: string;
   backgroundColor?: string;
+  className?: string;
 };
 
 const Card = ({
+  className,
   width = 864,
   height = 508,
   borderRadius = 30,
@@ -23,6 +25,7 @@ const Card = ({
 }: CardProps) => {
   return (
     <div
+      className={className}
       style={{
         width: width,
         height: height,

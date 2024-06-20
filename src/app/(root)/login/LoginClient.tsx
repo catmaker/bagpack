@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import styles from "./LoginClient.module.scss";
 import Button from "@/components/ui/Button";
@@ -7,6 +7,9 @@ import LoginInput from "@/components/ui/LoginInput";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import "firebase/auth";
+import { signIn } from "@/lib/firebase/firestore";
+import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
 const LoginClient = () => {
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -16,31 +19,35 @@ const LoginClient = () => {
   const togglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   const loginHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!emailRegex.test(email)) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      alert("비밀번호는 최소 8자리 이상, 문자 및 숫자를 포함해야 합니다.");
+      return;
+    }
     try {
-      const response = await fetch("/api/user/signIn", {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        alert("이메일 혹은 비밀번호가 일치하지 않습니다.");
-        throw new Error("signIn return 데이터가 비어있습니다.");
+      const response = await signIn(email, password);
+      if (response) {
+        console.log("로그인 성공", response);
+        alert("로그인이 완료되었습니다.");
+        router.push("/home");
+      } else {
+        console.log("로그인 실패");
+        alert(
+          `로그인에 실패하였습니다.
+존재하지 않는 계정이거나 비밀번호가 틀렸습니다.`,
+        );
       }
-      const data = await response.json();
-      console.log(data);
-      alert("로그인이 완료되었습니다.");
-      router.push("/home");
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <div className={styles.container}>
       <Card>
