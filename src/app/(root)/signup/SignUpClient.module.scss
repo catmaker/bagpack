@@ -1,3 +1,4 @@
+@import "@/styles/variables.scss";
 .container {
   width: 100vw;
   height: 100vh;
@@ -5,7 +6,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #f7f1f0;
+  background-color: $input-color;
 }
 .contents {
   display: flex;
@@ -23,19 +24,21 @@
 .login_header h1 {
   font-style: normal;
   font-weight: 700;
+  color: $primary-color;
   font-size: 24px;
   line-height: 24px;
-  color: #fe9a8a;
 }
+
 .login_header p {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
   text-align: center;
-  color: #838383;
+  color: $grey-color;
   padding-top: 10px;
 }
+
 .form {
   display: flex;
   flex-direction: column;
@@ -44,24 +47,27 @@
   gap: 1.5rem;
   margin-top: 10px;
 }
+
 .input {
   width: 320px;
   height: 50px;
-  background: #f7f1f0;
+  background: $input-color;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   border: none;
   padding-left: 50px;
 }
+
 .pw_input {
   width: 320px;
   height: 50px;
-  background: #f7f1f0;
+  background: $input-color;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   border: none;
   padding-left: 50px;
 }
+
 .input_box {
   position: relative;
 }
@@ -75,18 +81,35 @@
   top: 15px;
   right: 15px;
 }
-.login_button {
+
+.signUp {
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
+  text-decoration: none;
+  color: $primary-color !important;
+  font-weight: 700;
+  transition: 0.1s all ease-in-out !important;
+}
+.signUp:hover {
+  color: white !important;
+  background-color: $primary-color !important;
 }
 .login {
   margin-top: 20px;
   text-decoration: none;
-  color: #fe9a8a;
+  color: $primary-color;
   font-weight: 700;
+  transition: 0.1s all ease-in-out !important;
+}
+.login:hover {
+  color: $primary-color-hover !important;
 }
 .forgot {
   margin-top: 10px;
   text-decoration: none;
-  color: #838383;
+  color: $grey-color;
+}
+.forgot:hover {
+  color: $grey-color-hover !important;
 }

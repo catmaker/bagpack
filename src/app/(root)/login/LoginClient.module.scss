@@ -1,3 +1,4 @@
+@import "@/styles/variables.scss";
 .container {
   width: 100vw;
   height: 100vh;
@@ -5,7 +6,7 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #f7f1f0;
+  background-color: $input-color;
 }
 .contents {
   display: flex;
@@ -25,7 +26,7 @@
   font-weight: 700;
   font-size: 24px;
   line-height: 24px;
-  color: #fe9a8a;
+  color: $primary-color;
 }
 .login_header p {
   font-style: normal;
@@ -33,7 +34,7 @@
   font-size: 14px;
   line-height: 24px;
   text-align: center;
-  color: #838383;
+  color: $grey-color;
   padding-top: 10px;
 }
 .form {
@@ -47,7 +48,7 @@
 .email_input {
   width: 320px;
   height: 50px;
-  background: #f7f1f0;
+  background: $input-color;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   border: none;
@@ -56,7 +57,7 @@
 .pw_input {
   width: 320px;
   height: 50px;
-  background: #f7f1f0;
+  background: $input-color;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
   border: none;
@@ -78,15 +79,29 @@
 .login_button {
   margin-top: 40px;
   margin-bottom: 20px;
+  font-weight: 700;
+  color: $primary-color !important;
+  transition: 0.1s all ease-in-out !important;
+}
+.login_button:hover {
+  background-color: $primary-color !important;
+  color: white !important;
 }
 .signup {
   margin-top: 20px;
   text-decoration: none;
-  color: #fe9a8a;
+  color: $primary-color;
   font-weight: 700;
+  transition: 0.1s all ease-in-out !important;
+}
+.signup:hover {
+  color: $primary-color-hover !important;
 }
 .forgot {
   margin-top: 10px;
   text-decoration: none;
-  color: #838383;
+  color: $grey-color;
+}
+.forgot:hover {
+  color: $grey-color-hover !important;
 }

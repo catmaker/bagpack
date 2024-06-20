@@ -111,7 +111,7 @@ const SignUpClient = () => {
                 />
               </div>
 
-              <Button backgroundColor="#F7F1F0" className={styles.login_button}>
+              <Button backgroundColor="#F7F1F0" className={styles.signUp}>
                 회원가입
               </Button>
             </form>
