@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
 import styles from "./LoginClient.module.scss";
 import Button from "@/components/ui/Button";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "firebase/auth";
 import { signIn } from "@/lib/firebase/firestore";
+import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
 const LoginClient = () => {
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -18,8 +19,17 @@ const LoginClient = () => {
   const togglePasswordVisible = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   const loginHandler = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!emailRegex.test(email)) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      alert("비밀번호는 최소 8자리 이상, 문자 및 숫자를 포함해야 합니다.");
+      return;
+    }
     try {
       const response = await signIn(email, password);
       if (response) {
