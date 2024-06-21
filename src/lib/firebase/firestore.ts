@@ -10,6 +10,7 @@ import {
   getDoc,
   doc,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -118,5 +119,16 @@ export function getCurrentUser(): Promise<User | null> {
   });
 }
 // 팔레트 색상 저장하기
+export async function addPalette(email: string, palette: string[]) {
+  const db = getFirestore();
+  const userSnapshot = await getDocs(collection(db, "users"));
+  userSnapshot.docs.forEach(async (doc) => {
+    if (doc.data().email === email) {
+      await updateDoc(doc.ref, {
+        palette: palette,
+      });
+    }
+  });
+}
 
-module.exports = { signUp, signIn, getCurrentUser, getUser };
+module.exports = { signUp, signIn, getCurrentUser, getUser, addPalette };

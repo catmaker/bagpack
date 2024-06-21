@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import { useContext } from "react";
+// components
 import Card from "@/components/ui/Card";
 import Pallette from "@/components/ui/Pallette";
 import Circle from "@/components/ui/Circle";
@@ -13,8 +14,11 @@ import HappyIcon from "@/asset/svg/happy.svg";
 import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
+// firebase
+import { addPalette } from "@/lib/firebase/firestore";
 const PaletteClient = () => {
   const user = useContext(UserContext);
+  console.log(user);
   const paletteColors = [
     ["#CDB4DB", "#FFC8DD", "#FFAFCC", "#BDE0FE", "#324251"],
     ["#1D3557", "#457B9D", "#A8DADC", "#A7FF8A", "#E63946"],
@@ -30,10 +34,17 @@ const PaletteClient = () => {
 
   const handlePaletteClick = (paletteIndex: number) => {
     setSelectedPalette(paletteIndex);
+    console.log(paletteColors[paletteIndex]);
   };
   useEffect(() => {
     console.log(user);
   }, [user]);
+  const handleSavePalette = async () => {
+    if (user) {
+      await addPalette(user.email, paletteColors[selectedPalette]);
+      console.log("팔레트 저장 완료");
+    }
+  };
   function getColor(palletteIndex: number, circleIndex: number) {
     return paletteColors[palletteIndex][circleIndex];
   }
@@ -85,7 +96,7 @@ const PaletteClient = () => {
           ))}
         </div>
         <div className={styles.button_container}>
-          <Button>저장하기</Button>
+          <Button onClick={handleSavePalette}>저장하기</Button>
         </div>
       </Card>
     </div>
