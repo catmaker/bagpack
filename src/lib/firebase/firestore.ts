@@ -57,7 +57,6 @@ export async function signUp(email: string, password: string) {
       await setDoc(userDoc, {
         email: user.email,
         created_at: Timestamp.now(),
-        password: password,
         isDone: false,
       });
     }
@@ -94,7 +93,6 @@ export async function signIn(email: string, password: string) {
 export async function getUser(uid: string): Promise<User> {
   const db = getFirestore();
   const docSnap = await getDoc(doc(db, "users", uid));
-
   if (docSnap.exists()) {
     return docSnap.data() as User;
   } else {
@@ -120,22 +118,5 @@ export function getCurrentUser(): Promise<User | null> {
   });
 }
 // 팔레트 색상 저장하기
-type Palette = {
-  colors: string[];
-};
-export async function savePalette(
-  userId: string,
-  palette: Palette,
-): Promise<string> {
-  const palettesCollection = collection(db, "palettes");
-  const paletteData = {
-    userId,
-    ...palette,
-    created_at: Timestamp.now(),
-  };
 
-  const docRef = await addDoc(palettesCollection, paletteData);
-
-  return docRef.id;
-}
 module.exports = { signUp, signIn, getCurrentUser, getUser };
