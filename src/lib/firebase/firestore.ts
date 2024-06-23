@@ -40,10 +40,16 @@ type User = {
   password: string;
   created_at: string;
   isDone: boolean;
+  palette?: string[];
+  nickname: string;
 };
 
 // 유저 추가하기
-export async function signUp(email: string, password: string) {
+export async function signUp(
+  email: string,
+  password: string,
+  nickname: string,
+) {
   const auth = getAuth();
   const db = getFirestore();
   try {
