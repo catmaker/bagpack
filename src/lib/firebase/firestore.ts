@@ -48,8 +48,12 @@ type User = {
 export async function signUp(
   email: string,
   password: string,
-  nickname: string,
+  nickname: string | undefined,
 ) {
+  if (nickname === undefined) {
+    throw new Error("Nickname cannot be undefined");
+  }
+
   const auth = getAuth();
   const db = getFirestore();
   try {
@@ -65,6 +69,7 @@ export async function signUp(
         email: user.email,
         created_at: Timestamp.now(),
         isDone: false,
+        nickname,
       });
     }
     return user;
@@ -132,6 +137,7 @@ export async function addPalette(email: string, palette: string[]) {
     if (doc.data().email === email) {
       await updateDoc(doc.ref, {
         palette: palette,
+        isDone: true,
       });
     }
   });
