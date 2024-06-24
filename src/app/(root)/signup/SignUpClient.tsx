@@ -15,6 +15,7 @@ const SignUpClient = () => {
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordVisible = () => {
@@ -30,12 +31,21 @@ const SignUpClient = () => {
       alert("비밀번호는 최소 8자리 이상, 문자 및 숫자를 포함해야 합니다.");
       return;
     }
+    if (nickname.length < 2) {
+      alert("닉네임은 2자리 이상이어야 합니다.");
+      return;
+    }
+    if (nickname.length > 10) {
+      alert("닉네임은 10자리 이하이어야 합니다.");
+      return;
+    }
     try {
       const response = await fetch("/api/user/signUp", {
         method: "POST",
         body: JSON.stringify({
           email,
           password,
+          nickname,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +120,22 @@ const SignUpClient = () => {
                   onClick={togglePasswordVisible}
                 />
               </div>
-
+              <div className={styles.input_box}>
+                <LoginInput
+                  type="text"
+                  placeholder="Nickname"
+                  className={styles.input}
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
+                />
+                <Image
+                  className={styles.icon}
+                  src={"/bagpackIcon/user.svg"}
+                  alt="email"
+                  width={20}
+                  height={20}
+                />
+              </div>
               <Button backgroundColor="#F7F1F0" className={styles.signUp}>
                 회원가입
               </Button>
