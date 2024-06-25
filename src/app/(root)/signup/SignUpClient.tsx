@@ -69,7 +69,7 @@ const SignUpClient = () => {
   return (
     <div>
       <div className={styles.container}>
-        <Card>
+        <Card height={580}>
           <div className={styles.contents}>
             <div className={styles.login_header}>
               <h1>Register</h1>

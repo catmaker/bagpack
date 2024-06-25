@@ -22,9 +22,9 @@ import SettingIcon from "@/asset/svg/Setting.svg";
 const HomeClient = () => {
   const router = useRouter();
   const user = useContext(UserContext);
-
   useEffect(() => {
     console.log(user);
+    console.log(user?.nickname);
     if (user && !("palette" in user)) {
       // user가 null이 아니고, palette 필드가 없으면
       router.push("/palette");
@@ -83,7 +83,7 @@ const HomeClient = () => {
       <header className={styles.header}>
         <section className={styles.search_group}>
           <SearchBar
-            width="680px"
+            width="850px"
             height="50px"
             className={styles.search_bar}
             placeholder="Search your mood...."
@@ -112,6 +112,7 @@ const HomeClient = () => {
               alt="user_icon"
             ></Image>
           </Circle>
+          <div className={styles.username}>{user?.nickname}</div>
         </section>
       </header>
     </div>

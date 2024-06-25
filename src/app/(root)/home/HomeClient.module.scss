@@ -58,6 +58,7 @@
 
 .search_bar {
   position: relative;
+  margin-left: 35px;
 }
 .search_group {
   display: flex;
@@ -70,7 +71,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid $grey-color;
-  margin-left: 20px;
+  margin-left: 35px;
 }
 
 .header {
@@ -84,4 +85,7 @@
   top: 50%;
   transform: translateY(-50%);
   padding-left: 18px;
+}
+.username {
+  margin-left: 35px;
 }
