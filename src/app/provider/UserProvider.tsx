@@ -8,6 +8,8 @@ type User = {
   password: string;
   created_at: string;
   isDone: boolean;
+  palette?: string[];
+  nickname: string;
 };
 
 // UserContext의 타입을 User | null로 변경

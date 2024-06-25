@@ -10,6 +10,7 @@ import {
   getDoc,
   doc,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -39,10 +40,20 @@ type User = {
   password: string;
   created_at: string;
   isDone: boolean;
+  palette?: string[];
+  nickname: string;
 };
 
 // 유저 추가하기
-export async function signUp(email: string, password: string) {
+export async function signUp(
+  email: string,
+  password: string,
+  nickname: string | undefined,
+) {
+  if (nickname === undefined) {
+    throw new Error("Nickname cannot be undefined");
+  }
+
   const auth = getAuth();
   const db = getFirestore();
   try {
@@ -57,8 +68,8 @@ export async function signUp(email: string, password: string) {
       await setDoc(userDoc, {
         email: user.email,
         created_at: Timestamp.now(),
-        password: password,
         isDone: false,
+        nickname,
       });
     }
     return user;
@@ -94,7 +105,6 @@ export async function signIn(email: string, password: string) {
 export async function getUser(uid: string): Promise<User> {
   const db = getFirestore();
   const docSnap = await getDoc(doc(db, "users", uid));
-
   if (docSnap.exists()) {
     return docSnap.data() as User;
   } else {
@@ -120,22 +130,17 @@ export function getCurrentUser(): Promise<User | null> {
   });
 }
 // 팔레트 색상 저장하기
-type Palette = {
-  colors: string[];
-};
-export async function savePalette(
-  userId: string,
-  palette: Palette,
-): Promise<string> {
-  const palettesCollection = collection(db, "palettes");
-  const paletteData = {
-    userId,
-    ...palette,
-    created_at: Timestamp.now(),
-  };
-
-  const docRef = await addDoc(palettesCollection, paletteData);
-
-  return docRef.id;
+export async function addPalette(email: string, palette: string[]) {
+  const db = getFirestore();
+  const userSnapshot = await getDocs(collection(db, "users"));
+  userSnapshot.docs.forEach(async (doc) => {
+    if (doc.data().email === email) {
+      await updateDoc(doc.ref, {
+        palette: palette,
+        isDone: true,
+      });
+    }
+  });
 }
-module.exports = { signUp, signIn, getCurrentUser, getUser };
+
+module.exports = { signUp, signIn, getCurrentUser, getUser, addPalette };
