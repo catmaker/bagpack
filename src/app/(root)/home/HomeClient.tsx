@@ -11,13 +11,13 @@ import SideBar from "@/components/ui/SideBar/SideBar";
 import SearchBar from "@/components/ui/SearchBar/SearchBar";
 import Circle from "@/components/ui/Circle";
 // svg
-import LogoIcon from "@/asset/svg/Logo.svg";
-import LogoImage from "@/asset/svg/LogoImg.svg";
-import HomeIcon from "@/asset/svg/Home.svg";
-import LedgerIcon from "@/asset/svg/Ledger.svg";
-import ScheduleIcon from "@/asset/svg/Schedule.svg";
-import JournalIcon from "@/asset/svg/Journal.svg";
-import SettingIcon from "@/asset/svg/Setting.svg";
+import LogoIcon from "@/asset/svg/logo.svg";
+import LogoImage from "@/asset/svg/logoImg.svg";
+import HomeIcon from "@/asset/svg/home.svg";
+import LedgerIcon from "@/asset/svg/ledger.svg";
+import ScheduleIcon from "@/asset/svg/schedule.svg";
+import JournalIcon from "@/asset/svg/journal.svg";
+import SettingIcon from "@/asset/svg/setting.svg";
 
 const HomeClient = () => {
   const router = useRouter();
