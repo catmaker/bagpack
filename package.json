@@ -9,10 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.14",
+    "@fullcalendar/daygrid": "^6.1.14",
+    "@fullcalendar/interaction": "^6.1.14",
+    "@fullcalendar/list": "^6.1.14",
+    "@fullcalendar/react": "^6.1.14",
+    "@fullcalendar/timegrid": "^6.1.14",
+    "date-fns": "^3.6.0",
     "firebase": "^10.12.2",
     "framer-motion": "^11.2.10",
     "next": "13.5.6",
     "react": "^18",
+    "react-datepicker": "^7.1.0",
     "react-dom": "^18",
     "sass": "^1.77.4"
   },
@@ -20,6 +28,7 @@
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
