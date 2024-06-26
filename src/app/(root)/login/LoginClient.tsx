@@ -50,7 +50,7 @@ const LoginClient = () => {
 
   return (
     <div className={styles.container}>
-      <Card>
+      <Card height={550}>
         <div className={styles.contents}>
           <div className={styles.login_header}>
             <h1>Login</h1>
