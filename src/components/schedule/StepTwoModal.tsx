@@ -26,7 +26,7 @@ const StepTwoModal = ({
         <div className={styles.nextModal_header}>
           <h1 className={styles.nextModal_h1}>
             {selectedDate
-              ? `${selectedDate.toLocaleDateString()} ${dayOfWeek}`
+              ? `${selectedDate.getFullYear()}.${selectedDate.getMonth() + 1}.${selectedDate.getDate()} ${selectedDate.getHours()}:${selectedDate.getMinutes().toString().padStart(2, "0")} ${dayOfWeek}`
               : "날짜를 선택해주세요"}
           </h1>
           <Image
