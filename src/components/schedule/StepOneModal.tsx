@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "@/components/ui/modal/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,30 +9,28 @@ import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
 import styles from "@/app/(root)/schedule/ScheduleClient.module.scss";
+// zustand
+import useScheduleStore from "@/store/schedule";
+
 type StepOneModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  selectedDate: Date | null;
-  setSelectedDate: (date: Date) => void;
   handleGoToNextModal: () => void;
-  selectedMood: string | null;
-  setSelectedMood: (mood: string) => void;
   user: any;
   handleMoodClick: (mood: string) => void;
 };
-
 const StepOneModal = ({
   isOpen,
   onClose,
-  selectedDate,
-  setSelectedDate,
   handleGoToNextModal,
-  selectedMood,
-  setSelectedMood,
   user,
   handleMoodClick,
 }: StepOneModalProps) => {
+  const mood = useScheduleStore((state) => state.selectedMood);
+  const selectedDate = useScheduleStore((state) => state.selectedDate);
+  const setSelectedDate = useScheduleStore((state) => state.setSelectedDate);
   const iconStyle = { width: "35px", height: "35px" };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -67,7 +65,7 @@ const StepOneModal = ({
         {user?.palette && (
           <TerribleIcon
             className={
-              selectedMood === "terrible" ? styles.modal_moodIcon_selected : ""
+              mood === "terrible" ? styles.modal_moodIcon_selected : ""
             }
             style={{ ...iconStyle, color: user.palette[0] }}
             viewBox="0 0 478.125 478.125"
@@ -76,9 +74,7 @@ const StepOneModal = ({
         )}
         {user?.palette && (
           <SadIcon
-            className={
-              selectedMood === "sad" ? styles.modal_moodIcon_selected : ""
-            }
+            className={mood === "sad" ? styles.modal_moodIcon_selected : ""}
             style={{ ...iconStyle, color: user.palette[4] }}
             viewBox="0 0 478.125 478.125"
             onClick={() => handleMoodClick("sad")}
@@ -86,9 +82,7 @@ const StepOneModal = ({
         )}
         {user?.palette && (
           <NaturalIcon
-            className={
-              selectedMood === "natural" ? styles.modal_moodIcon_selected : ""
-            }
+            className={mood === "natural" ? styles.modal_moodIcon_selected : ""}
             style={{ ...iconStyle, color: user.palette[2] }}
             viewBox="0 0 478.125 478.125"
             onClick={() => handleMoodClick("natural")}
@@ -96,9 +90,7 @@ const StepOneModal = ({
         )}
         {user?.palette && (
           <SmileIcon
-            className={
-              selectedMood === "smile" ? styles.modal_moodIcon_selected : ""
-            }
+            className={mood === "smile" ? styles.modal_moodIcon_selected : ""}
             style={{ ...iconStyle, color: user.palette[3] }}
             viewBox="0 0 478.125 478.125"
             onClick={() => handleMoodClick("smile")}
@@ -106,9 +98,7 @@ const StepOneModal = ({
         )}
         {user?.palette && (
           <HappyIcon
-            className={
-              selectedMood === "happy" ? styles.modal_moodIcon_selected : ""
-            }
+            className={mood === "happy" ? styles.modal_moodIcon_selected : ""}
             style={{ ...iconStyle, color: user.palette[1] }}
             viewBox="0 0 478.125 478.125"
             onClick={() => handleMoodClick("happy")}

@@ -12,14 +12,21 @@ import { UserContext } from "@/app/provider/UserProvider";
 // css
 import styles from "./ScheduleClient.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
+// zustand
+import useScheduleStore from "@/store/schedule";
 
 const ScheduleClient = () => {
   const user = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [selectedMood, setSelectedMood] = useState<string | null>(null);
-  const [selectedDayOfWeek, setSelectedDayOfWeek] = useState("");
+  const {
+    selectedMood,
+    setSelectedMood,
+    selectedDate,
+    setSelectedDate,
+    selectedDayOfWeek,
+    setSelectedDayOfWeek,
+  } = useScheduleStore();
 
   useEffect(() => {
     console.log(user);
@@ -40,19 +47,6 @@ const ScheduleClient = () => {
     setIsModalOpen(true); // 날짜 클릭 시 모달을 엽니다.
     setSelectedDate(new Date(info.dateStr)); // info.dateStr을 Date 객체로 변환
     console.log(info.dateStr);
-
-    const weekdays = [
-      "일요일",
-      "월요일",
-      "화요일",
-      "수요일",
-      "목요일",
-      "금요일",
-      "토요일",
-    ];
-    const dayOfWeek = weekdays[new Date(info.dateStr).getDay()];
-    setSelectedDayOfWeek(dayOfWeek); // 선택된 요일을 상태에 저장
-    console.log(dayOfWeek);
   };
 
   const handleCloseModal = () => {
@@ -69,20 +63,13 @@ const ScheduleClient = () => {
         <StepOneModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          selectedDate={selectedDate} // 선택된 날짜
-          setSelectedDate={setSelectedDate} // 선택된 날짜를 변경하는 함수
           handleGoToNextModal={handleGoToNextModal} // 다음 모달로 이동하는 함수
-          selectedMood={selectedMood} // 선택된 기분
-          setSelectedMood={setSelectedMood} // 선택된 기분을 변경하는 함수
           user={user} // 사용자 정보
           handleMoodClick={handleMoodClick} // 기분 아이콘 클릭 핸들러
         />
         <StepTwoModal
-          dayOfWeek={selectedDayOfWeek} // 선택된 요일
           isOpen={isNextModalOpen} // 다음 모달 열림 상태
           onClose={() => setIsNextModalOpen(false)} // 다음 모달 닫기 함수
-          selectedDate={selectedDate} // 선택된 날짜
-          selectedDayOfWeek={selectedDayOfWeek} // 선택된 요일
           setIsModalOpen={setIsModalOpen} // 현재 모달 열림 상태 변경 함수
           setIsNextModalOpen={setIsNextModalOpen} // 다음 모달 열림 상태 변경 함수
         />
