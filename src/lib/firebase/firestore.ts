@@ -142,5 +142,17 @@ export async function addPalette(email: string, palette: string[]) {
     }
   });
 }
+// 유저 포스트 추가하기
+export async function addPost(email: string, post: string) {
+  const db = getFirestore();
+  const userSnapshot = await getDocs(collection(db, "users"));
+  userSnapshot.docs.forEach(async (doc) => {
+    if (doc.data().email === email) {
+      await updateDoc(doc.ref, {
+        post: post,
+      });
+    }
+  });
+}
 
 module.exports = { signUp, signIn, getCurrentUser, getUser, addPalette };
