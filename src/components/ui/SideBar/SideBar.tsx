@@ -4,8 +4,8 @@ import Link from "next/link";
 import styles from "./SideBar.module.scss";
 
 // svg
-import LogoIcon from "@/asset/svg/logo.svg";
-import LogoImage from "@/asset/svg/logoImg.svg";
+import LogoIcon from "@/asset/svg/Logo.svg";
+import LogoImage from "@/asset/svg/LogoImg.svg";
 import HomeIcon from "@/asset/svg/home.svg";
 import LedgerIcon from "@/asset/svg/ledger.svg";
 import ScheduleIcon from "@/asset/svg/schedule.svg";
