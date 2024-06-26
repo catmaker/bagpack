@@ -51,6 +51,9 @@
   font-size: 16px;
   line-height: 24px;
   margin-left: 40px;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .menu_item {
   margin-top: 35px;
@@ -61,6 +64,12 @@
   display: flex !important;
   align-items: center;
   height: 20px;
+  text-decoration: none;
+  color: black;
+}
+.menu_item > a:hover {
+  color: $primary-color;
+  transition: 0.2s all ease-in-out !important;
 }
 .menu_text {
   font-size: 16px;
