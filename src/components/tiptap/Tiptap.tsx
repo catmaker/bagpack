@@ -6,7 +6,12 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { use, useEffect, useState } from "react";
+import { set } from "date-fns";
+import React, { use, useContext, useEffect, useState } from "react";
+// provider
+import { UserContext } from "@/app/provider/UserProvider";
+// zustand
+import useScheduleStore from "@/store/schedule";
 
 const MenuBar = () => {
   const [color, setColor] = useState("#958DF1");
@@ -239,12 +244,47 @@ const content = `
 `;
 
 const EditorComponent = () => {
+  const [currentContent, setCurrentContent] = useState(content);
+  const selectedDate = useScheduleStore((state) => state.selectedDate);
+  console.log(selectedDate);
+  const user = useContext(UserContext);
+  const userEmail = user?.email;
+  const handleEditorUpdate = ({ editor }: any) => {
+    const updatedContent = editor.getHTML();
+    setCurrentContent(updatedContent);
+    console.log(updatedContent);
+  };
+  const saveContent = () => {
+    fetch("/api/user/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        post: currentContent,
+        date: selectedDate,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
-    <EditorProvider
-      slotBefore={<MenuBar />}
-      extensions={extensions}
-      content={content}
-    ></EditorProvider>
+    <>
+      <EditorProvider
+        slotBefore={<MenuBar />}
+        extensions={extensions}
+        content={content}
+        onUpdate={handleEditorUpdate}
+      />
+      <button onClick={saveContent}>저장</button>
+    </>
   );
 };
 

@@ -25,7 +25,6 @@ const PostModal = ({ isOpen, onClose }: PostModalProps) => {
     <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="700px">
       <form action="">
         <Tiptap />
-        <button>저장</button>
       </form>
     </Modal>
   );

@@ -142,17 +142,45 @@ export async function addPalette(email: string, palette: string[]) {
     }
   });
 }
+
 // 유저 포스트 추가하기
-export async function addPost(email: string, post: string) {
+export async function addPost(
+  email: string,
+  post: string,
+  date: string,
+): Promise<boolean> {
+  console.log(email, post, date);
   const db = getFirestore();
-  const userSnapshot = await getDocs(collection(db, "users"));
-  userSnapshot.docs.forEach(async (doc) => {
-    if (doc.data().email === email) {
-      await updateDoc(doc.ref, {
-        post: post,
-      });
-    }
-  });
+  try {
+    const userSnapshot = await getDocs(collection(db, "users"));
+    const updatePromises = userSnapshot.docs.map(async (doc) => {
+      if (doc.data().email === email) {
+        const existingPosts = doc.data().posts || []; // 기존 포스트 배열을 가져오거나, 없으면 빈 배열 사용
+        const newPost = {
+          id: Date.now().toString(),
+          content: post,
+          date: date, // 인자로 받은 날짜 사용
+        }; // 새 포스트 객체 생성
+        await updateDoc(doc.ref, {
+          posts: [...existingPosts, newPost], // 기존 포스트 배열에 새 포스트 추가
+        });
+        return true; // 성공적으로 업데이트 되었을 때 true 반환
+      }
+      return false; // 해당 이메일을 가진 문서가 아닐 경우 false 반환
+    });
+    const results = await Promise.all(updatePromises); // 모든 업데이트 작업을 병렬로 처리
+    return results.includes(true); // 하나라도 업데이트에 성공했다면 true 반환
+  } catch (error) {
+    console.error("Error adding post: ", error);
+    return false; // 예외 발생 시 false 반환
+  }
 }
 
-module.exports = { signUp, signIn, getCurrentUser, getUser, addPalette };
+module.exports = {
+  signUp,
+  signIn,
+  getCurrentUser,
+  getUser,
+  addPalette,
+  addPost,
+};
