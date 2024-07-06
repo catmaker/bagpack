@@ -3,6 +3,7 @@ import React, { useEffect, useContext } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { motion } from "framer-motion";
 // css
 import styles from "./HomeClient.module.scss";
 // component
@@ -25,7 +26,13 @@ const HomeClient = () => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <SideBar />
+        <motion.div
+          initial={{ x: "-100%" }} // 왼쪽에서 시작
+          animate={{ x: 0 }} // 오른쪽으로 이동하여 화면에 표시
+          transition={{ duration: 0.5 }} // 애니메이션 지속 시간 설정
+        >
+          <SideBar />
+        </motion.div>
         <section className={styles.search_group}>
           <SearchBar
             width="850px"
