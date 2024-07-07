@@ -4,10 +4,9 @@ import "./styles.scss";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
-import { EditorProvider, useCurrentEditor, useEditor } from "@tiptap/react";
+import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { set } from "date-fns";
-import React, { use, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // provider
 import { UserContext } from "@/app/provider/UserProvider";
 // zustand
@@ -308,6 +307,7 @@ const content = `
 
 const EditorComponent = () => {
   const [currentContent, setCurrentContent] = useState(content);
+  const [title, setTitle] = useState("");
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const selectedMood = useScheduleStore((state) => state.selectedMood);
   console.log("Selected Mood:", selectedMood);
@@ -329,6 +329,7 @@ const EditorComponent = () => {
       },
       body: JSON.stringify({
         email: userEmail,
+        title: title,
         post: currentContent,
         date: selectedDate,
         mood: selectedMood,
@@ -346,7 +347,18 @@ const EditorComponent = () => {
   return (
     <>
       <EditorProvider
-        slotBefore={<MenuBar />}
+        slotBefore={
+          <>
+            <MenuBar />
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목을 입력하세요"
+              style={{ display: "block", margin: "10px 0" }} // 스타일링 예시
+            />
+          </>
+        }
         extensions={extensions}
         content={content}
         onUpdate={handleEditorUpdate}
