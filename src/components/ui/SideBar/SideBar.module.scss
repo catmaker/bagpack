@@ -1,3 +1,4 @@
+@import "@/styles/variables.scss";
 .container {
   min-width: 250px;
   min-height: 100vh;
@@ -9,4 +10,71 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.aside {
+  min-width: 250px;
+  min-height: 100vh;
+  background-color: white;
+  border-radius: 0 15px 15px 0;
+}
+.section_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+// Logo
+.logo_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.logo_image {
+  padding-top: 30px;
+}
+.logo_icon {
+  padding-top: 30px;
+  padding-left: 20px;
+}
+// Overview h3
+.overview_title {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+  margin-top: 60px;
+  color: $grey-color;
+  margin-left: 40px;
+}
+// Menu
+.menu_list {
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 40px;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.menu_item {
+  margin-top: 35px;
+  display: flex;
+  align-items: center;
+}
+.menu_item > a {
+  display: flex !important;
+  align-items: center;
+  height: 20px;
+  text-decoration: none;
+  color: black;
+}
+.menu_item > a:hover {
+  color: $primary-color;
+  transition: 0.2s all ease-in-out !important;
+}
+.menu_text {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  padding-left: 15px;
+  margin-left: 8px;
 }

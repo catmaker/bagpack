@@ -19,7 +19,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .login_header h1 {
   font-style: normal;
@@ -27,6 +27,7 @@
   color: $primary-color;
   font-size: 24px;
   line-height: 24px;
+  margin-bottom: 0px;
 }
 
 .login_header p {
@@ -36,7 +37,6 @@
   line-height: 24px;
   text-align: center;
   color: $grey-color;
-  padding-top: 10px;
 }
 
 .form {

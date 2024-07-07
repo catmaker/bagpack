@@ -27,6 +27,7 @@
   font-size: 24px;
   line-height: 24px;
   color: $primary-color;
+  margin-bottom: 0px;
 }
 .login_header p {
   font-style: normal;
@@ -35,7 +36,6 @@
   line-height: 24px;
   text-align: center;
   color: $grey-color;
-  padding-top: 10px;
 }
 .form {
   display: flex;
