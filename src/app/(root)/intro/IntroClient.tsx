@@ -66,7 +66,7 @@ const IntroClient = () => {
           <Card>
             <Image
               className={styles.logoCut}
-              src={"/bagPackIcon/LogoCut.svg"}
+              src={"/bagpackIcon/LogoCut.svg"}
               alt="LogoCut"
               width={40}
               height={60}
