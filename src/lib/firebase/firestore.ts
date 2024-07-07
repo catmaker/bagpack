@@ -149,6 +149,7 @@ export async function addPost(
   post: string,
   date: string,
   mood: string,
+  title: string,
 ): Promise<boolean> {
   console.log(email, post, date);
   const db = getFirestore();
@@ -162,6 +163,7 @@ export async function addPost(
           content: post,
           date: date, // 인자로 받은 날짜 사용
           mood: mood,
+          title: title,
         }; // 새 포스트 객체 생성
         await updateDoc(doc.ref, {
           posts: [...existingPosts, newPost], // 기존 포스트 배열에 새 포스트 추가
@@ -182,6 +184,7 @@ type Post = {
   content: string;
   date: string;
   mood: string;
+  title: string;
 };
 
 // 유저 포스트 가져오기
@@ -196,7 +199,25 @@ export async function getPosts(email: string) {
   });
   return posts;
 }
-
+type PostById = {
+  id: string;
+  email: string;
+};
+// 유저 포스트 id로 가져오기
+export async function getPostById(id: string, email: string) {
+  const db = getFirestore();
+  const userSnapshot = await getDocs(collection(db, "users"));
+  let post: Post | null = null;
+  userSnapshot.docs.forEach((doc) => {
+    if (doc.data().email === email) {
+      const posts = doc.data().posts;
+      if (posts) {
+        post = posts.find((post) => post.id === id) || null;
+      }
+    }
+  });
+  return post;
+}
 module.exports = {
   signUp,
   signIn,
@@ -205,4 +226,5 @@ module.exports = {
   addPalette,
   addPost,
   getPosts,
+  getPostById,
 };
