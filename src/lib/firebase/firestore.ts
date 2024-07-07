@@ -177,6 +177,25 @@ export async function addPost(
     return false; // 예외 발생 시 false 반환
   }
 }
+type Post = {
+  id: string;
+  content: string;
+  date: string;
+  mood: string;
+};
+
+// 유저 포스트 가져오기
+export async function getPosts(email: string) {
+  const db = getFirestore();
+  const userSnapshot = await getDocs(collection(db, "users"));
+  let posts: Post[] = [];
+  userSnapshot.docs.forEach((doc) => {
+    if (doc.data().email === email) {
+      posts = doc.data().posts;
+    }
+  });
+  return posts;
+}
 
 module.exports = {
   signUp,
@@ -185,4 +204,5 @@ module.exports = {
   getUser,
   addPalette,
   addPost,
+  getPosts,
 };
