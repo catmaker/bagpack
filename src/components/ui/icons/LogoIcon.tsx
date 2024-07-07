@@ -10,7 +10,7 @@ const LogoIcon = ({ width, height }: LogoIconProps) => {
   return (
     <div>
       <Image
-        src="/bagPackIcon/Logo.svg"
+        src="/bagpackIcon/Logo.svg"
         alt="Logo"
         width={width}
         height={height}
