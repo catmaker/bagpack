@@ -18,14 +18,7 @@
     ],
     "no-console": "off",
     "eqeqeq": "error",
-    "indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1,
-        "ignoredNodes": ["ConditionalExpression"]
-      }
-    ],
+    "indent": "off",
     "comma-dangle": "off"
   },
   "overrides": [
