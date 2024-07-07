@@ -7,6 +7,7 @@ import PostModal from "@/components/schedule/PostModal";
 import useScheduleStore from "@/store/schedule";
 //
 import { UserContext } from "@/app/provider/UserProvider";
+import Link from "next/link";
 type StepTwoModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -18,6 +19,7 @@ type Post = {
   content: string;
   date: string;
   mood: string;
+  title: string;
 };
 
 const StepTwoModal = ({
@@ -35,10 +37,11 @@ const StepTwoModal = ({
   const selectedDayOfWeek = useScheduleStore(
     (state) => state.selectedDayOfWeek,
   );
+  console.log(selectedDate);
 
   useEffect(() => {
     handleGetPosts(); // 컴포넌트가 마운트될 때 포스트 데이터 가져오기
-  }, [user]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
+  }, [user]);
 
   const handleGetPosts = async () => {
     try {
@@ -83,9 +86,30 @@ const StepTwoModal = ({
           </div>
           <div>
             <ul>
-              {posts.map((post, index) => (
-                <li key={index}>{post.content}</li>
-              ))}
+              {posts
+                .filter((post) => {
+                  if (!selectedDate) return false;
+                  // selectedDate와 post.date를 Date 객체로 변환
+                  const selectedDateObj = new Date(selectedDate);
+                  const postDateObj = new Date(post.date);
+
+                  // 년, 월, 일 비교
+                  return (
+                    selectedDateObj.getFullYear() ===
+                      postDateObj.getFullYear() &&
+                    selectedDateObj.getMonth() === postDateObj.getMonth() &&
+                    selectedDateObj.getDate() === postDateObj.getDate()
+                  );
+                })
+                .map((filteredPost) => (
+                  // 조건에 맞는 경우에만 post.content 표시
+                  <Link
+                    href={`/schedule/${filteredPost.id}`}
+                    key={filteredPost.id}
+                  >
+                    {filteredPost.title}
+                  </Link>
+                ))}
             </ul>
           </div>
           <button
