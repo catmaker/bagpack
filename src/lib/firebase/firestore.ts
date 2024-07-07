@@ -148,6 +148,7 @@ export async function addPost(
   email: string,
   post: string,
   date: string,
+  mood: string,
 ): Promise<boolean> {
   console.log(email, post, date);
   const db = getFirestore();
@@ -160,6 +161,7 @@ export async function addPost(
           id: Date.now().toString(),
           content: post,
           date: date, // 인자로 받은 날짜 사용
+          mood: mood,
         }; // 새 포스트 객체 생성
         await updateDoc(doc.ref, {
           posts: [...existingPosts, newPost], // 기존 포스트 배열에 새 포스트 추가

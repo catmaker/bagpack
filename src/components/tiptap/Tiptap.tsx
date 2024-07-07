@@ -246,6 +246,8 @@ const content = `
 const EditorComponent = () => {
   const [currentContent, setCurrentContent] = useState(content);
   const selectedDate = useScheduleStore((state) => state.selectedDate);
+  const selectedMood = useScheduleStore((state) => state.selectedMood);
+  console.log("Selected Mood:", selectedMood);
   console.log(selectedDate);
   const user = useContext(UserContext);
   const userEmail = user?.email;
@@ -254,7 +256,9 @@ const EditorComponent = () => {
     setCurrentContent(updatedContent);
     console.log(updatedContent);
   };
-  const saveContent = () => {
+  const saveContent = (e: any) => {
+    e.preventDefault();
+    console.log("Selected Date:", selectedDate);
     fetch("/api/user/post", {
       method: "POST",
       headers: {
@@ -264,6 +268,7 @@ const EditorComponent = () => {
         email: userEmail,
         post: currentContent,
         date: selectedDate,
+        mood: selectedMood,
       }),
     })
       .then((response) => response.json())
