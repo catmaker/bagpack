@@ -199,6 +199,7 @@ export async function getPosts(email: string) {
   });
   return posts;
 }
+
 type PostById = {
   id: string;
   email: string;
@@ -212,11 +213,81 @@ export async function getPostById(id: string, email: string) {
     if (doc.data().email === email) {
       const posts = doc.data().posts;
       if (posts) {
-        post = posts.find((post) => post.id === id) || null;
+        post = posts.find((post: any) => post.id === id) || null;
       }
     }
   });
   return post;
+}
+// 유저 포스트 수정하기
+export async function updatePost(
+  email: string,
+  id: string,
+  post: string,
+  date: string,
+  title: string,
+  mood: string,
+) {
+  const db = getFirestore();
+  try {
+    const userSnapshot = await getDocs(collection(db, "users"));
+    const updatePromises = userSnapshot.docs.map(async (doc) => {
+      if (doc.data().email === email) {
+        const existingPosts = doc.data().posts || [];
+        const updatedPosts = existingPosts.map((existingPost: any) => {
+          if (existingPost.id === id) {
+            return {
+              id,
+              content: post,
+              date,
+              mood,
+              title,
+            };
+          }
+          return existingPost;
+        });
+        await updateDoc(doc.ref, {
+          posts: updatedPosts,
+        });
+        return true;
+      }
+      return false;
+    });
+    const results = await Promise.all(updatePromises);
+    return results.includes(true);
+  } catch (error) {
+    console.error("Error updating post: ", error);
+    return false;
+  }
+}
+// 유저 포스트 삭제하기
+export async function deletePost(email: string, id: string) {
+  const db = getFirestore(); // Firebase db 가져오기
+  try {
+    const userSnapshot = await getDocs(collection(db, "users")); // users 컬렉션의 모든 문서 가져오기
+    const updatePromises = userSnapshot.docs.map(async (doc) => {
+      // 모든 문서에 대해 반복
+      if (doc.data().email === email) {
+        // 이메일이 일치하는 문서 찾기
+        const existingPosts = doc.data().posts || []; // 해당 문서의 포스트 배열 가져오기
+        const updatedPosts = existingPosts.filter(
+          // 삭제할 포스트를 제외한 새로운 포스트 배열 생성
+          (existingPost: any) => existingPost.id !== id, // id가 일치하지 않는 포스트만 남김
+        );
+        await updateDoc(doc.ref, {
+          // 새로운 포스트 배열로 문서 업데이트
+          posts: updatedPosts,
+        });
+        return true;
+      }
+      return false;
+    });
+    const results = await Promise.all(updatePromises); // 모든 업데이트 작업을 병렬로 처리
+    return results.includes(true); // 하나라도 업데이트에 성공했다면 true 반환
+  } catch (error) {
+    console.error("Error deleting post: ", error);
+    return false;
+  }
 }
 module.exports = {
   signUp,
@@ -227,4 +298,6 @@ module.exports = {
   addPost,
   getPosts,
   getPostById,
+  updatePost,
+  deletePost,
 };
