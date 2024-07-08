@@ -12,6 +12,8 @@ interface ScheduleState {
   setStartDate: (date: Date | undefined) => void;
   endDate: Date | undefined;
   setEndDate: (date: Date | undefined) => void;
+  postsUpdate: boolean;
+  setPostsUpdate: (update: boolean) => void;
 }
 
 // 스토어 생성
@@ -33,6 +35,8 @@ const useScheduleStore = create<ScheduleState>((set) => ({
   setStartDate: (date) => set({ startDate: date }), // 함수 구현
   endDate: new Date(), // 초기값 설정
   setEndDate: (date) => set({ endDate: date }), // 함수 구현
+  postsUpdate: false,
+  setPostsUpdate: (update) => set({ postsUpdate: update }),
 }));
 
 export default useScheduleStore;

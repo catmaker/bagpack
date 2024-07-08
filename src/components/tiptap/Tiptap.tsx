@@ -319,7 +319,10 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
   const setStartDate = useScheduleStore((state) => state.setStartDate);
   const endDate = useScheduleStore((state) => state.endDate);
   const setEndDate = useScheduleStore((state) => state.setEndDate);
+  const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
+
   const userEmail = user?.email;
+
   console.log("userEmail" + userEmail);
   console.log("post" + currentContent);
   console.log("date" + selectedDate);
@@ -367,6 +370,7 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
 
       const data = await response.json();
       console.log(data);
+      setPostsUpdate(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -400,6 +404,7 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
       });
       const data = await response.json();
       console.log(data);
+      setPostsUpdate(true);
     } catch (error) {
       console.error("Error:", error);
     }
