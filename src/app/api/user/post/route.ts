@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addPost } from "@/lib/firebase/firestore";
 export async function POST(request: NextRequest) {
-  const { email, post, date, mood, title } = await request.json();
-  const savePost = await addPost(email, post, date, mood, title);
+  const { email, post, startDate, mood, title, endDate } = await request.json();
+  const savePost = await addPost(email, post, startDate, endDate, mood, title);
+  console.log(savePost);
   if (!savePost) {
     return NextResponse.json(
       { message: "포스트 저장에 실패했습니다." },

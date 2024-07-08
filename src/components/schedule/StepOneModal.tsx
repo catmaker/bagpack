@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@/components/ui/modal/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -30,7 +30,17 @@ const StepOneModal = ({
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const setSelectedDate = useScheduleStore((state) => state.setSelectedDate);
   const iconStyle = { width: "35px", height: "35px" };
-
+  const startDate = useScheduleStore((state) => state.startDate);
+  const setStartDate = useScheduleStore((state) => state.setStartDate);
+  const endDate = useScheduleStore((state) => state.endDate);
+  const setEndDate = useScheduleStore((state) => state.setEndDate);
+  console.log(startDate, endDate);
+  useEffect(() => {
+    if (selectedDate) {
+      setStartDate(selectedDate);
+      setEndDate(selectedDate);
+    }
+  }, [selectedDate, setStartDate]);
   return (
     <Modal
       isOpen={isOpen}
@@ -43,22 +53,28 @@ const StepOneModal = ({
       <h1 className={styles.modal_h1}>기분이 어땠나요?</h1>
       <div>
         <DatePicker
-          className={styles["react-datepicker__input-container"]}
-          dateFormat="yyyy.MM.dd HH:mm" // 날짜와 시간 형태
-          shouldCloseOnSelect={false} // 날짜와 시간을 모두 선택한 후에 닫히도록 설정
-          showTimeSelect // 시간 선택 옵션 활성화
-          timeFormat="HH:mm" // 시간 형식
-          timeIntervals={15} // 시간 선택 간격 (예: 15분)
-          minDate={new Date("2000-01-01")} // minDate 이전 날짜 선택 불가
-          maxDate={new Date()} // maxDate 이후 날짜 선택 불가
-          selected={selectedDate}
-          onChange={(date) => {
-            console.log(date); // 선택된 날짜를 콘솔에 출력
-            if (date) {
-              // date가 null이 아닐 때만 setSelectedDate 호출
-              setSelectedDate(date);
-            }
-          }}
+          selected={startDate}
+          onChange={(date) => setStartDate(date || undefined)}
+          selectsStart
+          startDate={startDate}
+          endDate={endDate}
+          dateFormat="yyyy.MM.dd HH:mm"
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          minDate={new Date("2000-01-01")}
+        />
+        <DatePicker
+          selected={endDate}
+          onChange={(date) => setEndDate(date || undefined)}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          dateFormat="yyyy.MM.dd HH:mm"
+          showTimeSelect
+          timeFormat="HH:mm"
+          timeIntervals={15}
+          minDate={startDate} // 종료일은 시작일 이후로 설정
         />
       </div>
       <div className={styles.modal_moodIcon_wrapper}>

@@ -17,9 +17,10 @@ type StepTwoModalProps = {
 type Post = {
   id: string;
   content: string;
-  date: string;
   mood: string;
   title: string;
+  startDate: string;
+  endDate: string;
 };
 
 const StepTwoModal = ({
@@ -33,7 +34,10 @@ const StepTwoModal = ({
   const mood = useScheduleStore((state) => state.selectedMood);
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const user = useContext(UserContext);
-
+  const startDate = useScheduleStore((state) => state.startDate);
+  const setStartDate = useScheduleStore((state) => state.setStartDate);
+  const endDate = useScheduleStore((state) => state.endDate);
+  const setEndDate = useScheduleStore((state) => state.setEndDate);
   const selectedDayOfWeek = useScheduleStore(
     (state) => state.selectedDayOfWeek,
   );
@@ -71,9 +75,13 @@ const StepTwoModal = ({
         <div>
           <div className={styles.nextModal_header}>
             <h1 className={styles.nextModal_h1}>
-              {selectedDate
-                ? `${selectedDate.getFullYear()}.${selectedDate.getMonth() + 1}.${selectedDate.getDate()} ${selectedDate.getHours()}:${selectedDate.getMinutes().toString().padStart(2, "0")} ${selectedDayOfWeek} `
-                : "날짜를 선택해주세요"}
+              {startDate && endDate
+                ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")} - ${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
+                : startDate
+                  ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")}`
+                  : endDate
+                    ? `${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
+                    : "날짜를 선택해주세요"}
             </h1>
             <Image
               className={styles.nextModal_plusIcon}
@@ -87,27 +95,26 @@ const StepTwoModal = ({
           <div>
             <ul>
               {posts
-                .filter((post) => {
-                  if (!selectedDate) return false;
-                  // selectedDate와 post.date를 Date 객체로 변환
-                  const selectedDateObj = new Date(selectedDate);
-                  const postDateObj = new Date(post.date);
+                .filter((item) => {
+                  const startDateObj = new Date(item.startDate);
+                  const endDateObj = new Date(item.endDate);
+                  const filterStartDateObj = new Date(
+                    "2024-07-01T00:00:00.000Z",
+                  );
+                  const filterEndDateObj = new Date("2024-07-27T00:00:00.000Z");
 
-                  // 년, 월, 일 비교
+                  // item의 startDate와 endDate가 필터링 기간 안에 있는지 확인
                   return (
-                    selectedDateObj.getFullYear() ===
-                      postDateObj.getFullYear() &&
-                    selectedDateObj.getMonth() === postDateObj.getMonth() &&
-                    selectedDateObj.getDate() === postDateObj.getDate()
+                    startDateObj <= filterEndDateObj &&
+                    endDateObj >= filterStartDateObj
                   );
                 })
-                .map((filteredPost) => (
-                  // 조건에 맞는 경우에만 post.content 표시
+                .map((filteredItem) => (
                   <Link
-                    href={`/schedule/${filteredPost.id}`}
-                    key={filteredPost.id}
+                    href={`/schedule/${filteredItem.id}`}
+                    key={filteredItem.id}
                   >
-                    {filteredPost.title}
+                    {filteredItem.title}
                   </Link>
                 ))}
             </ul>

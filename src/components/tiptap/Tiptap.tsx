@@ -315,7 +315,10 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
   const [currentTitle, setCurrentTitle] = useState(title); // title 상태 관리 추가
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const selectedMood = useScheduleStore((state) => state.selectedMood);
-
+  const startDate = useScheduleStore((state) => state.startDate);
+  const setStartDate = useScheduleStore((state) => state.setStartDate);
+  const endDate = useScheduleStore((state) => state.endDate);
+  const setEndDate = useScheduleStore((state) => state.setEndDate);
   const userEmail = user?.email;
   console.log("userEmail" + userEmail);
   console.log("post" + currentContent);
@@ -347,11 +350,12 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
     const payload = {
       email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
       post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
-      date: selectedDate ?? "error", // selectedDate가 undefined이면 "error" 사용
+      startDate: startDate ?? "error", // selectedDate가 undefined이면 "error" 사용
+      endDate: endDate ?? startDate, // endDate가 undefined이면 startDate 사용
       title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
       mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
     };
-
+    console.log(payload);
     try {
       const response = await fetch("/api/user/post", {
         method: "POST",
@@ -374,12 +378,13 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
 
     // 전송될 데이터 객체 생성
     const payload = {
-      email: userEmail,
-      post: currentContent,
-      date: selectedDate,
-      title: currentTitle,
+      email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
+      post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
+      startDate: startDate ?? "error", // selectedDate가 undefined이면 "error" 사용
+      endDate: endDate ?? startDate, // endDate가 undefined이면 startDate 사용
+      title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
+      mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
       id: id,
-      mood: selectedMood,
     };
 
     // 전송될 데이터 로그로 출력

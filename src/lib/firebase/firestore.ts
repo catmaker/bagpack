@@ -147,11 +147,12 @@ export async function addPalette(email: string, palette: string[]) {
 export async function addPost(
   email: string,
   post: string,
-  date: string,
+  startDate: string,
+  endDate: string,
   mood: string,
   title: string,
 ): Promise<boolean> {
-  console.log(email, post, date);
+  console.log(email, post, startDate, endDate, mood, title);
   const db = getFirestore();
   try {
     const userSnapshot = await getDocs(collection(db, "users"));
@@ -161,7 +162,8 @@ export async function addPost(
         const newPost = {
           id: Date.now().toString(),
           content: post,
-          date: date, // 인자로 받은 날짜 사용
+          startDate: startDate, // 인자로 받은 날짜 사용
+          endDate: endDate,
           mood: mood,
           title: title,
         }; // 새 포스트 객체 생성
@@ -222,11 +224,12 @@ export async function getPostById(id: string, email: string) {
 // 유저 포스트 수정하기
 export async function updatePost(
   email: string,
-  id: string,
   post: string,
-  date: string,
-  title: string,
+  startDate: string,
+  endDate: string,
   mood: string,
+  title: string,
+  id: string,
 ) {
   const db = getFirestore();
   try {
@@ -239,7 +242,8 @@ export async function updatePost(
             return {
               id,
               content: post,
-              date,
+              startDate,
+              endDate,
               mood,
               title,
             };
@@ -260,6 +264,7 @@ export async function updatePost(
     return false;
   }
 }
+
 // 유저 포스트 삭제하기
 export async function deletePost(email: string, id: string) {
   const db = getFirestore(); // Firebase db 가져오기
