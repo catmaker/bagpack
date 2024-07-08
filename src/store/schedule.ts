@@ -1,6 +1,14 @@
 import create from "zustand";
 
 // 스토어 상태와 함수에 대한 인터페이스 정의
+type Post = {
+  id: string;
+  content: string;
+  mood: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+};
 interface ScheduleState {
   selectedMood: string | null;
   setSelectedMood: (mood: string | null) => void;
@@ -14,6 +22,8 @@ interface ScheduleState {
   setEndDate: (date: Date | undefined) => void;
   postsUpdate: boolean;
   setPostsUpdate: (update: boolean) => void;
+  posts: Post[];
+  setPosts: (posts: Post[]) => void;
 }
 
 // 스토어 생성
@@ -37,6 +47,8 @@ const useScheduleStore = create<ScheduleState>((set) => ({
   setEndDate: (date) => set({ endDate: date }), // 함수 구현
   postsUpdate: false,
   setPostsUpdate: (update) => set({ postsUpdate: update }),
+  posts: [],
+  setPosts: (posts) => set({ posts }),
 }));
 
 export default useScheduleStore;

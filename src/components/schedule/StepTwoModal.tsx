@@ -30,7 +30,6 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]);
   const mood = useScheduleStore((state) => state.selectedMood);
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const user = useContext(UserContext);
@@ -42,6 +41,8 @@ const StepTwoModal = ({
     (state) => state.selectedDayOfWeek,
   );
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
+  const posts = useScheduleStore((state) => state.posts);
+  const setPosts = useScheduleStore((state) => state.setPosts);
   console.log(selectedDate);
 
   useEffect(() => {
