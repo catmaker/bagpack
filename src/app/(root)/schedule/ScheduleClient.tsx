@@ -45,20 +45,24 @@ const ScheduleClient = () => {
 
   const handleDateClick = (info: any) => {
     setIsModalOpen(true); // 날짜 클릭 시 모달을 엽니다.
+    if (typeof info.dateStr === "string") {
+      const formattedDate = info.dateStr.replace(/-/g, "");
 
-    // info.dateStr을 "YYYYMMDD" 형식으로 변환
-    const formattedDate = info.dateStr.replace(/-/g, "");
+      // info.dateStr을 "YYYYMMDD" 형식으로 변환
 
-    // "YYYYMMDD" 형식의 문자열을 "YYYY", "MM", "DD"로 분리
-    const year = formattedDate.substring(0, 4);
-    const month = formattedDate.substring(4, 6);
-    const day = formattedDate.substring(6, 8);
+      // "YYYYMMDD" 형식의 문자열을 "YYYY", "MM", "DD"로 분리
+      const year = formattedDate.substring(0, 4);
+      const month = formattedDate.substring(4, 6);
+      const day = formattedDate.substring(6, 8);
 
-    // "YYYY-MM-DD" 형식의 문자열로 변환
-    const dateForDateObject = `${year}-${month}-${day}`;
+      // "YYYY-MM-DD" 형식의 문자열로 변환
+      const dateForDateObject = `${year}-${month}-${day}`;
 
-    // Date 객체로 변환하여 setSelectedDate에 전달
-    setSelectedDate(new Date(dateForDateObject));
+      // Date 객체로 변환하여 setSelectedDate에 전달
+      setSelectedDate(new Date(dateForDateObject));
+    } else {
+      console.error("날짜 정보가 올바르지 않습니다.");
+    }
   };
 
   const handleCloseModal = () => {
@@ -70,9 +74,8 @@ const ScheduleClient = () => {
       <SideBar />
       <motion.div
         layout
-        initial={{ opacity: 0, scale: 0.5 }} // 초기 상태
+        initial={{ opacity: 0, scale: 1 }} // 초기 상태
         animate={{ opacity: 1, scale: 1 }} // 최종 상태: 완전 불투명하고, 원래 크기
-        transition={{ duration: 0.3 }} // 애니메이션 지속 시간: 0.5초
         className={`${styles.calendar} ${isModalOpen ? styles.modalBackground : ""}`}
       >
         <Calendar onDateClick={handleDateClick} />
