@@ -41,11 +41,12 @@ const StepTwoModal = ({
   const selectedDayOfWeek = useScheduleStore(
     (state) => state.selectedDayOfWeek,
   );
+  const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
   console.log(selectedDate);
 
   useEffect(() => {
     handleGetPosts(); // 컴포넌트가 마운트될 때 포스트 데이터 가져오기
-  }, [user]);
+  }, [user, setPostsUpdate]);
 
   const handleGetPosts = async () => {
     try {
@@ -64,11 +65,20 @@ const StepTwoModal = ({
       const data = await response.json();
       setPosts(data.data);
       console.log(data.data);
+      setPostsUpdate(false);
     } catch (error) {
       console.error(error);
     }
   };
-
+  const filteredPosts = posts.filter((item) => {
+    if (!startDate || !endDate) return false;
+    const startDateObj = new Date(item.startDate);
+    const endDateObj = new Date(item.endDate);
+    return (
+      startDateObj >= new Date(startDate) &&
+      startDateObj < new Date(endDate.getTime() + 86400000) // 86400000은 하루를 밀리초로 환산한 값
+    );
+  });
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="700px">
@@ -94,29 +104,14 @@ const StepTwoModal = ({
           </div>
           <div>
             <ul>
-              {posts
-                .filter((item) => {
-                  const startDateObj = new Date(item.startDate);
-                  const endDateObj = new Date(item.endDate);
-                  const filterStartDateObj = new Date(
-                    "2024-07-01T00:00:00.000Z",
-                  );
-                  const filterEndDateObj = new Date("2024-07-27T00:00:00.000Z");
-
-                  // item의 startDate와 endDate가 필터링 기간 안에 있는지 확인
-                  return (
-                    startDateObj <= filterEndDateObj &&
-                    endDateObj >= filterStartDateObj
-                  );
-                })
-                .map((filteredItem) => (
-                  <Link
-                    href={`/schedule/${filteredItem.id}`}
-                    key={filteredItem.id}
-                  >
-                    {filteredItem.title}
-                  </Link>
-                ))}
+              {filteredPosts.map((filteredItem) => (
+                <Link
+                  href={`/schedule/${filteredItem.id}`}
+                  key={filteredItem.id}
+                >
+                  {filteredItem.title}
+                </Link>
+              ))}
             </ul>
           </div>
           <button
