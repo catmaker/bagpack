@@ -8,15 +8,18 @@ interface ScheduleState {
   setSelectedDate: (date: Date | null) => void;
   selectedDayOfWeek: string;
   setSelectedDayOfWeek: (day: string) => void;
+  startDate: Date | undefined;
+  setStartDate: (date: Date | undefined) => void;
+  endDate: Date | undefined;
+  setEndDate: (date: Date | undefined) => void;
 }
 
 // 스토어 생성
 const useScheduleStore = create<ScheduleState>((set) => ({
   selectedMood: null,
   setSelectedMood: (mood) => set({ selectedMood: mood }),
-  selectedDate: new Date(), // 기본값을 오늘 날짜로 설정
+  selectedDate: new Date(),
   setSelectedDate: (date) => {
-    // 요일을 계산하여 selectedDayOfWeek 상태 업데이트
     const dayOfWeek = date
       ? ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"][
           date.getDay()
@@ -24,8 +27,12 @@ const useScheduleStore = create<ScheduleState>((set) => ({
       : "";
     set({ selectedDate: date, selectedDayOfWeek: dayOfWeek });
   },
-  selectedDayOfWeek: "", // 기본값은 빈 문자열로 설정
+  selectedDayOfWeek: "",
   setSelectedDayOfWeek: (day) => set({ selectedDayOfWeek: day }),
+  startDate: new Date(), // 초기값 설정
+  setStartDate: (date) => set({ startDate: date }), // 함수 구현
+  endDate: new Date(), // 초기값 설정
+  setEndDate: (date) => set({ endDate: date }), // 함수 구현
 }));
 
 export default useScheduleStore;
