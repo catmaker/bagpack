@@ -34,13 +34,14 @@ const StepOneModal = ({
   const setStartDate = useScheduleStore((state) => state.setStartDate);
   const endDate = useScheduleStore((state) => state.endDate);
   const setEndDate = useScheduleStore((state) => state.setEndDate);
+
   console.log(startDate, endDate);
   useEffect(() => {
     if (selectedDate) {
       setStartDate(selectedDate);
       setEndDate(selectedDate);
     }
-  }, [selectedDate, setStartDate]);
+  }, [selectedDate, setStartDate, setEndDate]);
   return (
     <Modal
       isOpen={isOpen}
@@ -54,7 +55,13 @@ const StepOneModal = ({
       <div>
         <DatePicker
           selected={startDate}
-          onChange={(date) => setStartDate(date || undefined)}
+          onChange={(date) => {
+            setStartDate(date || undefined);
+            if (endDate && date && date > endDate) {
+              // 첫 번째 피커에서 선택한 날짜가 두 번째 피커의 날짜보다 높은 경우, 두 번째 피커의 날짜도 변경
+              setEndDate(date);
+            }
+          }}
           selectsStart
           startDate={startDate}
           endDate={endDate}
