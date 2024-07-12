@@ -74,8 +74,8 @@ const ScheduleClient = () => {
       <SideBar />
       <motion.div
         layout
-        initial={{ opacity: 0, scale: 1 }} // 초기 상태
-        animate={{ opacity: 1, scale: 1 }} // 최종 상태: 완전 불투명하고, 원래 크기
+        initial={{ opacity: 0, scale: 1 }}
+        animate={{ opacity: 1, scale: 1 }}
         className={`${styles.calendar} ${isModalOpen ? styles.modalBackground : ""}`}
       >
         <Calendar onDateClick={handleDateClick} />
