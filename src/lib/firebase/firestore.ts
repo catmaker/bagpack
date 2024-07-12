@@ -294,6 +294,44 @@ export async function deletePost(email: string, id: string) {
     return false;
   }
 }
+// 유저 포스트 날짜 수정하기
+export async function updatePostDates(
+  email: string,
+  id: string,
+  startDate: string,
+  endDate: string,
+): Promise<boolean> {
+  const db = getFirestore();
+  try {
+    const userSnapshot = await getDocs(collection(db, "users"));
+    const updatePromises = userSnapshot.docs.map(async (doc) => {
+      if (doc.data().email === email) {
+        const existingPosts = doc.data().posts || [];
+        const updatedPosts = existingPosts.map((existingPost: any) => {
+          if (existingPost.id === id) {
+            return {
+              ...existingPost,
+              startDate,
+              endDate,
+            };
+          }
+          return existingPost;
+        });
+        await updateDoc(doc.ref, {
+          posts: updatedPosts,
+        });
+        return true;
+      }
+      return false;
+    });
+    const results = await Promise.all(updatePromises);
+    return results.includes(true);
+  } catch (error) {
+    console.error("Error updating post dates: ", error);
+    return false;
+  }
+}
+
 module.exports = {
   signUp,
   signIn,
@@ -305,4 +343,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  updatePostDates,
 };
