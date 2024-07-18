@@ -1,96 +1,79 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-type Post = {
-  params: any;
-  title: string;
-  content: string;
+type ScheduleDetailParams = {
+  params: {
+    id: string;
+  };
 };
-const Page = (params: Post) => {
-  const router = useRouter();
+type Post = {
+  id: string;
+  content: string;
+  mood: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+};
+const ScheduleDetail = ({ params }: ScheduleDetailParams) => {
+  const { id } = params;
+  const [post, setPost] = useState<Post>();
   const user = useContext(UserContext);
-  const [post, setPost] = useState<Post | null>(null);
-  console.log(user);
-  const id = params.params.id;
-  console.log(id);
   const email = user?.email;
   useEffect(() => {
     if (!user) return;
-    getPostById(id, user.email).then((data) => {
-      console.log(data);
-      if (data.success) {
-        // 성공 시, post 상태를 data.data로 업데이트
-        setPost(data.data);
-      } else {
-        router.push("/schedule");
-      }
-    });
-  }, [user, id]);
 
-  const getPostById = async (id: string, email: string) => {
-    try {
-      console.log(id, email);
-      const response = await fetch("/api/user/getPostById", {
-        method: "POST",
-        body: JSON.stringify({ id, email }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+    const postData = async () => {
+      try {
+        const data = { email, id };
+        const res = await fetch(`/api/user/getPostById`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log(data);
+          setPost(data.data);
+        }
+      } catch (err) {
+        console.error(err);
       }
-      const data = await response.json();
-      // 여기서 setPost를 호출하지 않고, 대신 반환값을 통해 상태를 업데이트
-      return { success: true, data: data.data }; // data.data를 반환하도록 수정
-    } catch (error) {
-      console.error(error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "An error occurred",
-      };
-    }
-  };
+    };
+
+    postData();
+  }, [user, email, id]);
 
   const deletePost = async () => {
     try {
-      const response = await fetch("/api/user/deletePost", {
+      const data = { email, id };
+      const res = await fetch(`/api/user/deletePost`, {
         method: "POST",
-        body: JSON.stringify({ id, email }),
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
+        body: JSON.stringify(data),
       });
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+      if (res.ok) {
+        console.log("삭제 성공");
       }
-      const data = await response.json();
-      return { success: true, data: data.data };
-    } catch (error) {
-      console.error(error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "An error occurred",
-      };
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
-    <>
-      <div>{typeof post === "object" ? post?.title : post}</div>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: typeof post === "object" ? post?.content || "" : post,
-        }}
-      />
+    <div>
+      <h1>{post?.title}</h1>
+      <p>{post?.content}</p>
       <Link href={`/schedule/${id}/modify`}>
         <button>수정</button>
       </Link>
       <button onClick={deletePost}>삭제</button>
-    </>
+    </div>
   );
 };
 
-export default Page;
+export default ScheduleDetail;
