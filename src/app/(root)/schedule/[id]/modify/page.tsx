@@ -3,16 +3,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import Link from "next/link";
 import Tiptap from "@/components/tiptap/Tiptap";
+import { useSearchParams } from "next/navigation";
 type ModifyProps = {
-  params: any;
-  title: string;
+  params: {
+    id: string;
+  };
+};
+type Post = {
   content: string;
+  title: string;
 };
 const Page = ({ params }: ModifyProps) => {
-  const [post, setPost] = useState<ModifyProps | null>(null);
+  const [post, setPost] = useState<Post | null>(null);
   const user = useContext(UserContext);
   const id = params.id;
-  console.log(id);
+  console.log(params);
   useEffect(() => {
     if (!user) return;
     getPostById(id, user.email).then((data) => {
@@ -49,6 +54,8 @@ const Page = ({ params }: ModifyProps) => {
     }
   };
   console.log(post?.content);
+  console.log(id);
+
   return (
     <div>
       {post?.content ? (
