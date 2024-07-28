@@ -1,0 +1,118 @@
+@import "@/styles/variables.scss";
+.header {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 40px;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+  li,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+.header > li > a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.leftBox {
+  display: flex;
+  align-items: center;
+}
+.logoLink {
+  padding-right: 10px;
+}
+.logo {
+  padding-left: 30px;
+  cursor: pointer;
+}
+.logo:hover {
+  scale: 1.05;
+  transition: all 0.05s ease;
+}
+.nav {
+  padding-right: 40px;
+  display: flex;
+}
+.navList {
+  display: flex;
+  list-style: none;
+  padding: 0px;
+  gap: 40px;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+.navList > li > a:hover {
+  color: $primary-color;
+  transition: all 0.2s;
+}
+.buttonBox {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.signupLink:hover {
+  color: $primary-color;
+  transition: all 0.2s;
+}
+
+.loginButton {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 19px;
+  padding: 10px;
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  transition: background-color 0.2s linear; /* Only transition background color */
+}
+
+.loginButton:hover {
+  background-color: $primary-color;
+  border-color: $primary-color; /* Use border-color instead of border to avoid changing the border width */
+  color: $white;
+}
+.logoutButton {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 19px;
+  padding: 10px;
+  width: 100px;
+}
+.logoutButton:hover {
+  background-color: $primary-color;
+  border-color: $primary-color;
+  color: $white !important;
+}
+@media (max-width: 575px) {
+  .header {
+    font-size: 13px;
+    transition: 0.3s;
+  }
+  .logoLink {
+    padding: 0;
+  }
+  .logo {
+    padding-left: 0px;
+  }
+  .nav {
+    padding-right: 20px;
+  }
+  .navList {
+    gap: 20px;
+  }
+}
