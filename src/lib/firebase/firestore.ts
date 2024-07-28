@@ -17,6 +17,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
+  Auth,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -100,7 +102,32 @@ export async function signIn(email: string, password: string) {
     return null;
   }
 }
+// 유저 로그아웃
+export async function signOutClient(): Promise<void> {
+  let auth: Auth;
 
+  try {
+    auth = getAuth();
+  } catch (error) {
+    console.error("Failed to initialize Firebase Auth:", error);
+    throw new Error("Firebase 인증 초기화 실패");
+  }
+
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully");
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      console.error(
+        `Firebase sign out error: [${error.code}] ${error.message}`,
+      );
+      throw new Error(`로그아웃 실패: ${error.message}`);
+    } else {
+      console.error("Unexpected error during sign out:", error);
+      throw new Error("알 수 없는 오류로 로그아웃 실패");
+    }
+  }
+}
 // 유저 정보 가져오기
 export async function getUser(uid: string): Promise<User> {
   const db = getFirestore();
@@ -344,4 +371,5 @@ module.exports = {
   updatePost,
   deletePost,
   updatePostDates,
+  signOutClient,
 };
