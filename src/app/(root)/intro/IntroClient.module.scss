@@ -52,3 +52,18 @@
   background-color: #838383 !important;
   transition: 0.1s all ease-in-out !important;
 }
+
+.imageBox {
+  width: 100vw;
+  height: 450px;
+  position: relative;
+  img {
+    object-fit: cover;
+  }
+}
+.articleIntro {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  margin: auto;
+}
