@@ -5,15 +5,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  height: 70px;
+  height: 40px;
   margin: 0px;
   padding: 0px;
   padding-top: 10px;
   padding-bottom: 10px;
   white-space: nowrap;
   width: 100%;
-  box-sizing: border-box;
-
+  overflow-x: hidden;
   li,
   ul {
     list-style: none;
@@ -103,7 +102,7 @@
 }
 @media (max-width: 575px) {
   .header {
-    font-size: 13px;
+    font-size: 11px;
     transition: 0.3s;
   }
   .logoLink {
@@ -111,6 +110,9 @@
   }
   .logo {
     padding-left: 0px;
+    width: 100px;
+    max-width: 100%; // 부모의 너비를 초과하지 않도록 설정
+    max-height: 100%; // 부모의 높이를 초과하지 않도록 설정
   }
   .nav {
     padding-right: 20px;
