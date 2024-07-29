@@ -1,3 +1,8 @@
+@import "@/styles/variables.scss";
+
+// 색상 변수
+$background-color: #f7f1f0;
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -5,18 +10,24 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #f7f1f0;
+  background-color: $background-color;
 }
-.next_button:hover {
-  background-color: #838383 !important;
-  transition: 0.1s all ease-in-out !important;
+
+.next_button {
+  &:hover {
+    background-color: $hover-background-color !important;
+    transition: 0.1s all ease-in-out !important;
+  }
+
+  &:active {
+    scale: 0.9;
+  }
 }
-.next_button:active {
-  scale: 0.9;
-}
+
 .logoCut {
   position: absolute;
 }
+
 .contents {
   display: flex;
   flex-direction: column;
@@ -24,31 +35,275 @@
   justify-content: center;
   height: 100%;
 }
+
 .title {
   padding-bottom: 50px;
   font-size: 1.2rem;
 }
+
 .subtitle_box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 .subtitle {
   padding-bottom: 15px;
   margin: 0;
 }
+
 .signup_box {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 40px;
 }
-.login_button:hover {
-  background-color: #838383 !important;
-  transition: 0.1s all ease-in-out !important;
+
+.login_button,
+.signup_button {
+  &:hover {
+    background-color: $hover-background-color !important;
+    transition: 0.1s all ease-in-out !important;
+  }
 }
-.signup_button:hover {
-  background-color: #838383 !important;
-  transition: 0.1s all ease-in-out !important;
+
+.imageBox {
+  width: 100vw;
+  height: 450px;
+  position: relative;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.articleIntro {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  margin: auto;
+}
+
+.firstSection {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $grey-line;
+  padding-bottom: 20px;
+
+  > img {
+    padding-left: 50px;
+
+    &:hover {
+      scale: 1.05;
+      transition: 0.5s all ease;
+    }
+  }
+}
+
+.sectionTitle {
+  font-size: 22px;
+  padding-left: 20px;
+}
+
+.sectionContent {
+  color: $grey-color;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+.secondSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid $grey-line;
+  padding-top: 20px;
+  flex-direction: column;
+  transition: 0.5s all linear;
+}
+
+.sectionContentFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.sectionContentBox {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 20px;
+  min-height: 110px;
+  div {
+    display: flex;
+
+    span {
+      color: black;
+      font-size: 17px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+  }
+
+  img {
+    padding-right: 10px;
+  }
+
+  span {
+    color: $grey-color;
+    font-size: 14px;
+  }
+}
+
+.thirdSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.thirdTitle {
+  font-size: 32px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.thirdContent {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  color: $grey-color;
+  padding-bottom: 20px;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.buttonBox {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 40px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: 1px solid $button-border-color;
+    text-align: center;
+    box-sizing: border-box;
+    transition: background-color 0.2s linear;
+    min-width: 160px;
+
+    &:first-of-type {
+      background-color: white;
+      border-radius: 19px;
+      cursor: pointer;
+
+      &:hover {
+        a {
+          color: $white;
+        }
+        background-color: $button-primary-color;
+        border-color: $button-primary-color;
+      }
+    }
+
+    &:nth-of-type(2) {
+      background-color: black;
+      border-radius: 19px;
+      cursor: pointer;
+      a {
+        color: $white;
+      }
+
+      &:hover {
+        background-color: $button-primary-color;
+        border-color: $button-primary-color;
+        color: $white;
+      }
+    }
+  }
+}
+
+.notion {
+  font-size: 12px;
+  color: $grey-color;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (max-width: 900px) {
+  .sectionContentFlex > img {
+    width: 200px;
+    height: 200px;
+  }
+  .content {
+    div {
+      align-items: center;
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .sectionContentFlex > img {
+    display: none;
+  }
+  .content {
+    span {
+      font-size: 10px;
+    }
+    div {
+      align-items: center;
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+  .vacationsImg {
+    width: 400px;
+    height: 400px;
+  }
+  .thirdTitle {
+    font-size: 20px;
+  }
+  .firstSection {
+    img {
+      width: 100px;
+      height: 100px;
+      padding: 20px;
+    }
+  }
+  .sectionTitle {
+    font-size: 16px;
+    padding-top: 20px;
+  }
+  .sectionContent {
+    font-size: 12px;
+  }
+  .secondSection {
+    padding-top: 0;
+  }
 }

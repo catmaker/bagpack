@@ -7,6 +7,7 @@ import PostModal from "@/components/schedule/PostModal";
 import useScheduleStore from "@/store/schedule";
 //
 import { UserContext } from "@/app/provider/UserProvider";
+import Link from "next/link";
 type StepTwoModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -16,8 +17,10 @@ type StepTwoModalProps = {
 type Post = {
   id: string;
   content: string;
-  date: string;
   mood: string;
+  title: string;
+  startDate: string;
+  endDate: string;
 };
 
 const StepTwoModal = ({
@@ -27,18 +30,24 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]);
   const mood = useScheduleStore((state) => state.selectedMood);
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const user = useContext(UserContext);
-
+  const startDate = useScheduleStore((state) => state.startDate);
+  const setStartDate = useScheduleStore((state) => state.setStartDate);
+  const endDate = useScheduleStore((state) => state.endDate);
+  const setEndDate = useScheduleStore((state) => state.setEndDate);
   const selectedDayOfWeek = useScheduleStore(
     (state) => state.selectedDayOfWeek,
   );
+  const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
+  const posts = useScheduleStore((state) => state.posts);
+  const setPosts = useScheduleStore((state) => state.setPosts);
+  console.log(selectedDate);
 
   useEffect(() => {
     handleGetPosts(); // 컴포넌트가 마운트될 때 포스트 데이터 가져오기
-  }, [user]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때만 실행되도록 함
+  }, [user, setPostsUpdate]);
 
   const handleGetPosts = async () => {
     try {
@@ -57,20 +66,33 @@ const StepTwoModal = ({
       const data = await response.json();
       setPosts(data.data);
       console.log(data.data);
+      setPostsUpdate(false);
     } catch (error) {
       console.error(error);
     }
   };
-
+  const filteredPosts = posts.filter((item) => {
+    if (!startDate || !endDate) return false;
+    const startDateObj = new Date(item.startDate);
+    const endDateObj = new Date(item.endDate);
+    return (
+      startDateObj >= new Date(startDate) &&
+      startDateObj < new Date(endDate.getTime() + 86400000) // 86400000은 하루를 밀리초로 환산한 값
+    );
+  });
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="700px">
         <div>
           <div className={styles.nextModal_header}>
             <h1 className={styles.nextModal_h1}>
-              {selectedDate
-                ? `${selectedDate.getFullYear()}.${selectedDate.getMonth() + 1}.${selectedDate.getDate()} ${selectedDate.getHours()}:${selectedDate.getMinutes().toString().padStart(2, "0")} ${selectedDayOfWeek} `
-                : "날짜를 선택해주세요"}
+              {startDate && endDate
+                ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")} - ${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
+                : startDate
+                  ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")}`
+                  : endDate
+                    ? `${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
+                    : "날짜를 선택해주세요"}
             </h1>
             <Image
               className={styles.nextModal_plusIcon}
@@ -83,8 +105,13 @@ const StepTwoModal = ({
           </div>
           <div>
             <ul>
-              {posts.map((post, index) => (
-                <li key={index}>{post.content}</li>
+              {filteredPosts.map((filteredItem) => (
+                <Link
+                  href={`/schedule/${filteredItem.id}`}
+                  key={filteredItem.id}
+                >
+                  {filteredItem.title}
+                </Link>
               ))}
             </ul>
           </div>
