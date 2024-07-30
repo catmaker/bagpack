@@ -6,21 +6,21 @@ import Button from "@/components/ui/Button";
 import LoginInput from "@/components/ui/LoginInput";
 import Image from "next/image";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
-
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
+
 const SignUpClient = () => {
   const router = useRouter();
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
-
   const [passwordVisible, setPasswordVisible] = useState(false);
+
   const togglePasswordVisible = () => {
-    setPasswordVisible(!passwordVisible);
+    setPasswordVisible((prev) => !prev);
   };
+
   const registerHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!emailRegex.test(email)) {
@@ -69,14 +69,14 @@ const SignUpClient = () => {
   return (
     <div>
       <div className={styles.container}>
-        <Card height={580}>
+        <Card width={500} height={550} className={styles.card}>
           <div className={styles.contents}>
-            <div className={styles.login_header}>
-              <h1>Register</h1>
+            <div className={styles.loginHeader}>
+              <h1>Time InK</h1>
               <p>Create your new account</p>
             </div>
             <form className={styles.form} onSubmit={registerHandler}>
-              <div className={styles.input_box}>
+              <div className={styles.inputBox}>
                 <LoginInput
                   type="text"
                   placeholder="Email"
@@ -92,7 +92,7 @@ const SignUpClient = () => {
                   height={20}
                 />
               </div>
-              <div className={styles.input_box}>
+              <div className={styles.inputBox}>
                 <LoginInput
                   type={passwordVisible ? "text" : "password"}
                   placeholder="Password"
@@ -103,24 +103,24 @@ const SignUpClient = () => {
                 <Image
                   className={styles.icon}
                   src={"/bagpackIcon/lock.svg"}
-                  alt="email"
+                  alt="password"
                   width={20}
                   height={20}
                 />
                 <Image
-                  className={styles.eye_icon}
+                  className={styles.eyeIcon}
                   src={
                     passwordVisible
                       ? "/bagpackIcon/eye-slash.svg"
                       : "/bagpackIcon/eye.svg"
                   }
-                  alt="password_hide"
+                  alt="toggle password visibility"
                   width={23}
                   height={23}
                   onClick={togglePasswordVisible}
                 />
               </div>
-              <div className={styles.input_box}>
+              <div className={styles.inputBox}>
                 <LoginInput
                   type="text"
                   placeholder="Nickname"
@@ -131,21 +131,27 @@ const SignUpClient = () => {
                 <Image
                   className={styles.icon}
                   src={"/bagpackIcon/user.svg"}
-                  alt="email"
+                  alt="nickname"
                   width={20}
                   height={20}
                 />
               </div>
-              <Button backgroundColor="#F7F1F0" className={styles.signUp}>
+              <Button
+                width={370}
+                backgroundColor="#F7F1F0"
+                className={styles.signUp}
+              >
                 회원가입
               </Button>
             </form>
-            <Link href={"/login"} className={styles.login}>
-              로그인
-            </Link>
-            <Link href={"/forgot"} className={styles.forgot}>
-              아이디 혹은 비밀번호를 잊으셨나요?
-            </Link>
+            <div className={styles.signUpMenu}>
+              <Link href={"/login"} className={styles.login}>
+                로그인
+              </Link>
+              <Link href={"/forgot"} className={styles.forgot}>
+                비밀번호찾기
+              </Link>
+            </div>
           </div>
         </Card>
       </div>
