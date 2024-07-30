@@ -1,77 +1,121 @@
 @import "@/styles/variables.scss";
+
 .container {
   min-width: 250px;
   min-height: 100vh;
   background: #ffffff;
   border-radius: 0 15px 15px 0;
 }
+
 /* Rectangle 38 */
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .aside {
-  min-width: 250px;
+  min-width: 212px;
   min-height: 100vh;
   background-color: white;
+
   border-radius: 0 15px 15px 0;
+  ul {
+    list-style: none;
+  }
+  li {
+    list-style: none;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  p {
+    margin: 0;
+  }
 }
-.section_wrapper {
+
+.sectionWrapper {
   display: flex;
   flex-direction: column;
 }
 
 // Logo
-.logo_container {
+.logoContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding-top: 40px;
+  padding-bottom: 110px;
+  padding-right: 15px;
 }
-.logo_image {
-  padding-top: 30px;
-}
-.logo_icon {
-  padding-top: 30px;
-  padding-left: 20px;
-}
-// Overview h3
-.overview_title {
-  font-style: normal;
+.logoContainer > h1 {
+  font-family: "YellowTail" !important;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 24px;
-  margin-top: 60px;
-  color: $grey-color;
-  margin-left: 40px;
+  box-sizing: border-box;
+  font-size: 30px;
+  margin: 0;
 }
+
 // Menu
-.menu_list {
+.menuList {
   font-size: 16px;
   line-height: 24px;
-  margin-left: 40px;
   padding-left: 0;
   margin-top: 0;
   margin-bottom: 0;
+  li {
+    width: 75%;
+    margin: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border-radius: 30px;
+    margin-bottom: 15px;
+
+    a {
+      div {
+        display: flex;
+      }
+      display: flex;
+      font-size: 14px;
+      p {
+        margin-left: 20px;
+        color: #abb5ba;
+        padding-top: 2px;
+      }
+    }
+  }
 }
-.menu_item {
+.active {
+  background-color: $primary-color-hover;
+}
+.activeText {
+  color: $aside-text-color !important;
+}
+.menuItem {
   margin-top: 35px;
   display: flex;
   align-items: center;
 }
-.menu_item > a {
+
+.menuItem > a {
   display: flex !important;
   align-items: center;
   height: 20px;
   text-decoration: none;
   color: black;
 }
-.menu_item > a:hover {
+
+.menuItem > a:hover {
   color: $primary-color;
   transition: 0.2s all ease-in-out !important;
 }
-.menu_text {
+
+.menuText {
   font-size: 16px;
   line-height: 24px;
   font-weight: 700;
