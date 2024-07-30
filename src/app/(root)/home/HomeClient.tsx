@@ -29,7 +29,7 @@ const HomeClient = () => {
         <motion.div
           initial={{ x: "-100%" }} // 왼쪽에서 시작
           animate={{ x: 0 }} // 오른쪽으로 이동하여 화면에 표시
-          transition={{ duration: 0.5 }} // 애니메이션 지속 시간 설정
+          transition={{ duration: 0.3 }} // 애니메이션 지속 시간 설정
         >
           <SideBar />
         </motion.div>
