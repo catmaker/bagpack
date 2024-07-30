@@ -10,7 +10,7 @@ import styles from "./HomeClient.module.scss";
 import SideBar from "@/components/ui/SideBar/SideBar";
 import SearchBar from "@/components/ui/SearchBar/SearchBar";
 import Circle from "@/components/ui/Circle";
-
+import AlarmIcon from "@/asset/svg/alarm.svg";
 const HomeClient = () => {
   const router = useRouter();
   const user = useContext(UserContext);
@@ -35,7 +35,7 @@ const HomeClient = () => {
         </motion.div>
         <section className={styles.search_group}>
           <SearchBar
-            width="850px"
+            width="500px"
             height="50px"
             className={styles.search_bar}
             placeholder="Search your mood...."
@@ -48,23 +48,28 @@ const HomeClient = () => {
               alt="search_icon"
             ></Image>
           </SearchBar>
-          <Circle className={styles.alarm} color="white" size={50}>
-            <Image
-              src={"/bagPackIcon/alarm.svg"}
-              width={15}
-              height={15}
-              alt="alarm_icon"
-            ></Image>
-          </Circle>
-          <Circle className={styles.user} color="white" size={50}>
-            <Image
-              src={"/bagPackIcon/userIcon.svg"}
-              width={18}
-              height={18}
-              alt="user_icon"
-            ></Image>
-          </Circle>
-          <div className={styles.username}>{user?.nickname}</div>
+        </section>
+        <section className={styles.userGroup}>
+          <div className={styles.clientBox}>
+            <Circle className={styles.alarm} color="white" size={38}>
+              <AlarmIcon
+                width={"16"}
+                height={"16"}
+                fill={"rgb(255, 119, 119)"}
+              />
+            </Circle>
+            <div className={styles.userInfo}>
+              <Circle className={styles.user} color="white" size={38}>
+                <Image
+                  src={"/bagpackIcon/profile.jpg"}
+                  fill
+                  alt="userProfile"
+                  style={{ borderRadius: "50%" }}
+                ></Image>
+              </Circle>
+              <p>{user?.nickname}</p>
+            </div>
+          </div>
         </section>
       </header>
     </div>
