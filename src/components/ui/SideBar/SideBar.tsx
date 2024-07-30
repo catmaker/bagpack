@@ -1,60 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-// css
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import styles from "./SideBar.module.scss";
 
 // svg
-import LogoIcon from "@/asset/svg/logo.svg";
-import LogoImage from "@/asset/svg/logoImg.svg";
 import HomeIcon from "@/asset/svg/home.svg";
-import LedgerIcon from "@/asset/svg/ledger.svg";
-import ScheduleIcon from "@/asset/svg/schedule.svg";
-import JournalIcon from "@/asset/svg/journal.svg";
 import SettingIcon from "@/asset/svg/setting.svg";
-
+import ScheduleIcon from "@/asset/svg/schedule.svg";
 const SideBar = () => {
+  const pathname = usePathname();
+  const [activeMenu, setActiveMenu] = useState("home");
+
+  useEffect(() => {
+    // 현재 경로에 따라 activeMenu 설정
+    if (pathname === "/home") {
+      setActiveMenu("home");
+    } else if (pathname === "/schedule") {
+      setActiveMenu("schedule");
+    }
+  }, [pathname]); // pathname이 변경될 때마다 실행
+
   return (
     <div className={styles.aside}>
       <aside>
-        <section className={styles.section_wrapper}>
-          <div className={styles.logo_container}>
-            <div className={styles.logo_image}>
-              <LogoImage />
-            </div>
-            <div className={styles.logo_icon}>
-              <LogoIcon />
-            </div>
-          </div>
-          <h3 className={styles.overview_title}>OVERVIEW</h3>
-          <ul className={styles.menu_list}>
-            <li className={styles.menu_item}>
+        <section className={styles.sectionWrapper}>
+          <Link href={"/"} className={styles.logoContainer}>
+            <Image
+              src={"/bagpackIcon/logoIcon.png"}
+              width={50}
+              height={50}
+              alt="logoIcon"
+            />
+            <h1>Time InK</h1>
+          </Link>
+          <ul className={styles.menuList}>
+            <li className={activeMenu === "home" ? styles.active : ""}>
               <Link href={"/home"}>
-                <HomeIcon />
-                <strong className={styles.menu_text}>Home</strong>
+                <div>
+                  <HomeIcon
+                    fill={activeMenu === "home" ? "white" : "#ABB5BA"}
+                    width={"24"}
+                    height={"24"}
+                  />
+                  <p className={activeMenu === "home" ? styles.activeText : ""}>
+                    HOME
+                  </p>
+                </div>
               </Link>
             </li>
-            <li className={styles.menu_item}>
-              <Link href={"/ledger"}>
-                <LedgerIcon />
-                <strong className={styles.menu_text}>Ledger</strong>
-              </Link>
-            </li>
-            <li className={styles.menu_item}>
+            <li className={activeMenu === "schedule" ? styles.active : ""}>
               <Link href={"/schedule"}>
-                <ScheduleIcon />
-                <strong className={styles.menu_text}>Schedule</strong>
-              </Link>
-            </li>
-            <li className={styles.menu_item}>
-              <Link href={"/journal"}>
-                <JournalIcon />
-                <strong className={styles.menu_text}>Journal</strong>
-              </Link>
-            </li>
-            <li className={styles.menu_item}>
-              <Link href={"/setting"}>
-                <SettingIcon />
-                <strong className={styles.menu_text}>Setting</strong>
+                <div>
+                  <ScheduleIcon
+                    fill={activeMenu === "schedule" ? "white" : "#ABB5BA"}
+                    width={"24"}
+                    height={"24"}
+                  />
+                  <p
+                    className={
+                      activeMenu === "schedule" ? styles.activeText : ""
+                    }
+                  >
+                    SCHEDULE
+                  </p>
+                </div>
               </Link>
             </li>
           </ul>

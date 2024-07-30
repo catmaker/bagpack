@@ -5,7 +5,7 @@
   height: 100vh;
   display: flex;
   overflow: hidden;
-  background-color: #ebecf1;
+  background-color: #f9f9f9;
 }
 
 // search
@@ -25,8 +25,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $grey-color;
-  margin-left: 35px;
 }
 
 .header {
@@ -40,6 +38,33 @@
   transform: translateY(-50%);
   padding-left: 18px;
 }
-.username {
-  margin-left: 35px;
+.userGroup {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+}
+.clientBox {
+  display: flex;
+  align-items: center;
+  margin-left: 230px;
+}
+.alarm {
+  margin-right: 20px;
+}
+.userInfo {
+  width: 240px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 15px;
+    font-size: 17px;
+    font-weight: 700;
+  }
+}
+.user {
+  margin-left: 6px;
+  position: relative;
 }
