@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "@/components/ui/Card";
 import styles from "./LoginClient.module.scss";
 import Button from "@/components/ui/Button";
@@ -7,9 +7,9 @@ import LoginInput from "@/components/ui/LoginInput";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import "firebase/auth";
 import { signIn } from "@/lib/firebase/firestore";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
+
 const LoginClient = () => {
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -17,7 +17,7 @@ const LoginClient = () => {
   const [password, setPassword] = useState("");
 
   const togglePasswordVisible = () => {
-    setPasswordVisible(!passwordVisible);
+    setPasswordVisible((prev) => !prev);
   };
 
   const loginHandler = async (event: React.FormEvent) => {
@@ -50,18 +50,18 @@ const LoginClient = () => {
 
   return (
     <div className={styles.container}>
-      <Card height={550}>
+      <Card width={500} height={550} className={styles.card}>
         <div className={styles.contents}>
-          <div className={styles.login_header}>
-            <h1>Login</h1>
-            <p>Login to your account</p>
+          <div className={styles.loginHeader}>
+            <h1>Time InK</h1>
+            <p>Login your account</p>
           </div>
           <form className={styles.form} onSubmit={loginHandler}>
-            <div className={styles.input_box}>
+            <div className={styles.inputBox}>
               <LoginInput
                 type="text"
                 placeholder="Email"
-                className={styles.email_input}
+                className={styles.inputField}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -73,45 +73,51 @@ const LoginClient = () => {
                 height={20}
               />
             </div>
-            <div className={styles.input_box}>
+            <div className={styles.inputBox}>
               <LoginInput
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Password"
-                className={styles.email_input}
+                className={styles.inputField}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <Image
                 className={styles.icon}
                 src={"/bagpackIcon/lock.svg"}
-                alt="email"
+                alt="password"
                 width={20}
                 height={20}
               />
               <Image
-                className={styles.eye_icon}
+                className={styles.eyeIcon}
                 src={
                   passwordVisible
                     ? "/bagpackIcon/eye-slash.svg"
                     : "/bagpackIcon/eye.svg"
                 }
-                alt="password_hide"
+                alt="toggle password visibility"
                 width={23}
                 height={23}
                 onClick={togglePasswordVisible}
               />
             </div>
 
-            <Button backgroundColor="#F7F1F0" className={styles.login_button}>
+            <Button
+              width={370}
+              backgroundColor="#F7F1F0"
+              className={styles.loginButton}
+            >
               로그인
             </Button>
           </form>
-          <Link href={"/signup"} className={styles.signup}>
-            회원가입
-          </Link>
-          <Link href={"/forgot"} className={styles.forgot}>
-            아이디 혹은 비밀번호를 잊으셨나요?
-          </Link>
+          <div className={styles.loginMenu}>
+            <Link href={"/signup"} className={styles.signup}>
+              회원가입
+            </Link>
+            <Link href={"/forgot"} className={styles.forgot}>
+              비밀번호 찾기
+            </Link>
+          </div>
         </div>
       </Card>
     </div>
