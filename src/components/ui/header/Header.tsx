@@ -36,7 +36,7 @@ const Header = () => {
         </Link>
         <ul className={styles.navList}>
           <li>
-            <Link href={`/intro`}>HOME</Link>
+            <Link href={`/home`}>HOME</Link>
           </li>
           <li>
             <Link href={`/schedule`}>일정</Link>
