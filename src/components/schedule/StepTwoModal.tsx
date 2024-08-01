@@ -80,19 +80,35 @@ const StepTwoModal = ({
       startDateObj < new Date(endDate.getTime() + 86400000) // 86400000은 하루를 밀리초로 환산한 값
     );
   });
+  console.log("Filtered Posts:", filteredPosts);
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월을 2자리로
+    const day = String(date.getDate()).padStart(2, "0"); // 일을 2자리로
+    return `${year}. ${month}. ${day}`; // 마지막 마침표 없음
+  };
+
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="700px">
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        width="1000px"
+        minHeight="90vh"
+        buttonClassName={styles.modal_close}
+      >
         <div>
           <div className={styles.nextModal_header}>
             <h1 className={styles.nextModal_h1}>
-              {startDate && endDate
-                ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")} - ${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
+              {/* {startDate && endDate
+                ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} - ${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()}`
                 : startDate
-                  ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} ${startDate.getHours()}:${startDate.getMinutes().toString().padStart(2, "0")}`
+                  ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()}`
                   : endDate
-                    ? `${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()} ${endDate.getHours()}:${endDate.getMinutes().toString().padStart(2, "0")}`
-                    : "날짜를 선택해주세요"}
+                    ? `${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()}`
+                    : "날짜를 선택해주세요"} */}
+              새로운 경험 기록하기
             </h1>
             <Image
               className={styles.nextModal_plusIcon}
@@ -104,14 +120,18 @@ const StepTwoModal = ({
             />
           </div>
           <div>
-            <ul>
+            <p>선택한 기간의 작성한 글 목록</p>
+            <ul className={styles.filterPostList}>
               {filteredPosts.map((filteredItem) => (
-                <Link
-                  href={`/schedule/${filteredItem.id}`}
-                  key={filteredItem.id}
-                >
-                  {filteredItem.title}
-                </Link>
+                <li key={filteredItem.id}>
+                  <Link href={`/schedule/${filteredItem.id}`}>
+                    <span>
+                      {formatDate(filteredItem.startDate)}~
+                      {formatDate(filteredItem.endDate)}
+                    </span>
+                    {filteredItem.title}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -120,6 +140,7 @@ const StepTwoModal = ({
               setIsNextModalOpen(false); // 현재 모달 닫기
               setIsModalOpen(true); // 이전 모달 열기
             }}
+            className={styles.prevButton}
           >
             뒤로가기
           </button>
