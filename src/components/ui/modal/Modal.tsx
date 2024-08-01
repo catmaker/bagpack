@@ -13,6 +13,8 @@ type ModalProps = {
   className?: string;
   buttonText?: string;
   buttonClassName?: string;
+  maxHeight?: string;
+  maxWidth?: string;
 };
 
 const Modal = ({
@@ -23,6 +25,8 @@ const Modal = ({
   height,
   minHeight,
   minWidth,
+  maxHeight,
+  maxWidth,
   className,
   buttonText = "닫기",
   buttonClassName,
@@ -50,6 +54,8 @@ const Modal = ({
               height: height,
               minHeight: minHeight,
               minWidth: minWidth,
+              maxHeight: maxHeight || "80vh",
+              maxWidth: maxWidth,
             }}
           >
             {children}
