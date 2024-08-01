@@ -45,10 +45,12 @@ const ScheduleClient = () => {
 
   const handleDateClick = (info: any) => {
     setIsModalOpen(true); // 날짜 클릭 시 모달을 엽니다.
-    if (typeof info.dateStr === "string") {
-      const formattedDate = info.dateStr.replace(/-/g, "");
 
-      // info.dateStr을 "YYYYMMDD" 형식으로 변환
+    // startStr 값을 사용하여 날짜 문자열을 가져옵니다.
+    const dateStr = info.startStr;
+
+    if (typeof dateStr === "string") {
+      const formattedDate = dateStr.replace(/-/g, "");
 
       // "YYYYMMDD" 형식의 문자열을 "YYYY", "MM", "DD"로 분리
       const year = formattedDate.substring(0, 4);
@@ -60,11 +62,11 @@ const ScheduleClient = () => {
 
       // Date 객체로 변환하여 setSelectedDate에 전달
       setSelectedDate(new Date(dateForDateObject));
+      console.log(selectedDate);
     } else {
-      console.error("날짜 정보가 올바르지 않습니다.");
+      console.error("날짜 정보가 올바르지 않습니다:", dateStr);
     }
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
   };
