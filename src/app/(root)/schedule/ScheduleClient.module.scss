@@ -1,3 +1,4 @@
+@import "@/styles/variables.scss";
 .container {
   width: 100vw;
   height: 100vh;
@@ -38,17 +39,18 @@
 }
 .modal_h1 {
   margin-top: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+  font-size: 22px;
 }
 .modal_moodIcon_wrapper {
   display: flex;
-  margin-bottom: 30px;
   gap: 10px;
+  padding-bottom: 20px;
 }
-.modal_moodIcon_wrapper > svg {
+.iconBox > svg {
   cursor: pointer;
 }
-.modal_moodIcon_wrapper > svg:hover {
+.iconBox > svg:hover {
   transform: scale(1.2);
   transition: transform 0.2s;
 }
@@ -65,9 +67,12 @@
   position: absolute;
   top: 70%;
   left: 35%;
+  margin-top: 20px;
+  transition: 0.3s all ease-in-out !important;
 }
 .modal_next_button:hover {
-  background-color: #f5f5f5;
+  color: white !important;
+  background-color: $primary-color !important;
 }
 .modal_close_button {
   cursor: pointer;
@@ -78,22 +83,18 @@
   position: absolute;
   top: 70%;
   right: 35%;
+  margin-top: 20px;
+  transition: 0.3s all ease-in-out !important;
 }
 .modal_close_button:hover {
-  background-color: #f5f5f5;
-}
-
-//modal-datepicker
-.react-datepicker__input-container {
-  border: none !important; // 기존 스타일 덮어쓰기
-  width: 105px !important;
-  cursor: pointer !important;
-  margin-bottom: 30px;
+  color: white !important;
+  background-color: $primary-color !important;
 }
 
 // next-modal
 .nextModal_h1 {
-  font-size: 1.5rem;
+  font-size: 22px;
+  margin: 0;
 }
 .nextModal_header {
   display: flex;
@@ -107,4 +108,70 @@
 .nextModal_plusIcon:hover {
   transform: scale(1.2);
   transition: transform 0.2s;
+}
+
+.datePickerBox {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+.pickerLabel {
+  margin: 0;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+.moodPicker {
+  text-align: center;
+}
+.iconBox {
+  display: flex;
+  gap: 10px;
+}
+
+//stepTwo
+.filterPostList {
+  list-style: none;
+  padding: 0;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    gap: 8px;
+
+    span {
+      margin-right: 10px;
+      font-size: 10px;
+      color: $grey-color;
+    }
+
+    &:hover {
+      background-color: $primary-color;
+      box-shadow:
+        0 5px 5px rgba(0, 0, 0, 0.25),
+        0 10px 10px rgba(0, 0, 0, 0.22);
+    }
+  }
+}
+.prevButton {
+  padding: 10px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out !important;
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.modal_close {
+  display: none;
 }
