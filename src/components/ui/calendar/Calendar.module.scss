@@ -1,7 +1,9 @@
 .calendar {
-  width: 80% !important;
-  height: 90% !important;
+  width: 95% !important;
+  height: 92% !important;
   background-color: white;
+  border-radius: 10px;
+  padding: 10px;
 }
 @font-face {
   font-family: "Pretendard-Regular";
@@ -11,7 +13,7 @@
 }
 .event-content {
   font-family: "Pretendard-Regular", sans-serif !important;
-  background-color: skyblue;
+  background-color: #fe9a8a;
   padding: 3px;
   border-radius: 4px;
   border: none;
@@ -24,4 +26,7 @@
   font-style: normal !important;
   margin-left: 5px;
   color: black;
+}
+.fc-saturday {
+  color: blue !important; // 토요일 텍스트를 파란색으로 설정
 }

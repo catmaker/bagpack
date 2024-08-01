@@ -7,7 +7,7 @@ import useScheduleStore from "@/store/schedule";
 import styles from "./Calendar.module.scss";
 import Modal from "../modal/Modal";
 import { UserContext } from "@/app/provider/UserProvider";
-
+import "./styles.css";
 type CalendarProps = {
   onDateClick?: (info: any) => void;
   event?: [];
@@ -71,7 +71,7 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
         title: post.title as string,
         date: post.startDate,
         end: post.endDate,
-        backgroundColor: "skyblue",
+        backgroundColor: "#fe9a8a ",
         content: post.content,
       });
     });
@@ -167,7 +167,29 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
         }}
         eventClick={handleEventClick}
         eventDrop={handleEventDrop}
+        headerToolbar={{
+          left: "today", // 왼쪽에 이전/다음/오늘 버튼 배치
+          center: "prev title next", // 중앙에 제목 배치
+          right: "dayGridMonth,dayGridWeek,dayGridDay", // 오른쪽에 보기 선택 버튼 배치
+        }}
+        titleFormat={{
+          year: "numeric",
+          month: "long",
+        }}
+        locale={"ko"}
+        dayCellContent={function (info) {
+          var number = document.createElement("a");
+          number.classList.add("fc-daygrid-day-number");
+          number.innerHTML = info.dayNumberText
+            .replace("일", "")
+            .replace("日", "");
+
+          return {
+            html: number.outerHTML,
+          };
+        }}
       />
+
       {selectedEvent && (
         <Modal
           className={styles.modal}
