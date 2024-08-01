@@ -82,4 +82,32 @@
   line-height: 1.5;
   padding: 1rem;
   margin-top: 1rem;
-}/*# sourceMappingURL=styles.css.map */
+} /*# sourceMappingURL=styles.css.map */
+
+.title_h1 {
+  font-size: 22px;
+}
+.title_label {
+  font-size: 14px;
+  margin: 0px;
+  margin-bottom: 5px;
+}
+.title_input {
+  border-radius: 5px;
+  width: 40%;
+  padding: 10px;
+  border: 2px solid #dadada;
+}
+
+.button-group {
+  display: flex !important;
+  flex-direction: row !important; /* 버튼을 가로로 나열 */
+  flex-wrap: wrap !important; /* 버튼이 부모 요소 범위를 넘어가면 아래로 떨어지게 설정 */
+}
+
+.button-group button,
+input {
+  flex: 1 1 100px; /* 버튼의 기본 너비를 100px로 설정하고, 필요에 따라 크기를 조정 */
+  min-width: 50px; /* 버튼의 최소 너비 설정 */
+  height: 20px; /* 버튼의 높이를 통일 */
+}

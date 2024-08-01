@@ -1,12 +1,12 @@
 "use client";
-import "./styles.scss";
-
+import "./styles.css";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React, { use, useContext, useEffect, useState } from "react";
+import Image from "next/image";
 // provider
 import { UserContext } from "@/app/provider/UserProvider";
 // zustand
@@ -31,7 +31,12 @@ const MenuBar = () => {
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "is-active" : ""}
         >
-          Bold
+          <Image
+            src={"/bagpackIcon/bold.svg"}
+            width={10}
+            height={10}
+            alt="bold_icon"
+          ></Image>
         </button>
         <button
           onClick={(e) => {
@@ -275,34 +280,7 @@ const extensions = [
 ];
 
 const content = `
-<h2>
-  Hi there,
-</h2>
-<p>
-  this is a <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    That’s a bullet list with one …
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
-  display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
+  내용을 입력해주세요.
 `;
 type EditorComponentProps = {
   contents?: string;
@@ -415,13 +393,16 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
       <EditorProvider
         slotBefore={
           <>
-            <MenuBar />
+            <h1 className="title_h1">글 작성하기</h1>
+            <p className="title_label">제목을 입력해주세요.</p>
             <input
+              className="title_input"
               type="text"
               value={currentTitle ? currentTitle : ""}
               onChange={handleTitleChange}
               placeholder={currentTitle ? currentTitle : "제목을 입력하세요"}
             ></input>
+            <MenuBar />
           </>
         }
         extensions={extensions}
