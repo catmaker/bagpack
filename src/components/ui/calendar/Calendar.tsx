@@ -195,6 +195,7 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
           className={styles.modal}
           isOpen={isOpen}
           onClose={handleCloseModal}
+          maxHeight="600px"
         >
           <h2>{selectedEvent.title}</h2>
           <p>Start: {selectedEvent.date}</p>

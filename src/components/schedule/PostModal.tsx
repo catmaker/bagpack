@@ -22,7 +22,7 @@ const PostModal = ({ isOpen, onClose }: PostModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="700px">
+    <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
       <form action="">
         <Tiptap />
       </form>
