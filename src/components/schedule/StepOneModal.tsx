@@ -9,6 +9,7 @@ import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
 import styles from "@/app/(root)/schedule/ScheduleClient.module.scss";
+import "./StepOneModal.css";
 // zustand
 import useScheduleStore from "@/store/schedule";
 
@@ -42,96 +43,121 @@ const StepOneModal = ({
       setEndDate(selectedDate);
     }
   }, [selectedDate, setStartDate, setEndDate]);
+  const handleNextClick = () => {
+    if (!mood) {
+      // 기분이 선택되지 않은 경우 알림
+      alert("기분을 선택해 주세요.");
+      return; // 함수를 종료하여 다음 단계로 이동하지 않음
+    }
+
+    // 기분이 선택된 경우 다음 모달로 이동
+    handleGoToNextModal();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       width="500px"
-      minHeight="300px"
+      minHeight="60vh"
       className={styles.modal}
       buttonClassName={styles.modal_close_button}
     >
-      <h1 className={styles.modal_h1}>기분이 어땠나요?</h1>
-      <div>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => {
-            setStartDate(date || undefined);
-            if (endDate && date && date > endDate) {
-              // 첫 번째 피커에서 선택한 날짜가 두 번째 피커의 날짜보다 높은 경우, 두 번째 피커의 날짜도 변경
-              setEndDate(date);
-            }
-          }}
-          selectsStart
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat="yyyy.MM.dd HH:mm"
-          showTimeSelect
-          timeFormat="HH:mm"
-          timeIntervals={15}
-          minDate={new Date("2000-01-01")}
-        />
-        <DatePicker
-          selected={endDate}
-          onChange={(date) => setEndDate(date || undefined)}
-          selectsEnd
-          startDate={startDate}
-          endDate={endDate}
-          dateFormat="yyyy.MM.dd HH:mm"
-          showTimeSelect
-          timeFormat="HH:mm"
-          timeIntervals={15}
-          minDate={startDate} // 종료일은 시작일 이후로 설정
-        />
+      <h1 className={styles.modal_h1}>당신의 소중한 이야기를 남겨보세요!</h1>
+      <div className={styles.datePickerBox}>
+        <div>
+          <p className={styles.pickerLabel}>시작일</p>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => {
+              setStartDate(date || undefined);
+              if (endDate && date && date > endDate) {
+                // 첫 번째 피커에서 선택한 날짜가 두 번째 피커의 날짜보다 높은 경우, 두 번째 피커의 날짜도 변경
+                setEndDate(date);
+              }
+            }}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy.MM.dd HH:mm"
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            minDate={new Date("2000-01-01")}
+          />
+        </div>
+        <div>
+          <p className={styles.pickerLabel}>종료일</p>
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date || undefined)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy.MM.dd HH:mm"
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            minDate={startDate} // 종료일은 시작일 이후로 설정
+          />
+        </div>
       </div>
       <div className={styles.modal_moodIcon_wrapper}>
-        {user?.palette && (
-          <TerribleIcon
-            className={
-              mood === "terrible" ? styles.modal_moodIcon_selected : ""
-            }
-            style={{ ...iconStyle, color: user.palette[0] }}
-            viewBox="0 0 478.125 478.125"
-            onClick={() => handleMoodClick("terrible")}
-          />
-        )}
-        {user?.palette && (
-          <SadIcon
-            className={mood === "sad" ? styles.modal_moodIcon_selected : ""}
-            style={{ ...iconStyle, color: user.palette[4] }}
-            viewBox="0 0 478.125 478.125"
-            onClick={() => handleMoodClick("sad")}
-          />
-        )}
-        {user?.palette && (
-          <NaturalIcon
-            className={mood === "natural" ? styles.modal_moodIcon_selected : ""}
-            style={{ ...iconStyle, color: user.palette[2] }}
-            viewBox="0 0 478.125 478.125"
-            onClick={() => handleMoodClick("natural")}
-          />
-        )}
-        {user?.palette && (
-          <SmileIcon
-            className={mood === "smile" ? styles.modal_moodIcon_selected : ""}
-            style={{ ...iconStyle, color: user.palette[3] }}
-            viewBox="0 0 478.125 478.125"
-            onClick={() => handleMoodClick("smile")}
-          />
-        )}
-        {user?.palette && (
-          <HappyIcon
-            className={mood === "happy" ? styles.modal_moodIcon_selected : ""}
-            style={{ ...iconStyle, color: user.palette[1] }}
-            viewBox="0 0 478.125 478.125"
-            onClick={() => handleMoodClick("happy")}
-          />
-        )}
+        <div>
+          <p className={styles.moodPicker}>오늘의 기분을 선택해 주세요</p>
+          <div className={styles.iconBox}>
+            {user?.palette && (
+              <TerribleIcon
+                className={
+                  mood === "terrible" ? styles.modal_moodIcon_selected : ""
+                }
+                style={{ ...iconStyle, color: user.palette[0] }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick("terrible")}
+              />
+            )}
+            {user?.palette && (
+              <SadIcon
+                className={mood === "sad" ? styles.modal_moodIcon_selected : ""}
+                style={{ ...iconStyle, color: user.palette[4] }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick("sad")}
+              />
+            )}
+            {user?.palette && (
+              <NaturalIcon
+                className={
+                  mood === "natural" ? styles.modal_moodIcon_selected : ""
+                }
+                style={{ ...iconStyle, color: user.palette[2] }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick("natural")}
+              />
+            )}
+            {user?.palette && (
+              <SmileIcon
+                className={
+                  mood === "smile" ? styles.modal_moodIcon_selected : ""
+                }
+                style={{ ...iconStyle, color: user.palette[3] }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick("smile")}
+              />
+            )}
+            {user?.palette && (
+              <HappyIcon
+                className={
+                  mood === "happy" ? styles.modal_moodIcon_selected : ""
+                }
+                style={{ ...iconStyle, color: user.palette[1] }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick("happy")}
+              />
+            )}
+          </div>
+        </div>
       </div>
-      <button
-        className={styles.modal_next_button}
-        onClick={handleGoToNextModal}
-      >
+      <button className={styles.modal_next_button} onClick={handleNextClick}>
         다음
       </button>
     </Modal>
