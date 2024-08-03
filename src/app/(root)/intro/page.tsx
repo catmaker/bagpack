@@ -1,6 +1,6 @@
-import IntroClient from "./IntroClient";
-const Intro = () => {
-  return <IntroClient />;
+import Intro from "@/app/containers/intro";
+const IntroPage = () => {
+  return <Intro />;
 };
 
-export default Intro;
+export default IntroPage;

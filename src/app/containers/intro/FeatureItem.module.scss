@@ -1,0 +1,43 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+  gap: 10px;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.title {
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #666;
+}
+@media (max-width: 900px) {
+  .titleContainer {
+    font-size: 14px;
+  }
+  .description {
+    font-size: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .titleContainer {
+    font-size: 17px;
+  }
+  .description {
+    font-size: 14px;
+  }
+  .content {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}

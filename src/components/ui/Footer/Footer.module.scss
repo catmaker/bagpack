@@ -43,3 +43,11 @@ $link-hover-color: #3498db;
 .footerSocials {
   padding-top: 20px;
 }
+
+@media (max-width: 600px) {
+  .footer {
+    a {
+      font-size: 12px;
+    }
+  }
+}

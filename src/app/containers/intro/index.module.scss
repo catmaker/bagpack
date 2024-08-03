@@ -85,6 +85,7 @@ $background-color: #f7f1f0;
   margin: auto;
 }
 
+// WelcomeSection.tsx
 .firstSection {
   display: flex;
   align-items: center;
@@ -129,10 +130,14 @@ $background-color: #f7f1f0;
   align-items: center;
   height: 300px;
 }
+.earth {
+  flex: 1;
+}
 
 .sectionContentBox {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 40px;
 }
 
@@ -258,18 +263,23 @@ $background-color: #f7f1f0;
     width: 200px;
     height: 200px;
   }
-  .content {
-    div {
-      align-items: center;
-      span {
-        font-size: 14px;
-      }
-    }
-  }
 }
 @media (max-width: 600px) {
   .sectionContentFlex > img {
     display: none;
+  }
+  .sectionContentFlex {
+    flex-direction: column;
+    height: auto;
+  }
+  .sectionContentBox {
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+  .secondTitle {
+    font-size: 22px;
   }
   .content {
     span {
@@ -287,19 +297,26 @@ $background-color: #f7f1f0;
     height: 400px;
   }
   .thirdTitle {
-    font-size: 20px;
+    font-size: 22px;
+    padding: 0;
+  }
+  .thirdContent {
+    p {
+      font-size: 17px;
+    }
   }
   .firstSection {
     img {
-      width: 100px;
-      height: 100px;
-      padding: 20px;
+      display: none;
     }
   }
   .sectionTitle {
-    font-size: 16px;
+    font-size: 22px;
     padding-top: 20px;
+    padding-left: 0;
+    text-align: center;
   }
+
   .sectionContent {
     font-size: 12px;
   }
