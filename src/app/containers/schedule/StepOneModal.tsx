@@ -9,7 +9,7 @@ import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
 import styles from "./StepOneModal.module.scss";
-import "./StepOneModal";
+import "./StepOneModalDatePicker.css";
 // zustand
 import useScheduleStore from "@/store/schedule";
 
