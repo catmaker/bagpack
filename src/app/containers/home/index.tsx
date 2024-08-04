@@ -4,25 +4,25 @@ import { UserContext } from "@/app/provider/UserProvider";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-// css
-import styles from "./index.module.scss";
 // component
 import SideBar from "@/components/ui/SideBar/SideBar";
 import SearchBar from "@/components/ui/SearchBar/SearchBar";
 import Circle from "@/components/ui/Circle";
 import AlarmIcon from "@/asset/svg/alarm.svg";
+// css
+import styles from "./index.module.scss";
 const HomeClient = () => {
   const router = useRouter();
   const user = useContext(UserContext);
   const hasAlerted = useRef(false); // 알림 표시 여부를 추적
 
-  useEffect(() => {
-    if (!user && !hasAlerted.current) {
-      hasAlerted.current = true; // 알림 표시 상태 업데이트
-      alert("로그인을 해주세요.");
-      router.push("/login");
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (!user && !hasAlerted.current) {
+  //     hasAlerted.current = true; // 알림 표시 상태 업데이트
+  //     alert("로그인을 해주세요.");
+  //     router.push("/login");
+  //   }
+  // }, [user, router]);
   return (
     <div className={styles.container}>
       <header className={styles.header}>
