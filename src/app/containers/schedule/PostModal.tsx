@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 // components
 import Modal from "@/components/ui/modal/Modal";
-import Tiptap from "../tiptap/Tiptap";
+import Tiptap from "@/components/tiptap/Tiptap";
 // zustand
 import useScheduleStore from "@/store/schedule";
 

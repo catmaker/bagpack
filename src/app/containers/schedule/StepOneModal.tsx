@@ -8,8 +8,7 @@ import HappyIcon from "@/asset/svg/happy.svg";
 import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
-import styles from "@/app/(root)/schedule/ScheduleClient.module.scss";
-import "./StepOneModal.css";
+import styles from "./StepOneModal.module.scss";
 // zustand
 import useScheduleStore from "@/store/schedule";
 

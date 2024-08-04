@@ -1,7 +1,7 @@
 import React from "react";
-import ScheduleClient from "./ScheduleClient";
-const page = () => {
-  return <ScheduleClient></ScheduleClient>;
+import Schedule from "@/app/containers/schedule";
+const SchedulePage = () => {
+  return <Schedule></Schedule>;
 };
 
-export default page;
+export default SchedulePage;

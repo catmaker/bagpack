@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 import Calendar from "@/components/ui/calendar/Calendar";
 import SideBar from "@/components/ui/SideBar/SideBar";
 import Modal from "@/components/ui/modal/Modal";
-import StepOneModal from "@/components/schedule/StepOneModal";
-import StepTwoModal from "@/components/schedule/StepTwoModal";
+import StepOneModal from "./StepOneModal";
+import StepTwoModal from "./StepTwoModal";
 // context
 import { UserContext } from "@/app/provider/UserProvider";
 // css
-import styles from "./ScheduleClient.module.scss";
+import styles from "./index.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 // zustand
 import useScheduleStore from "@/store/schedule";

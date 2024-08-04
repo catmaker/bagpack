@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import Modal from "@/components/ui/modal/Modal";
 import Image from "next/image";
-import styles from "@/app/(root)/schedule/ScheduleClient.module.scss";
-import PostModal from "@/components/schedule/PostModal";
+import styles from "./StepTwoModal.module.scss";
+import PostModal from "./PostModal";
 // zustand
 import useScheduleStore from "@/store/schedule";
 //
