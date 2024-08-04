@@ -1,7 +1,9 @@
 import React from "react";
-import HomeClient from "./HomeClient";
-const page = () => {
-  return <HomeClient></HomeClient>;
+
+import Home from "@/app/containers/home";
+
+const HomePage = () => {
+  return <Home></Home>;
 };
 
-export default page;
+export default HomePage;
