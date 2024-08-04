@@ -22,226 +22,217 @@ const MenuBar = () => {
 
   return (
     <div className="control-group">
-      <div className="button-group">
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleBold().run();
-          }}
-          disabled={!editor.can().chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "is-active" : ""}
-        >
-          <Image
-            src={"/bagpackIcon/bold.svg"}
-            width={10}
-            height={10}
-            alt="bold_icon"
-          ></Image>
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleItalic().run();
-          }}
-          disabled={!editor.can().chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "is-active" : ""}
-        >
-          Italic
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleStrike().run();
-          }}
-          disabled={!editor.can().chain().focus().toggleStrike().run()}
-          className={editor.isActive("strike") ? "is-active" : ""}
-        >
-          Strike
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleCode().run();
-          }}
-          disabled={!editor.can().chain().focus().toggleCode().run()}
-          className={editor.isActive("code") ? "is-active" : ""}
-        >
-          Code
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().unsetAllMarks().run();
-          }}
-        >
-          Clear marks
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().clearNodes().run();
-          }}
-        >
-          Clear nodes
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setParagraph().run();
-          }}
-          className={editor.isActive("paragraph") ? "is-active" : ""}
-        >
-          Paragraph
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 1 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 1 }) ? "is-active" : ""
-          }
-        >
-          H1
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 2 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 2 }) ? "is-active" : ""
-          }
-        >
-          H2
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 3 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 3 }) ? "is-active" : ""
-          }
-        >
-          H3
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 4 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 4 }) ? "is-active" : ""
-          }
-        >
-          H4
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 5 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 5 }) ? "is-active" : ""
-          }
-        >
-          H5
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleHeading({ level: 6 }).run();
-          }}
-          className={
-            editor.isActive("heading", { level: 6 }) ? "is-active" : ""
-          }
-        >
-          H6
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleBulletList().run();
-          }}
-          className={editor.isActive("bulletList") ? "is-active" : ""}
-        >
-          Bullet list
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleOrderedList().run();
-          }}
-          className={editor.isActive("orderedList") ? "is-active" : ""}
-        >
-          Ordered list
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleCodeBlock().run();
-          }}
-          className={editor.isActive("codeBlock") ? "is-active" : ""}
-        >
-          Code block
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleBlockquote().run();
-          }}
-          className={editor.isActive("blockquote") ? "is-active" : ""}
-        >
-          Blockquote
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setHorizontalRule().run();
-          }}
-        >
-          Horizontal rule
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setHardBreak().run();
-          }}
-        >
-          Hard break
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().undo().run();
-          }}
-          disabled={!editor.can().chain().focus().undo().run()}
-        >
-          Undo
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().redo().run();
-          }}
-          disabled={!editor.can().chain().focus().redo().run()}
-        >
-          Redo
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setColor("#958DF1").run();
-          }}
-          className={
-            editor.isActive("textStyle", { color: "#958DF1" })
-              ? "is-active"
-              : ""
-          }
-        >
-          Purple
-        </button>
+      <div className="tiptap-button-group">
+        <div className="button-1">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleBold().run();
+            }}
+            disabled={!editor.can().chain().focus().toggleBold().run()}
+            className={editor.isActive("bold") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/bold.svg"}
+              width={15}
+              height={15}
+              alt="bold_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleItalic().run();
+            }}
+            disabled={!editor.can().chain().focus().toggleItalic().run()}
+            className={editor.isActive("italic") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/italic.svg"}
+              width={15}
+              height={15}
+              alt="italic_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleStrike().run();
+            }}
+            disabled={!editor.can().chain().focus().toggleStrike().run()}
+            className={editor.isActive("strike") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/strike.svg"}
+              width={17}
+              height={17}
+              alt="strike_icon"
+            ></Image>
+          </button>
+        </div>
+        <div className="button-1">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleCode().run();
+            }}
+            disabled={!editor.can().chain().focus().toggleCode().run()}
+            className={editor.isActive("code") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/code.svg"}
+              width={20}
+              height={20}
+              alt="code_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().setParagraph().run();
+            }}
+            className={editor.isActive("paragraph") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/paragraph.svg"}
+              width={11}
+              height={11}
+              alt="paragraph_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 1 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 1 }) ? "is-active" : ""
+            }
+          >
+            H1
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 2 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 2 }) ? "is-active" : ""
+            }
+          >
+            H2
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 3 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 3 }) ? "is-active" : ""
+            }
+          >
+            H3
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 4 }).run();
+            }}
+            className={
+              editor.isActive("heading", { level: 4 }) ? "is-active" : ""
+            }
+          >
+            H4
+          </button>
+        </div>
+        <div className="button-1">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleBulletList().run();
+            }}
+            className={editor.isActive("bulletList") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/bulletList.svg"}
+              width={10}
+              height={10}
+              alt="bulletList_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleOrderedList().run();
+            }}
+            className={editor.isActive("orderedList") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/orderedList.svg"}
+              width={10}
+              height={10}
+              alt="orderedList_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleCodeBlock().run();
+            }}
+            className={editor.isActive("codeBlock") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/codeBlock.svg"}
+              width={10}
+              height={10}
+              alt="codeBlock_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleBlockquote().run();
+            }}
+            className={editor.isActive("blockquote") ? "is-active" : ""}
+          >
+            <Image
+              src={"/bagpackIcon/blockquote.svg"}
+              width={10}
+              height={10}
+              alt="blockquote_icon"
+            ></Image>
+          </button>
+        </div>
+        <div className="button-1">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().undo().run();
+            }}
+            disabled={!editor.can().chain().focus().undo().run()}
+          >
+            <Image
+              src={"/bagpackIcon/undo.svg"}
+              width={10}
+              height={10}
+              alt="undo_icon"
+            ></Image>
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().redo().run();
+            }}
+            disabled={!editor.can().chain().focus().redo().run()}
+          >
+            <Image
+              src={"/bagpackIcon/redo.svg"}
+              width={10}
+              height={10}
+              alt="redo_icon"
+            ></Image>
+          </button>
+        </div>
         <input
           type="color"
           value={color}
@@ -399,7 +390,7 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
               type="text"
               value={currentTitle ? currentTitle : ""}
               onChange={handleTitleChange}
-              placeholder={currentTitle ? currentTitle : "제목을 입력하세요"}
+              placeholder={currentTitle ? currentTitle : ""}
             ></input>
             <MenuBar />
           </>

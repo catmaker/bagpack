@@ -90,24 +90,28 @@
 .title_label {
   font-size: 14px;
   margin: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 .title_input {
   border-radius: 5px;
   width: 40%;
   padding: 10px;
   border: 2px solid #dadada;
+  margin-bottom: 10px;
 }
-
-.button-group {
-  display: flex !important;
-  flex-direction: row !important; /* 버튼을 가로로 나열 */
-  flex-wrap: wrap !important; /* 버튼이 부모 요소 범위를 넘어가면 아래로 떨어지게 설정 */
+.tiptap-button-group {
+  display: flex;
 }
-
-.button-group button,
-input {
-  flex: 1 1 100px; /* 버튼의 기본 너비를 100px로 설정하고, 필요에 따라 크기를 조정 */
-  min-width: 50px; /* 버튼의 최소 너비 설정 */
-  height: 20px; /* 버튼의 높이를 통일 */
+.tiptap-button-group button {
+  background-color: white;
+  border: none;
+}
+.button-1 {
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+.ProseMirror > p {
+  margin: 0;
 }
