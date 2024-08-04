@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import useScheduleStore from "@/store/schedule";
 import styles from "./Calendar.module.scss";
-import Modal from "../modal/Modal";
+import Modal from "../../../../components/ui/modal/Modal";
 import { UserContext } from "@/app/provider/UserProvider";
 import "./styles.css";
 type CalendarProps = {
@@ -54,10 +54,6 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     }
   }, [posts]);
 
-  useEffect(() => {
-    console.log("Event titles updated:", eventTitles);
-  }, [eventTitles]);
-
   if (!user) {
     return null;
   }
@@ -84,10 +80,11 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
       id: clickInfo.event.id,
       title: clickInfo.event.title,
       date: clickInfo.event.startStr,
-      end: clickInfo.event.endStr,
+      end: clickInfo.event.endStr || clickInfo.event.startStr,
       backgroundColor: clickInfo.event.backgroundColor,
       content: clickInfo.event.extendedProps.content,
     });
+    console.log("Selected event:", event); // selectedEvent 확인
     setIsOpen(true);
   };
 
@@ -103,7 +100,7 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
       email: userEmail,
       id: dropInfo.event.id,
       startDate: dropInfo.event.startStr,
-      endDate: dropInfo.event.endStr,
+      endDate: dropInfo.event.endStr || dropInfo.event.startStr,
     };
 
     console.log("이벤트 업데이트됨:", updatedEvent);
@@ -133,8 +130,6 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     setSelectedEvent(null);
   };
 
-  console.log(selectedEvent);
-
   return (
     <div className={styles.calendar}>
       <FullCalendar
@@ -151,7 +146,6 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
           hour12: false,
         }}
         eventContent={(arg) => {
-          console.log(arg.event._def);
           return (
             <div className={styles["event-content"]}>
               <b>{arg.timeText}</b>
