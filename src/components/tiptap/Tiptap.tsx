@@ -300,7 +300,6 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
 
   const userEmail = user?.email;
-
   console.log("userEmail" + userEmail);
   console.log("post" + currentContent);
   console.log("date" + selectedDate);

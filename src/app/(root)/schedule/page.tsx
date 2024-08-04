@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import Schedule from "@/app/containers/schedule";
-const SchedulePage = () => {
+const SchedulePage = async () => {
   return <Schedule></Schedule>;
 };
 

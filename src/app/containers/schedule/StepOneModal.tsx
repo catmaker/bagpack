@@ -9,6 +9,7 @@ import NaturalIcon from "@/asset/svg/natural.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
 import styles from "./StepOneModal.module.scss";
+import "./StepOneModal";
 // zustand
 import useScheduleStore from "@/store/schedule";
 
@@ -44,12 +45,9 @@ const StepOneModal = ({
   }, [selectedDate, setStartDate, setEndDate]);
   const handleNextClick = () => {
     if (!mood) {
-      // 기분이 선택되지 않은 경우 알림
       alert("기분을 선택해 주세요.");
-      return; // 함수를 종료하여 다음 단계로 이동하지 않음
+      return;
     }
-
-    // 기분이 선택된 경우 다음 모달로 이동
     handleGoToNextModal();
   };
 
