@@ -1,7 +1,7 @@
 import React from "react";
-import LoginClient from "./LoginClient";
-const Login = () => {
-  return <LoginClient></LoginClient>;
+import Login from "@/app/containers/login";
+const LoginPage = () => {
+  return <Login></Login>;
 };
 
-export default Login;
+export default LoginPage;

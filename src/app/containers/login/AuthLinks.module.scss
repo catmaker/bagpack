@@ -1,0 +1,33 @@
+@import "@/styles/variables.scss";
+
+.loginMenu {
+  width: 370px;
+  font-weight: 700;
+  font-size: 13px;
+  padding-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.signup {
+  text-decoration: none;
+  color: $primary-color;
+  transition: 0.3s all ease-in-out !important;
+
+  &:hover {
+    color: $primary-color-hover !important;
+  }
+}
+
+.forgot {
+  text-decoration: none;
+  color: $grey-color;
+
+  &:hover {
+    color: $grey-color-hover !important;
+  }
+}
+@media (max-width: 580px) {
+  .loginMenu {
+    width: 250px;
+  }
+}
