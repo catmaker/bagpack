@@ -1,12 +1,13 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 // components
-import Calendar from "@/components/ui/calendar/Calendar";
+import Calendar from "@/app/containers/schedule/calendar/Calendar";
 import SideBar from "@/components/ui/SideBar/SideBar";
-import Modal from "@/components/ui/modal/Modal";
 import StepOneModal from "./StepOneModal";
 import StepTwoModal from "./StepTwoModal";
+import UserAlert from "@/components/ui/UserAlert";
 // context
 import { UserContext } from "@/app/provider/UserProvider";
 // css
@@ -16,6 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import useScheduleStore from "@/store/schedule";
 
 const ScheduleClient = () => {
+  const router = useRouter();
   const user = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
@@ -29,8 +31,11 @@ const ScheduleClient = () => {
   } = useScheduleStore();
 
   useEffect(() => {
-    console.log(user);
-  }, [user]);
+    // if (!user) {
+    //   alert("로그인 후 이용할 수 있는 기능입니다.");
+    //   router.push("/login");
+    // }
+  }, []);
 
   const handleGoToNextModal = () => {
     setIsModalOpen(false); // 현재 모달 닫기
@@ -73,6 +78,7 @@ const ScheduleClient = () => {
 
   return (
     <div className={styles.container}>
+      {/* <UserAlert /> */}
       <SideBar />
       <motion.div
         layout
