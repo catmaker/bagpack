@@ -84,34 +84,66 @@
   margin-top: 1rem;
 } /*# sourceMappingURL=styles.css.map */
 
-.title_h1 {
-  font-size: 22px;
-}
-.title_label {
-  font-size: 14px;
-  margin: 0px;
-  margin-bottom: 10px;
-}
-.title_input {
-  border-radius: 5px;
-  width: 40%;
-  padding: 10px;
-  border: 2px solid #dadada;
-  margin-bottom: 10px;
-}
 .tiptap-button-group {
   display: flex;
-}
-.tiptap-button-group button {
+  gap: 10px;
   background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  align-items: center;
+  justify-contents: center;
+  box-shadow:
+    0px 3.75998px 11.28px rgba(0, 0, 0, 0.0503198),
+    0px 2.01027px 6.0308px rgba(0, 0, 0, 0.0417275),
+    0px 1.12694px 3.38082px rgba(0, 0, 0, 0.035),
+    0px 0.598509px 1.79553px rgba(0, 0, 0, 0.0282725);
+}
+
+.tiptap-button-group button {
   border: none;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+}
+.tiptap-button-group button:hover {
+  scale: 1.1;
 }
 .button-1 {
-  border: 2px solid black;
   display: flex;
   align-items: center;
   border-radius: 10px;
 }
+.ProseMirror {
+  box-shadow:
+    0px 3.75998px 11.28px rgba(0, 0, 0, 0.0503198),
+    0px 2.01027px 6.0308px rgba(0, 0, 0, 0.0417275),
+    0px 1.12694px 3.38082px rgba(0, 0, 0, 0.035),
+    0px 0.598509px 1.79553px rgba(0, 0, 0, 0.0282725);
+  margin: 0;
+  margin-bottom: 10px;
+  min-height: 30rem;
+}
 .ProseMirror > p {
   margin: 0;
+}
+
+.tiptap-color {
+  width: 32px;
+  height: 32px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+}
+/* 안쪽부분의 디자인 변경 */
+.tiptap-color::-webkit-color-swatch {
+  border-radius: 30px;
+  border: none;
+}
+.fc-day {
+  min-height: 100px !important;
+}
+.fc-daygrid-day-frame {
+  height: 100% !important;
 }
