@@ -7,7 +7,10 @@ import useScheduleStore from "@/store/schedule";
 import styles from "./Calendar.module.scss";
 import Modal from "../../../../components/ui/modal/Modal";
 import { UserContext } from "@/app/provider/UserProvider";
+import { format } from "date-fns";
 import "./styles.css";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
 type CalendarProps = {
   onDateClick?: (info: any) => void;
   event?: [];
@@ -129,7 +132,9 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     setIsOpen(false);
     setSelectedEvent(null);
   };
-
+  const formatDate = (dateStr: string) => {
+    return format(new Date(dateStr), "yyyy-MM-dd HH:mm");
+  };
   return (
     <div className={styles.calendar}>
       <FullCalendar
@@ -190,13 +195,41 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
           isOpen={isOpen}
           onClose={handleCloseModal}
           maxHeight="600px"
+          minWidth="60vw"
+          minHeight="60vh"
         >
-          <h2>{selectedEvent.title}</h2>
-          <p>Start: {selectedEvent.date}</p>
-          <p>End: {selectedEvent.end}</p>
+          <h2 className={styles.modal_title}>{selectedEvent.title}</h2>
+          {selectedEvent.date === selectedEvent.end ? (
+            <p className={styles.modal_day}>
+              날짜: {formatDate(selectedEvent.date)}
+            </p>
+          ) : (
+            <>
+              <p>시작 날짜: {formatDate(selectedEvent.date)}</p>
+              <p>종료 날짜: {formatDate(selectedEvent.end)}</p>
+            </>
+          )}
+          <p className={styles.modal_content_title}>내용</p>
           <p
             dangerouslySetInnerHTML={{ __html: selectedEvent?.content || "" }}
           ></p>
+          <div className={styles.button_box}>
+            <Button
+              backgroundColor="#e6e6e6"
+              padding={"10px 20px 10px 20px"}
+              onClick={handleCloseModal}
+            >
+              닫기
+            </Button>
+            <Button backgroundColor="#e6e6e6" padding={"10px 20px 10px 20px"}>
+              <Link
+                href={`schedule/${selectedEvent.id}/modify`}
+                className={styles.modal_modify_link}
+              >
+                수정
+              </Link>
+            </Button>
+          </div>
         </Modal>
       )}
     </div>
