@@ -1,0 +1,35 @@
+@import "@/styles/variables.scss";
+.title_h1 {
+  font-size: 1.5rem;
+}
+
+.title_label {
+  font-size: 1rem;
+  margin: 0px;
+  margin-bottom: 10px;
+}
+.title_input {
+  border-radius: 5px;
+  width: 40%;
+  padding: 10px;
+  border: 2px solid #dadada;
+  margin-bottom: 10px;
+}
+.modal_footer {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  cursor: pointer;
+  background-color: #e6e6e6;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: 0.3s all ease-in-out !important;
+  &:hover {
+    color: white !important;
+    background-color: $primary-color !important;
+  }
+}
