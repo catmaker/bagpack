@@ -1,14 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Card from "@/components/ui/Card";
-import styles from "./SignUpClient.module.scss";
+import styles from "./index.module.scss";
 import Button from "@/components/ui/Button";
 import LoginInput from "@/components/ui/LoginInput";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
-
+import { Mail, Lock, Eye, EyeSlash, User } from "../../../../public/svg";
 const SignUpClient = () => {
   const router = useRouter();
   const [id, setId] = useState("");
@@ -16,7 +15,7 @@ const SignUpClient = () => {
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const svgColor = "#FE9A8A";
   const togglePasswordVisible = () => {
     setPasswordVisible((prev) => !prev);
   };
@@ -84,12 +83,12 @@ const SignUpClient = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Image
+                <Mail
                   className={styles.icon}
-                  src={"/bagpackIcon/mail.svg"}
                   alt="email"
                   width={20}
                   height={20}
+                  fill={svgColor}
                 />
               </div>
               <div className={styles.inputBox}>
@@ -100,25 +99,32 @@ const SignUpClient = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <Image
+                <Lock
                   className={styles.icon}
-                  src={"/bagpackIcon/lock.svg"}
                   alt="password"
                   width={20}
                   height={20}
+                  fill={svgColor}
                 />
-                <Image
-                  className={styles.eyeIcon}
-                  src={
-                    passwordVisible
-                      ? "/bagpackIcon/eye-slash.svg"
-                      : "/bagpackIcon/eye.svg"
-                  }
-                  alt="toggle password visibility"
-                  width={23}
-                  height={23}
-                  onClick={togglePasswordVisible}
-                />
+                {passwordVisible ? (
+                  <Eye
+                    width={23}
+                    height={23}
+                    alt="toggle password visibility"
+                    className={styles.eyeIcon}
+                    onClick={togglePasswordVisible}
+                    fill={svgColor}
+                  />
+                ) : (
+                  <EyeSlash
+                    width={23}
+                    height={23}
+                    alt="toggle password visibility"
+                    className={styles.eyeIcon}
+                    onClick={togglePasswordVisible}
+                    fill={svgColor}
+                  />
+                )}
               </div>
               <div className={styles.inputBox}>
                 <LoginInput
@@ -128,12 +134,12 @@ const SignUpClient = () => {
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
                 />
-                <Image
+                <User
                   className={styles.icon}
-                  src={"/bagpackIcon/user.svg"}
                   alt="nickname"
                   width={20}
                   height={20}
+                  fill={svgColor}
                 />
               </div>
               <Button

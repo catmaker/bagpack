@@ -1,7 +1,7 @@
 import React from "react";
-import SignUpClient from "./SignUpClient";
-const SignUp = () => {
-  return <SignUpClient></SignUpClient>;
+import SignUp from "@/app/containers/signup";
+const SignUpPage = () => {
+  return <SignUp />;
 };
 
-export default SignUp;
+export default SignUpPage;
