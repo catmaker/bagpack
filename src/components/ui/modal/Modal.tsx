@@ -11,8 +11,6 @@ type ModalProps = {
   minHeight?: string;
   minWidth?: string;
   className?: string;
-  buttonText?: string;
-  buttonClassName?: string;
   maxHeight?: string;
   maxWidth?: string;
 };
@@ -28,8 +26,6 @@ const Modal = ({
   maxHeight,
   maxWidth,
   className,
-  buttonText = "닫기",
-  buttonClassName,
 }: ModalProps) => {
   return (
     <AnimatePresence>
@@ -48,20 +44,17 @@ const Modal = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onClick={(e) => e.stopPropagation()} // 이벤트 버블링 방지
+            onClick={(e) => e.stopPropagation()}
             style={{
-              width: width,
-              height: height,
-              minHeight: minHeight,
-              minWidth: minWidth,
+              width,
+              height,
+              minHeight,
+              minWidth,
               maxHeight: maxHeight || "80vh",
-              maxWidth: maxWidth,
+              maxWidth,
             }}
           >
             {children}
-            <button className={buttonClassName} onClick={onClose}>
-              {buttonText}
-            </button>
           </motion.div>
         </motion.div>
       )}

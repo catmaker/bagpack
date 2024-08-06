@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Modal from "@/components/ui/modal/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,6 +20,7 @@ type StepOneModalProps = {
   user: any;
   handleMoodClick: (mood: string) => void;
 };
+
 const StepOneModal = ({
   isOpen,
   onClose,
@@ -36,13 +37,13 @@ const StepOneModal = ({
   const endDate = useScheduleStore((state) => state.endDate);
   const setEndDate = useScheduleStore((state) => state.setEndDate);
 
-  console.log(startDate, endDate);
   useEffect(() => {
     if (selectedDate) {
       setStartDate(selectedDate);
       setEndDate(selectedDate);
     }
   }, [selectedDate, setStartDate, setEndDate]);
+
   const handleNextClick = () => {
     if (!mood) {
       alert("기분을 선택해 주세요.");
@@ -51,14 +52,17 @@ const StepOneModal = ({
     handleGoToNextModal();
   };
 
+  const handleCloseModal = () => {
+    onClose();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       width="500px"
-      minHeight="60vh"
+      minHeight="430px"
       className={styles.modal}
-      buttonClassName={styles.modal_close_button}
     >
       <h1 className={styles.modal_h1}>당신의 소중한 이야기를 남겨보세요!</h1>
       <div className={styles.datePickerBox}>
@@ -69,7 +73,6 @@ const StepOneModal = ({
             onChange={(date) => {
               setStartDate(date || undefined);
               if (endDate && date && date > endDate) {
-                // 첫 번째 피커에서 선택한 날짜가 두 번째 피커의 날짜보다 높은 경우, 두 번째 피커의 날짜도 변경
                 setEndDate(date);
               }
             }}
@@ -95,7 +98,7 @@ const StepOneModal = ({
             showTimeSelect
             timeFormat="HH:mm"
             timeIntervals={15}
-            minDate={startDate} // 종료일은 시작일 이후로 설정
+            minDate={startDate}
           />
         </div>
       </div>
@@ -154,9 +157,17 @@ const StepOneModal = ({
           </div>
         </div>
       </div>
-      <button className={styles.modal_next_button} onClick={handleNextClick}>
-        다음
-      </button>
+      <div className={styles.modal_footer}>
+        <button className={styles.modal_next_button} onClick={handleNextClick}>
+          다음
+        </button>
+        <button
+          onClick={handleCloseModal}
+          className={styles.modal_close_button}
+        >
+          닫기
+        </button>
+      </div>
     </Modal>
   );
 };
