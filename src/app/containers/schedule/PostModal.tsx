@@ -20,11 +20,13 @@ const PostModal = ({ isOpen, onClose }: PostModalProps) => {
   const postHandler = async (event: React.FormEvent) => {
     event.preventDefault();
   };
-
+  const handleCloseModal = () => {
+    onClose();
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
       <form action="">
-        <Tiptap />
+        <Tiptap onClose={handleCloseModal} />
       </form>
     </Modal>
   );
