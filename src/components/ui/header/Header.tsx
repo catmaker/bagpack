@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./Header.module.scss";
 import Image from "next/image";
-
+import { Logo } from "../../../../public/svg/index";
 const Header = () => {
   const user = useContext(UserContext);
   console.log(user);
@@ -25,14 +25,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.leftBox}>
         <Link href={"/intro"} className={styles.logoLink}>
-          <Image
-            className={styles.logo}
-            src={"/bagpackIcon/NewLogo.svg"}
-            width={140}
-            height={40}
-            alt="logo"
-            sizes="100vw"
-          />
+          <Logo width={140} height={40} className={styles.logo} />
         </Link>
         <ul className={styles.navList}>
           <li>

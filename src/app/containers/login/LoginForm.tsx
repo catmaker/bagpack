@@ -1,9 +1,9 @@
 import React from "react";
 import LoginInput from "@/components/ui/LoginInput";
 import styles from "./LoginForm.module.scss";
-import Image from "next/image";
 import Button from "@/components/ui/Button";
-
+//svg
+import { Mail, Lock, Eye, EyeSlash } from "../../../../public/svg";
 interface Props {
   email: string;
   setEmail: (value: string) => void;
@@ -13,7 +13,7 @@ interface Props {
   togglePasswordVisible: () => void;
   handleLogin: (e: React.FormEvent<HTMLFormElement>) => void;
 }
-
+const svgColor = "#FE9A8A";
 const LoginForm: React.FC<Props> = ({
   email,
   setEmail,
@@ -33,9 +33,9 @@ const LoginForm: React.FC<Props> = ({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Image
+        <Mail
           className={styles.icon}
-          src={"/bagpackIcon/mail.svg"}
+          fill={svgColor}
           alt="email"
           width={20}
           height={20}
@@ -49,25 +49,30 @@ const LoginForm: React.FC<Props> = ({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Image
+        <Lock
           className={styles.icon}
-          src={"/bagpackIcon/lock.svg"}
+          fill={svgColor}
           alt="password"
           width={20}
           height={20}
         />
-        <Image
-          className={styles.eyeIcon}
-          src={
-            passwordVisible
-              ? "/bagpackIcon/eye-slash.svg"
-              : "/bagpackIcon/eye.svg"
-          }
-          alt="toggle password visibility"
-          width={23}
-          height={23}
-          onClick={togglePasswordVisible}
-        />
+        {passwordVisible ? (
+          <Eye
+            className={styles.eyeIcon}
+            width={23}
+            height={23}
+            fill={svgColor}
+            onClick={togglePasswordVisible}
+          />
+        ) : (
+          <EyeSlash
+            className={styles.eyeIcon}
+            width={23}
+            height={23}
+            fill={svgColor}
+            onClick={togglePasswordVisible}
+          />
+        )}
       </div>
 
       <Button

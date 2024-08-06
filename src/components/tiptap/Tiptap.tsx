@@ -6,7 +6,25 @@ import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import React, { use, useContext, useEffect, useState } from "react";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
+import styles from "./Tiptap.module.scss";
+import Modal from "../ui/modal/Modal";
+//svg
+import {
+  Bold,
+  Italic,
+  Strike,
+  Code,
+  Paragraph,
+  H1,
+  H2,
+  H3,
+  BulletList,
+  OrderedList,
+  Blockquote,
+  Undo,
+  Redo,
+} from "../../../public/svg";
 // provider
 import { UserContext } from "@/app/provider/UserProvider";
 // zustand
@@ -32,12 +50,7 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/bold.svg"}
-              width={15}
-              height={15}
-              alt="bold_icon"
-            ></Image>
+            <Bold width={20} height={20} alt="bold_icon"></Bold>
           </button>
           <button
             onClick={(e) => {
@@ -47,12 +60,7 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleItalic().run()}
             className={editor.isActive("italic") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/italic.svg"}
-              width={15}
-              height={15}
-              alt="italic_icon"
-            ></Image>
+            <Italic width={20} height={20} alt="italic_icon"></Italic>
           </button>
           <button
             onClick={(e) => {
@@ -62,12 +70,7 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleStrike().run()}
             className={editor.isActive("strike") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/strike.svg"}
-              width={17}
-              height={17}
-              alt="strike_icon"
-            ></Image>
+            <Strike width={20} height={20} alt="strike_icon"></Strike>
           </button>
         </div>
         <div className="button-1">
@@ -79,12 +82,7 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleCode().run()}
             className={editor.isActive("code") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/code.svg"}
-              width={20}
-              height={20}
-              alt="code_icon"
-            ></Image>
+            <Code width={20} height={20} alt="code_icon"></Code>
           </button>
           <button
             onClick={(e) => {
@@ -93,12 +91,7 @@ const MenuBar = () => {
             }}
             className={editor.isActive("paragraph") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/paragraph.svg"}
-              width={11}
-              height={11}
-              alt="paragraph_icon"
-            ></Image>
+            <Paragraph width={20} height={20} alt="paragraph_icon"></Paragraph>
           </button>
           <button
             onClick={(e) => {
@@ -109,7 +102,7 @@ const MenuBar = () => {
               editor.isActive("heading", { level: 1 }) ? "is-active" : ""
             }
           >
-            H1
+            <H1 width={20} height={20} alt="h1" />
           </button>
           <button
             onClick={(e) => {
@@ -120,7 +113,7 @@ const MenuBar = () => {
               editor.isActive("heading", { level: 2 }) ? "is-active" : ""
             }
           >
-            H2
+            <H2 width={20} height={20} alt="h2" />
           </button>
           <button
             onClick={(e) => {
@@ -131,18 +124,7 @@ const MenuBar = () => {
               editor.isActive("heading", { level: 3 }) ? "is-active" : ""
             }
           >
-            H3
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              editor.chain().focus().toggleHeading({ level: 4 }).run();
-            }}
-            className={
-              editor.isActive("heading", { level: 4 }) ? "is-active" : ""
-            }
-          >
-            H4
+            <H3 width={20} height={20} alt="h3" />
           </button>
         </div>
         <div className="button-1">
@@ -153,12 +135,11 @@ const MenuBar = () => {
             }}
             className={editor.isActive("bulletList") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/bulletList.svg"}
-              width={10}
-              height={10}
+            <BulletList
+              width={32}
+              height={24}
               alt="bulletList_icon"
-            ></Image>
+            ></BulletList>
           </button>
           <button
             onClick={(e) => {
@@ -167,26 +148,11 @@ const MenuBar = () => {
             }}
             className={editor.isActive("orderedList") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/orderedList.svg"}
-              width={10}
-              height={10}
+            <OrderedList
+              width={32}
+              height={24}
               alt="orderedList_icon"
-            ></Image>
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              editor.chain().focus().toggleCodeBlock().run();
-            }}
-            className={editor.isActive("codeBlock") ? "is-active" : ""}
-          >
-            <Image
-              src={"/bagpackIcon/codeBlock.svg"}
-              width={10}
-              height={10}
-              alt="codeBlock_icon"
-            ></Image>
+            ></OrderedList>
           </button>
           <button
             onClick={(e) => {
@@ -195,12 +161,11 @@ const MenuBar = () => {
             }}
             className={editor.isActive("blockquote") ? "is-active" : ""}
           >
-            <Image
-              src={"/bagpackIcon/blockquote.svg"}
-              width={10}
-              height={10}
+            <Blockquote
+              width={32}
+              height={24}
               alt="blockquote_icon"
-            ></Image>
+            ></Blockquote>
           </button>
         </div>
         <div className="button-1">
@@ -211,12 +176,7 @@ const MenuBar = () => {
             }}
             disabled={!editor.can().chain().focus().undo().run()}
           >
-            <Image
-              src={"/bagpackIcon/undo.svg"}
-              width={10}
-              height={10}
-              alt="undo_icon"
-            ></Image>
+            <Undo width={20} height={20} fill="none" alt="undo_icon"></Undo>
           </button>
           <button
             onClick={(e) => {
@@ -225,31 +185,19 @@ const MenuBar = () => {
             }}
             disabled={!editor.can().chain().focus().redo().run()}
           >
-            <Image
-              src={"/bagpackIcon/redo.svg"}
-              width={10}
-              height={10}
-              alt="redo_icon"
-            ></Image>
+            <Redo width={20} height={20} fill="none" alt="redo_icon"></Redo>
           </button>
         </div>
         <input
           type="color"
           value={color}
-          onChange={(e) => setColor(e.target.value)} // 컬러 선택 시 상태 업데이트
+          className="tiptap-color"
+          onChange={(e) => {
+            setColor(e.target.value);
+            editor.chain().focus().setColor(e.target.value).run();
+          }}
           style={{ marginLeft: "10px" }}
         />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setColor(color).run();
-          }}
-          className={
-            editor.isActive("textStyle", { color: color }) ? "is-active" : ""
-          }
-        >
-          Apply Color
-        </button>
       </div>
     </div>
   );
@@ -277,8 +225,15 @@ type EditorComponentProps = {
   contents?: string;
   title?: string;
   id?: string;
+  onClose?: () => void;
 };
-const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
+const EditorComponent = ({
+  contents,
+  title,
+  id,
+  onClose,
+}: EditorComponentProps) => {
+  const router = useRouter();
   const user = useContext(UserContext);
   const [currentContent, setCurrentContent] = useState(contents); // 초기 상태를 `contents`로 설정
   const [currentTitle, setCurrentTitle] = useState(title); // title 상태 관리 추가
@@ -289,7 +244,7 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
   const endDate = useScheduleStore((state) => state.endDate);
   const setEndDate = useScheduleStore((state) => state.setEndDate);
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
-
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const userEmail = user?.email;
   console.log("userEmail" + userEmail);
   console.log("post" + currentContent);
@@ -339,6 +294,8 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
       const data = await response.json();
       console.log(data);
       setPostsUpdate(true);
+      alert("저장에 성공했습니다!");
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -383,10 +340,10 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
       <EditorProvider
         slotBefore={
           <>
-            <h1 className="title_h1">글 작성하기</h1>
-            <p className="title_label">제목을 입력해주세요.</p>
+            <h1 className={styles.title_h1}>글 작성하기</h1>
+            <p className={styles.title_label}>제목을 입력해주세요.</p>
             <input
-              className="title_input"
+              className={styles.title_input}
               type="text"
               value={currentTitle ? currentTitle : ""}
               onChange={handleTitleChange}
@@ -400,9 +357,23 @@ const EditorComponent = ({ contents, title, id }: EditorComponentProps) => {
         onUpdate={handleEditorUpdate}
       />
       {contents ? (
-        <button onClick={updateContent}>수정</button>
+        <div className={styles.modal_footer}>
+          <button onClick={saveContent} className={styles.button}>
+            수정
+          </button>
+          <button onClick={onClose} className={styles.button}>
+            닫기
+          </button>
+        </div>
       ) : (
-        <button onClick={saveContent}>저장</button>
+        <div className={styles.modal_footer}>
+          <button onClick={saveContent} className={styles.button}>
+            저장
+          </button>
+          <button onClick={onClose} className={styles.button}>
+            닫기
+          </button>
+        </div>
       )}
     </>
   );
