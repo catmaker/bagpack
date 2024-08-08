@@ -79,20 +79,22 @@ const ScheduleDetail = ({ params }: ScheduleDetailParams) => {
     <div className={styles.container}>
       <SideBar />
       <div className={styles.content_wrapper}>
-        <h1>{post?.title}</h1>
-        {post?.startDate === post?.endDate ? (
-          <p>{formatDate(post?.startDate || "")}</p>
-        ) : (
-          <>
+        <div className={styles.content}>
+          <h1>{post?.title}</h1>
+          {post?.startDate === post?.endDate ? (
             <p>{formatDate(post?.startDate || "")}</p>
-            <p>{formatDate(post?.endDate || "")}</p>
-          </>
-        )}
-        <div dangerouslySetInnerHTML={{ __html: post?.content || "" }}></div>
-        <Link href={`/schedule/${id}/modify`}>
-          <button>수정</button>
-        </Link>
-        <button onClick={deletePost}>삭제</button>
+          ) : (
+            <>
+              <p>{formatDate(post?.startDate || "")}</p>
+              <p>{formatDate(post?.endDate || "")}</p>
+            </>
+          )}
+          <div dangerouslySetInnerHTML={{ __html: post?.content || "" }}></div>
+          <Link href={`/schedule/${id}/modify`}>
+            <button>수정</button>
+          </Link>
+          <button onClick={deletePost}>삭제</button>
+        </div>
       </div>
     </div>
   );
