@@ -140,20 +140,25 @@ export async function getUser(uid: string): Promise<User> {
 }
 // 유저 정보 확인
 export function getCurrentUser(): Promise<User | null> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const userData = await getUser(user.uid);
-          resolve(userData);
-        } catch (error) {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (user) => {
+        unsubscribe(); // 여러 번 호출되는거 방지 (한 번만 호출되도록)
+        if (user) {
+          try {
+            const userData = await getUser(user.uid);
+            resolve(userData);
+          } catch (error) {
+            reject(error);
+          }
+        } else {
           resolve(null);
         }
-      } else {
-        resolve(null);
-      }
-    });
+      },
+      reject,
+    );
   });
 }
 // 팔레트 색상 저장하기
