@@ -14,14 +14,6 @@ type StepTwoModalProps = {
   setIsNextModalOpen: (isOpen: boolean) => void;
   setIsModalOpen: (isOpen: boolean) => void;
 };
-type Post = {
-  id: string;
-  content: string;
-  mood: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-};
 
 const StepTwoModal = ({
   isOpen,
@@ -30,7 +22,7 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const mood = useScheduleStore((state) => state.selectedMood);
+  const selectedMood = useScheduleStore((state) => state.selectedMood);
   const selectedDate = useScheduleStore((state) => state.selectedDate);
   const user = useContext(UserContext);
   const startDate = useScheduleStore((state) => state.startDate);
@@ -43,12 +35,16 @@ const StepTwoModal = ({
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
   const posts = useScheduleStore((state) => state.posts);
   const setPosts = useScheduleStore((state) => state.setPosts);
-  console.log(selectedDate);
 
   useEffect(() => {
     handleGetPosts(); // 컴포넌트가 마운트될 때 포스트 데이터 가져오기
   }, [user, setPostsUpdate]);
-
+  console.log(`
+    Mood: ${selectedMood}
+    Start Date: ${startDate}
+    End Date: ${endDate}
+    Selected Date: ${selectedDate}
+`);
   const handleGetPosts = async () => {
     try {
       const response = await fetch("/api/user/getPost", {
@@ -65,7 +61,6 @@ const StepTwoModal = ({
       }
       const data = await response.json();
       setPosts(data.data);
-      console.log(data.data);
       setPostsUpdate(false);
     } catch (error) {
       console.error(error);
@@ -80,7 +75,6 @@ const StepTwoModal = ({
       startDateObj < new Date(endDate.getTime() + 86400000) // 86400000은 하루를 밀리초로 환산한 값
     );
   });
-  console.log("Filtered Posts:", filteredPosts);
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -91,13 +85,7 @@ const StepTwoModal = ({
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        width="1000px"
-        minHeight="90vh"
-        buttonClassName={styles.modal_close}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
         <div>
           <div className={styles.nextModal_header}>
             <h1 className={styles.nextModal_h1}>
