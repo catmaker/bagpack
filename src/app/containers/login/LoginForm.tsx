@@ -79,6 +79,9 @@ const LoginForm: React.FC<Props> = ({
         width={370}
         backgroundColor="#F7F1F0"
         className={styles.loginButton}
+        height={50}
+        borderRadius={15}
+        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       >
         로그인
       </Button>

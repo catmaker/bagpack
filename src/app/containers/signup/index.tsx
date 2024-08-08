@@ -146,6 +146,9 @@ const SignUpClient = () => {
                 width={370}
                 backgroundColor="#F7F1F0"
                 className={styles.signUp}
+                borderRadius={15}
+                height={50}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
               >
                 회원가입
               </Button>
