@@ -1,15 +1,16 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import Link from "next/link";
 import SideBar from "@/components/ui/SideBar/SideBar";
 import styles from "@/app/containers/schedule/[id]/index.module.scss";
 import { format } from "date-fns";
+import { deletePost } from "@/utils/axios/fetcher/schedule";
+import { useRouter } from "next/navigation";
 type ScheduleDetailParams = {
-  params: {
-    id: string;
-  };
+  id: string;
 };
+
 type Post = {
   id: string;
   content: string;
@@ -18,54 +19,32 @@ type Post = {
   startDate: string;
   endDate: string;
 };
-const ScheduleDetail = ({ params }: ScheduleDetailParams) => {
+
+type ScheduleDetailProps = {
+  params: ScheduleDetailParams;
+  data: Post;
+};
+
+const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
+  const router = useRouter();
   const { id } = params;
-  const [post, setPost] = useState<Post>();
+  const [post, setPost] = useState<Post>(data);
   const user = useContext(UserContext);
   const email = user?.email;
   useEffect(() => {
-    if (!user) return;
-    console.log(user);
-    const postData = async () => {
-      try {
-        const data = { email, id };
-        const res = await fetch(`/api/user/getPostById`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          console.log(data.data);
-          setPost(data.data);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    postData();
-  }, [user, email, id]);
-
-  const deletePost = async () => {
+    if (data === undefined) {
+      alert("해당 게시물이 존재하지 않습니다.");
+      router.push("/schedule");
+    }
+  }, [data, router]);
+  const handleDeletePost = async () => {
     try {
-      const data = { email, id };
-      const res = await fetch(`/api/user/deletePost`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) {
-        console.log("삭제 성공");
-      }
+      await deletePost(email, id);
     } catch (err) {
       console.error(err);
     }
   };
+
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "";
     const date = new Date(dateStr);
@@ -75,6 +54,7 @@ const ScheduleDetail = ({ params }: ScheduleDetailParams) => {
     }
     return format(date, "yyyy-MM-dd HH:mm");
   };
+
   return (
     <div className={styles.container}>
       <SideBar />
@@ -93,7 +73,7 @@ const ScheduleDetail = ({ params }: ScheduleDetailParams) => {
           <Link href={`/schedule/${id}/modify`}>
             <button>수정</button>
           </Link>
-          <button onClick={deletePost}>삭제</button>
+          <button onClick={handleDeletePost}>삭제</button>
         </div>
       </div>
     </div>

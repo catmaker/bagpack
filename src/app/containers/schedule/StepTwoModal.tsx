@@ -5,7 +5,8 @@ import styles from "./StepTwoModal.module.scss";
 import PostModal from "./PostModal";
 // zustand
 import useScheduleStore from "@/store/schedule";
-//
+// axios
+import { getPosts } from "@/utils/axios/fetcher/schedule";
 import { UserContext } from "@/app/provider/UserProvider";
 import Link from "next/link";
 type StepTwoModalProps = {
@@ -35,37 +36,26 @@ const StepTwoModal = ({
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
   const posts = useScheduleStore((state) => state.posts);
   const setPosts = useScheduleStore((state) => state.setPosts);
-
+  const handleGetPosts = async () => {
+    try {
+      const data = await getPosts(user?.email);
+      setPosts(data);
+      setPostsUpdate(false);
+    } catch (error) {
+      console.error("게시물 가져오기 중 에러 발생:", error);
+    }
+  };
   useEffect(() => {
-    handleGetPosts(); // 컴포넌트가 마운트될 때 포스트 데이터 가져오기
+    handleGetPosts();
   }, [user, setPostsUpdate]);
+
   console.log(`
     Mood: ${selectedMood}
     Start Date: ${startDate}
     End Date: ${endDate}
     Selected Date: ${selectedDate}
 `);
-  const handleGetPosts = async () => {
-    try {
-      const response = await fetch("/api/user/getPost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: user?.email,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Error fetching posts");
-      }
-      const data = await response.json();
-      setPosts(data.data);
-      setPostsUpdate(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   const filteredPosts = posts.filter((item) => {
     if (!startDate || !endDate) return false;
     const startDateObj = new Date(item.startDate);

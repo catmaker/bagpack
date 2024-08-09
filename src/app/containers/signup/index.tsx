@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
 import { Mail, Lock, Eye, EyeSlash, User } from "../../../../public/svg";
+import { signUp } from "@/utils/axios/fetcher/signup";
 const SignUpClient = () => {
   const router = useRouter();
   const [id, setId] = useState("");
@@ -39,29 +40,11 @@ const SignUpClient = () => {
       return;
     }
     try {
-      const response = await fetch("/api/user/signUp", {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          password,
-          nickname,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        alert("이미 존재하는 이메일입니다.");
-        throw new Error("signUp return 데이터가 비어있습니다.");
-      }
-
-      const data = await response.json();
-      console.log(data);
+      await signUp(email, password, nickname);
       alert("회원가입이 완료되었습니다.");
       router.push("/login");
     } catch (error) {
-      console.error(error);
+      console.error("회원가입 중 에러 발생:", error);
     }
   };
 
