@@ -239,15 +239,16 @@ type PostById = {
   email: string;
 };
 // 유저 포스트 id로 가져오기
-export async function getPostById(id: string, email: string) {
+export async function getPostById(id: string) {
   const db = getFirestore();
   const userSnapshot = await getDocs(collection(db, "users"));
   let post: Post | null = null;
   userSnapshot.docs.forEach((doc) => {
-    if (doc.data().email === email) {
-      const posts = doc.data().posts;
-      if (posts) {
-        post = posts.find((post: any) => post.id === id) || null;
+    const posts = doc.data().posts;
+    if (posts) {
+      const foundPost = posts.find((post: any) => post.id === id);
+      if (foundPost) {
+        post = foundPost;
       }
     }
   });
