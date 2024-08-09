@@ -15,7 +15,7 @@ import { UserContext } from "@/app/provider/UserProvider";
 // zustand
 import useScheduleStore from "@/store/schedule";
 import DatePicker from "react-datepicker";
-
+import { savePost, updatePost } from "@/utils/axios/fetcher/schedule";
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
   TextStyle.configure({ types: [ListItem.name] } as any),
@@ -89,23 +89,27 @@ const EditorComponent = ({
     const payload = {
       email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
       post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
-      startDate: startDate ?? "error", // selectedDate가 undefined이면 "error" 사용
-      endDate: endDate ?? startDate, // endDate가 undefined이면 startDate 사용
+      startDate: startDate ? startDate.toISOString() : "error", // startDate가 Date 객체라면 ISO 문자열로 변환
+      endDate: endDate
+        ? endDate.toISOString()
+        : startDate
+          ? startDate.toISOString()
+          : "error", // endDate가 Date 객체라면 ISO 문자열로 변환, startDate가 undefined이면 "error" 사용
       title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
       mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
     };
-    console.log(payload);
-    try {
-      const response = await fetch("/api/user/post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
 
-      const data = await response.json();
-      console.log(data);
+    console.log(payload);
+
+    try {
+      await savePost(
+        payload.email,
+        payload.post,
+        payload.startDate,
+        payload.endDate,
+        payload.title,
+        payload.mood,
+      );
       setPostsUpdate(true);
       alert("저장에 성공했습니다!");
       window.location.reload();
@@ -122,27 +126,32 @@ const EditorComponent = ({
     const payload = {
       email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
       post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
-      startDate: startDate ?? "error", // selectedDate가 undefined이면 "error" 사용
-      endDate: endDate ?? startDate, // endDate가 undefined이면 startDate 사용
+      startDate: startDate ? startDate.toISOString() : "error", // startDate가 Date 객체라면 ISO 문자열로 변환
+      endDate: endDate
+        ? endDate.toISOString()
+        : startDate
+          ? startDate.toISOString()
+          : "error", // endDate가 Date 객체라면 ISO 문자열로 변환, startDate가 undefined이면 "error" 사용
       title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
       mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
-      id: id,
+      id: id ?? "error", // id가 undefined이면 "error" 사용
     };
-
     // 전송될 데이터 로그로 출력
     console.log("Sending payload:", payload);
 
     try {
-      const response = await fetch("/api/user/updatePost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload), // payload 변수 사용
-      });
-      const data = await response.json();
-      console.log(data);
+      await updatePost(
+        payload.email,
+        payload.post,
+        payload.startDate,
+        payload.endDate,
+        payload.mood,
+        payload.title,
+        payload.id,
+      );
       setPostsUpdate(true);
+      alert("수정에 성공했습니다!");
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
     }

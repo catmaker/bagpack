@@ -79,3 +79,66 @@ export const deletePost = async (email: string | undefined, id: string) => {
     throw error;
   }
 };
+
+export const savePost = async (
+  email: string | undefined,
+  post: string,
+  startDate: string,
+  endDate: string,
+  title: string,
+  mood: string,
+) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/user/post",
+      { email, post, startDate, endDate, title, mood },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.status === 200) {
+      console.log("저장 성공");
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("게시물 저장 에러:", error.message);
+    } else {
+      console.error("예상치 못한 에러:", error);
+    }
+    throw error;
+  }
+};
+
+export const updatePost = async (
+  email: string | undefined,
+  post: string,
+  startDate: string,
+  endDate: string,
+  mood: string,
+  title: string,
+  id: string,
+) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/user/updatePost",
+      { email, post, startDate, endDate, mood, title, id },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.status === 200) {
+      console.log("수정 성공");
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("게시물 수정 에러:", error.message);
+    } else {
+      console.error("예상치 못한 에러:", error);
+    }
+    throw error;
+  }
+};
