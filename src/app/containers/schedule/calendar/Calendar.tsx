@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import "./styles.css";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
+import { updatePostDates } from "@/utils/axios/fetcher/schedule";
 type CalendarProps = {
   onDateClick?: (info: any) => void;
   event?: [];
@@ -87,7 +88,6 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
       backgroundColor: clickInfo.event.backgroundColor,
       content: clickInfo.event.extendedProps.content,
     });
-    console.log("Selected event:", event); // selectedEvent 확인
     setIsOpen(true);
   };
 
@@ -110,16 +110,12 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     updatePost(updatedEvent);
 
     try {
-      const response = await fetch(`/api/user/updatePostDates`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedEvent),
-      });
-
-      const data = await response.json();
-      console.log("이벤트 업데이트됨:", data);
+      await updatePostDates(
+        userEmail,
+        dropInfo.event.id,
+        dropInfo.event.startStr,
+        dropInfo.event.endStr || dropInfo.event.startStr,
+      );
       fetchPosts(user); // 상태를 다시 불러와서 캘린더를 리렌더링
     } catch (error) {
       console.error("이벤트 업데이트 중 오류 발생:", error);
