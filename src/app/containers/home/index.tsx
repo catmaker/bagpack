@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -9,20 +9,28 @@ import SideBar from "@/components/ui/SideBar/SideBar";
 import SearchBar from "@/components/ui/SearchBar/SearchBar";
 import Circle from "@/components/ui/Circle";
 import AlarmIcon from "@/asset/svg/alarm.svg";
+import Loading from "@/components/Loading";
 // css
 import styles from "./index.module.scss";
+
 const HomeClient = () => {
   const router = useRouter();
   const user = useContext(UserContext);
   const hasAlerted = useRef(false); // 알림 표시 여부를 추적
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
-  // useEffect(() => {
-  //   if (!user && !hasAlerted.current) {
-  //     hasAlerted.current = true; // 알림 표시 상태 업데이트
-  //     alert("로그인을 해주세요.");
-  //     router.push("/login");
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    if (user) {
+      setIsLoading(false); // 사용자 데이터가 준비되면 로딩 상태 해제
+    } else {
+      setIsLoading(false); // 사용자 데이터가 없으면 바로 로딩 상태 해제
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
+  }
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>

@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
+import styles from "./index.module.scss";
 
 const Loading = () => {
   return (
-    <div>
-      <p>Loading...</p>
+    <div className={styles.container}>
+      <div className={styles.load_man}></div>
     </div>
   );
 };

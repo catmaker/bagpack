@@ -8,6 +8,7 @@ import SideBar from "@/components/ui/SideBar/SideBar";
 import StepOneModal from "./StepOneModal";
 import StepTwoModal from "./StepTwoModal";
 import UserAlert from "@/components/ui/UserAlert";
+import Loading from "@/components/Loading";
 // context
 import { UserContext } from "@/app/provider/UserProvider";
 // css
@@ -21,6 +22,7 @@ const ScheduleClient = () => {
   const user = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const {
     selectedMood,
     setSelectedMood,
@@ -28,14 +30,22 @@ const ScheduleClient = () => {
     setSelectedDate,
     selectedDayOfWeek,
     setSelectedDayOfWeek,
+    fetchPosts, // 데이터 가져오기 함수 추가
+    posts, // 가져온 데이터 추가
   } = useScheduleStore();
 
   useEffect(() => {
-    // if (!user) {
-    //   alert("로그인 후 이용할 수 있는 기능입니다.");
-    //   router.push("/login");
-    // }
-  }, []);
+    const fetchData = async () => {
+      if (user) {
+        await fetchPosts(user); // 사용자 데이터를 기반으로 데이터를 가져옴
+        setIsLoading(false); // 데이터가 모두 준비되면 로딩 상태 해제
+      } else {
+        setIsLoading(false); // 사용자 데이터가 없으면 바로 로딩 상태 해제
+      }
+    };
+
+    fetchData();
+  }, [user, fetchPosts]);
 
   const handleGoToNextModal = () => {
     setIsModalOpen(false); // 현재 모달 닫기
@@ -75,6 +85,10 @@ const ScheduleClient = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false); // 모달 닫기
   };
+
+  if (isLoading) {
+    return <Loading />; // 로딩 중일 때 Loading 컴포넌트 표시
+  }
 
   return (
     <div className={styles.container}>

@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import "./styles.css";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 import { updatePostDates } from "@/utils/axios/fetcher/schedule";
 type CalendarProps = {
   onDateClick?: (info: any) => void;

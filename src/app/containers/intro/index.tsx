@@ -1,13 +1,10 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import styles from "./index.module.scss";
 import Header from "@/components/ui/header/Header";
 import Banner from "@/components/ui/banner/Banner";
-import Link from "next/link";
 import Footer from "@/components/ui/Footer/Footer";
-import { Suspense } from "react";
 import Loading from "@/components/Loading";
 import WelcomeSection from "./WelcomeSection";
 import FeaturesSection from "./FeaturesSection";
@@ -28,21 +25,19 @@ const Intro = () => {
   ];
 
   return (
-    <Suspense fallback={<Loading />}>
-      <motion.div>
-        <Header />
-        <div className={styles.imageBox}>
-          <Banner slides={slides} />
-        </div>
-        <article className={styles.articleIntro}>
-          <WelcomeSection />
-          <FeaturesSection />
-          <CallToActionSection />
-          <DisclaimerSection />
-        </article>
-        <Footer />
-      </motion.div>
-    </Suspense>
+    <motion.div>
+      <Header />
+      <div className={styles.imageBox}>
+        <Banner slides={slides} />
+      </div>
+      <article className={styles.articleIntro}>
+        <WelcomeSection />
+        <FeaturesSection />
+        <CallToActionSection />
+        <DisclaimerSection />
+      </article>
+      <Footer />
+    </motion.div>
   );
 };
 
