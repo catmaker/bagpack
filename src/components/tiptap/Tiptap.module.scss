@@ -33,3 +33,14 @@
     background-color: $primary-color !important;
   }
 }
+.datePickerWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  input {
+    border: 2px solid #dadada;
+    border-radius: 5px;
+    padding: 10px;
+  }
+}

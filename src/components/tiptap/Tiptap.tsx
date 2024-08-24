@@ -16,6 +16,9 @@ import { UserContext } from "@/app/provider/UserProvider";
 import useScheduleStore from "@/store/schedule";
 import DatePicker from "react-datepicker";
 import { savePost, updatePost } from "@/utils/axios/fetcher/schedule";
+import "react-datepicker/dist/react-datepicker.css";
+import { parseISO } from "date-fns";
+
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
   TextStyle.configure({ types: [ListItem.name] } as any),
@@ -34,17 +37,23 @@ const extensions = [
 const content = `
   내용을 입력해주세요.
 `;
+
 type EditorComponentProps = {
   contents?: string;
   title?: string;
   id?: string;
   onClose?: () => void;
+  contentStartDate?: string;
+  contentEndDate?: string;
 };
+
 const EditorComponent = ({
   contents,
   title,
   id,
   onClose,
+  contentStartDate,
+  contentEndDate,
 }: EditorComponentProps) => {
   const router = useRouter();
   const user = useContext(UserContext);
@@ -64,6 +73,7 @@ const EditorComponent = ({
   console.log("date" + selectedDate);
   console.log("mood" + selectedMood);
   console.log("title" + currentTitle);
+
   const handleEditorUpdate = ({ editor }: any) => {
     const updatedContent = editor.getHTML();
     setCurrentContent(updatedContent);
@@ -165,18 +175,76 @@ const EditorComponent = ({
             <h1 className={styles.title_h1}>글 작성하기</h1>
             <p className={styles.title_label}>제목을 입력해주세요.</p>
             {contents ? (
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date || undefined)}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                dateFormat="yyyy.MM.dd HH:mm"
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                minDate={startDate}
-              />
+              <>
+                <div className={styles.datePickerWrapper}>
+                  <DatePicker
+                    selected={
+                      startDate
+                        ? startDate
+                        : contentStartDate
+                          ? parseISO(contentStartDate)
+                          : undefined
+                    }
+                    onChange={(date) => setStartDate(date || undefined)}
+                    selectsStart
+                    startDate={
+                      startDate
+                        ? startDate
+                        : contentStartDate
+                          ? parseISO(contentStartDate)
+                          : undefined
+                    }
+                    endDate={
+                      endDate
+                        ? endDate
+                        : contentEndDate
+                          ? parseISO(contentEndDate)
+                          : undefined
+                    }
+                    dateFormat="yyyy.MM.dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                  />
+                </div>
+                <div className={styles.datePickerWrapper}>
+                  <DatePicker
+                    selected={
+                      endDate
+                        ? endDate
+                        : contentEndDate
+                          ? parseISO(contentEndDate)
+                          : undefined
+                    }
+                    onChange={(date) => setEndDate(date || undefined)}
+                    selectsEnd
+                    startDate={
+                      startDate
+                        ? startDate
+                        : contentStartDate
+                          ? parseISO(contentStartDate)
+                          : undefined
+                    }
+                    endDate={
+                      endDate
+                        ? endDate
+                        : contentEndDate
+                          ? parseISO(contentEndDate)
+                          : undefined
+                    }
+                    dateFormat="yyyy.MM.dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    minDate={
+                      startDate
+                        ? startDate
+                        : contentStartDate
+                          ? parseISO(contentStartDate)
+                          : undefined
+                    }
+                  />
+                </div>
+              </>
             ) : (
               ""
             )}
