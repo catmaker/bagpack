@@ -179,26 +179,26 @@ const EditorComponent = ({
                 <div className={styles.datePickerWrapper}>
                   <DatePicker
                     selected={
-                      startDate
-                        ? startDate
-                        : contentStartDate
-                          ? parseISO(contentStartDate)
+                      contentStartDate
+                        ? parseISO(contentStartDate)
+                        : startDate
+                          ? startDate
                           : undefined
                     }
                     onChange={(date) => setStartDate(date || undefined)}
                     selectsStart
                     startDate={
-                      startDate
-                        ? startDate
-                        : contentStartDate
-                          ? parseISO(contentStartDate)
+                      contentStartDate
+                        ? parseISO(contentStartDate)
+                        : startDate
+                          ? startDate
                           : undefined
                     }
                     endDate={
-                      endDate
-                        ? endDate
-                        : contentEndDate
-                          ? parseISO(contentEndDate)
+                      contentEndDate
+                        ? parseISO(contentEndDate)
+                        : endDate
+                          ? endDate
                           : undefined
                     }
                     dateFormat="yyyy.MM.dd HH:mm"
@@ -209,26 +209,26 @@ const EditorComponent = ({
                 <div className={styles.datePickerWrapper}>
                   <DatePicker
                     selected={
-                      endDate
-                        ? endDate
-                        : contentEndDate
-                          ? parseISO(contentEndDate)
+                      contentEndDate
+                        ? parseISO(contentEndDate)
+                        : endDate
+                          ? endDate
                           : undefined
                     }
                     onChange={(date) => setEndDate(date || undefined)}
                     selectsEnd
                     startDate={
-                      startDate
-                        ? startDate
-                        : contentStartDate
-                          ? parseISO(contentStartDate)
+                      contentStartDate
+                        ? parseISO(contentStartDate)
+                        : startDate
+                          ? startDate
                           : undefined
                     }
                     endDate={
-                      endDate
-                        ? endDate
-                        : contentEndDate
-                          ? parseISO(contentEndDate)
+                      contentEndDate
+                        ? parseISO(contentEndDate)
+                        : endDate
+                          ? endDate
                           : undefined
                     }
                     dateFormat="yyyy.MM.dd HH:mm"
@@ -236,10 +236,10 @@ const EditorComponent = ({
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     minDate={
-                      startDate
-                        ? startDate
-                        : contentStartDate
-                          ? parseISO(contentStartDate)
+                      contentStartDate
+                        ? parseISO(contentStartDate)
+                        : startDate
+                          ? startDate
                           : undefined
                     }
                   />
