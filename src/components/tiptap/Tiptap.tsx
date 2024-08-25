@@ -1,23 +1,21 @@
 "use client";
-import "./styles.css";
+import React, { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import DatePicker from "react-datepicker";
+import { parseISO } from "date-fns";
+import { EditorProvider } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
-import { EditorProvider, useCurrentEditor, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import React, { use, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./Tiptap.module.scss";
-import Modal from "../ui/modal/Modal";
 import MenuBar from "./TiptapHeader";
-// provider
 import { UserContext } from "@/app/provider/UserProvider";
-// zustand
 import useScheduleStore from "@/store/schedule";
-import DatePicker from "react-datepicker";
 import { savePost, updatePost } from "@/utils/axios/fetcher/schedule";
 import "react-datepicker/dist/react-datepicker.css";
-import { parseISO } from "date-fns";
+import "./styles.css";
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -25,11 +23,11 @@ const extensions = [
   StarterKit.configure({
     bulletList: {
       keepMarks: true,
-      keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+      keepAttributes: false, // TODO: 'attrs'를 유지하려고 할 때 'marks'가 유지되지 않는 문제를 해결하기 위해 'false'로 설정했습니다.
     },
     orderedList: {
       keepMarks: true,
-      keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+      keepAttributes: false, // TODO: 'attrs'를 유지하려고 할 때 'marks'가 유지되지 않는 문제를 해결하기 위해 'false'로 설정했습니다.
     },
   }),
 ];
@@ -66,14 +64,20 @@ const EditorComponent = ({
   const endDate = useScheduleStore((state) => state.endDate);
   const setEndDate = useScheduleStore((state) => state.setEndDate);
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const userEmail = user?.email;
   console.log("userEmail" + userEmail);
   console.log("post" + currentContent);
   console.log("date" + selectedDate);
   console.log("mood" + selectedMood);
   console.log("title" + currentTitle);
-
+  useEffect(() => {
+    if (contentStartDate) {
+      setStartDate(parseISO(contentStartDate));
+    }
+    if (contentEndDate) {
+      setEndDate(parseISO(contentEndDate));
+    }
+  }, [contentStartDate, contentEndDate]);
   const handleEditorUpdate = ({ editor }: any) => {
     const updatedContent = editor.getHTML();
     setCurrentContent(updatedContent);
@@ -161,7 +165,7 @@ const EditorComponent = ({
       );
       setPostsUpdate(true);
       alert("수정에 성공했습니다!");
-      window.location.reload();
+      router.push("/schedule");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -174,80 +178,6 @@ const EditorComponent = ({
           <>
             <h1 className={styles.title_h1}>글 작성하기</h1>
             <p className={styles.title_label}>제목을 입력해주세요.</p>
-            {contents ? (
-              <>
-                <div className={styles.datePickerWrapper}>
-                  <DatePicker
-                    selected={
-                      contentStartDate
-                        ? parseISO(contentStartDate)
-                        : startDate
-                          ? startDate
-                          : undefined
-                    }
-                    onChange={(date) => setStartDate(date || undefined)}
-                    selectsStart
-                    startDate={
-                      contentStartDate
-                        ? parseISO(contentStartDate)
-                        : startDate
-                          ? startDate
-                          : undefined
-                    }
-                    endDate={
-                      contentEndDate
-                        ? parseISO(contentEndDate)
-                        : endDate
-                          ? endDate
-                          : undefined
-                    }
-                    dateFormat="yyyy.MM.dd HH:mm"
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                  />
-                </div>
-                <div className={styles.datePickerWrapper}>
-                  <DatePicker
-                    selected={
-                      contentEndDate
-                        ? parseISO(contentEndDate)
-                        : endDate
-                          ? endDate
-                          : undefined
-                    }
-                    onChange={(date) => setEndDate(date || undefined)}
-                    selectsEnd
-                    startDate={
-                      contentStartDate
-                        ? parseISO(contentStartDate)
-                        : startDate
-                          ? startDate
-                          : undefined
-                    }
-                    endDate={
-                      contentEndDate
-                        ? parseISO(contentEndDate)
-                        : endDate
-                          ? endDate
-                          : undefined
-                    }
-                    dateFormat="yyyy.MM.dd HH:mm"
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    minDate={
-                      contentStartDate
-                        ? parseISO(contentStartDate)
-                        : startDate
-                          ? startDate
-                          : undefined
-                    }
-                  />
-                </div>
-              </>
-            ) : (
-              ""
-            )}
             <input
               className={styles.title_input}
               type="text"
@@ -255,6 +185,45 @@ const EditorComponent = ({
               onChange={handleTitleChange}
               placeholder={currentTitle ? currentTitle : ""}
             ></input>
+            {contents ? (
+              <div className={styles.datePickerBox}>
+                <div className={styles.datePickerWrapper}>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => {
+                      console.log("Date selected:", date);
+                      setStartDate(date || undefined);
+                    }}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="yyyy.MM.dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                  />
+                </div>
+                <div className={styles.datePickerWrapper}>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => {
+                      console.log("Date selected:", date);
+                      setEndDate(date || undefined);
+                    }}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="yyyy.MM.dd HH:mm"
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    minDate={startDate}
+                  />
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+
             <MenuBar />
           </>
         }
@@ -267,9 +236,9 @@ const EditorComponent = ({
           <button onClick={updateContent} className={styles.button}>
             수정
           </button>
-          <button onClick={onClose} className={styles.button}>
+          <Link className={styles.button} href={`/schedule/${id}`}>
             닫기
-          </button>
+          </Link>
         </div>
       ) : (
         <div className={styles.modal_footer}>
