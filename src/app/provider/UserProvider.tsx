@@ -1,17 +1,7 @@
 "use client";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { getCurrentUser } from "@/lib/firebase/firestore";
-
-type User = {
-  id: string;
-  email: string;
-  password: string;
-  created_at: string;
-  isDone: boolean;
-  palette?: string[];
-  nickname: string;
-};
-
+import { User } from "@/types/user";
 // UserContext의 타입을 User | null로 변경
 const UserContext = createContext<User | null>(null);
 

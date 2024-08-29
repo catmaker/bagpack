@@ -20,7 +20,7 @@ import {
   signOut,
   Auth,
 } from "firebase/auth";
-
+import { User } from "@/types/user";
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -36,15 +36,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export default app;
 // 모든 유저 가져오기
-type User = {
-  id: string;
-  email: string;
-  password: string;
-  created_at: string;
-  isDone: boolean;
-  palette?: string[];
-  nickname: string;
-};
 
 // 유저 추가하기
 export async function signUp(
@@ -161,6 +152,7 @@ export function getCurrentUser(): Promise<User | null> {
     );
   });
 }
+
 // 팔레트 색상 저장하기
 export async function addPalette(email: string, palette: string[]) {
   const db = getFirestore();
