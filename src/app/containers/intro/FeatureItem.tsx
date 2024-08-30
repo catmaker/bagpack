@@ -1,11 +1,6 @@
 import Image from "next/image";
+import { FeatureItemProps } from "@/types/intro";
 import styles from "./FeatureItem.module.scss";
-
-interface FeatureItemProps {
-  iconSrc: string;
-  title: string;
-  description?: string;
-}
 
 const FeatureItem = ({ iconSrc, title, description }: FeatureItemProps) => (
   <div className={styles.featureItemWrapper}>
