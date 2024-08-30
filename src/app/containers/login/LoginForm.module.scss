@@ -1,5 +1,6 @@
 @import "@/styles/variables.scss";
-.form {
+
+.loginForm {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,9 +8,11 @@
   gap: 1.5rem;
   margin-top: 10px;
 }
-.inputBox {
+
+.inputContainer {
   position: relative;
 }
+
 .inputField {
   width: 320px;
   height: 50px;
@@ -18,34 +21,38 @@
   border-radius: 15px;
   border: none;
   padding-left: 50px;
-  transition: 0.3s all ease-in-out !important;
+  transition: 0.3s all ease-in-out;
 }
-.icon {
+
+.inputIcon {
   position: absolute;
   top: 16px;
   left: 15px;
 }
-.eyeIcon {
+
+.passwordToggleIcon {
   position: absolute;
   top: 15px;
   right: 15px;
 }
-.loginButton {
+
+.submitButton {
   margin-top: 40px;
   font-weight: 700;
-  color: $primary-color !important;
-  transition: 0.3s all ease-in-out !important;
+  color: $primary-color;
+  transition: 0.3s all ease-in-out;
 
   &:hover {
     background-color: $primary-color !important;
-    color: white !important;
+    color: $white !important;
   }
 }
+
 @media (max-width: 580px) {
   .inputField {
-    width: 200px !important;
+    width: 200px;
   }
-  .loginButton {
-    width: 250px !important;
+  .submitButton {
+    width: 250px;
   }
 }

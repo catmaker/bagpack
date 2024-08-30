@@ -3,9 +3,8 @@ import Button from "@/components/ui/Button";
 import LoginInput from "@/components/ui/LoginInput";
 import { Mail, Lock, Eye, EyeSlash } from "../../../../public/svg";
 import styles from "./LoginForm.module.scss";
-// svg
 
-interface Props {
+interface LoginFormProps {
   email: string;
   setEmail: (value: string) => void;
   password: string;
@@ -14,8 +13,10 @@ interface Props {
   togglePasswordVisible: () => void;
   handleLogin: (e: React.FormEvent<HTMLFormElement>) => void;
 }
+
 const svgColor = "#FE9A8A";
-const LoginForm: React.FC<Props> = ({
+
+const LoginForm: React.FC<LoginFormProps> = ({
   email,
   setEmail,
   password,
@@ -25,8 +26,8 @@ const LoginForm: React.FC<Props> = ({
   handleLogin,
 }) => {
   return (
-    <form className={styles.form} onSubmit={handleLogin}>
-      <div className={styles.inputBox}>
+    <form className={styles.loginForm} onSubmit={handleLogin}>
+      <div className={styles.inputContainer}>
         <LoginInput
           type="text"
           placeholder="Email"
@@ -35,14 +36,14 @@ const LoginForm: React.FC<Props> = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <Mail
-          className={styles.icon}
+          className={styles.inputIcon}
           fill={svgColor}
-          alt="email"
+          alt="email icon"
           width={20}
           height={20}
         />
       </div>
-      <div className={styles.inputBox}>
+      <div className={styles.inputContainer}>
         <LoginInput
           type={passwordVisible ? "text" : "password"}
           placeholder="Password"
@@ -51,15 +52,15 @@ const LoginForm: React.FC<Props> = ({
           onChange={(e) => setPassword(e.target.value)}
         />
         <Lock
-          className={styles.icon}
+          className={styles.inputIcon}
           fill={svgColor}
-          alt="password"
+          alt="password icon"
           width={20}
           height={20}
         />
         {passwordVisible ? (
           <Eye
-            className={styles.eyeIcon}
+            className={styles.passwordToggleIcon}
             width={23}
             height={23}
             fill={svgColor}
@@ -67,7 +68,7 @@ const LoginForm: React.FC<Props> = ({
           />
         ) : (
           <EyeSlash
-            className={styles.eyeIcon}
+            className={styles.passwordToggleIcon}
             width={23}
             height={23}
             fill={svgColor}
@@ -79,7 +80,7 @@ const LoginForm: React.FC<Props> = ({
       <Button
         width={370}
         backgroundColor="#F7F1F0"
-        className={styles.loginButton}
+        className={styles.submitButton}
         height={50}
         borderRadius={15}
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"

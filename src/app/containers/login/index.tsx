@@ -29,9 +29,9 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <Card width={500} height={550} className={styles.card}>
-        <div className={styles.contents}>
+    <div className={styles.loginPageContainer}>
+      <Card width={500} height={550} className={styles.loginCard}>
+        <div className={styles.loginCardContent}>
           <LoginHeader />
           <LoginForm
             email={email}

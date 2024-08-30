@@ -1,30 +1,29 @@
 @import "@/styles/variables.scss";
 
-// LoginHeader.tsx
 @font-face {
   font-family: "YellowTail";
   src: url("/fonts/Yellowtail-Regular.ttf");
 }
 
-.loginHeader {
+.loginHeaderContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 50px 0 2rem;
 }
 
-.loginHeader h1 {
-  font-family: "YellowTail" !important;
+.appTitle {
+  font-family: "YellowTail", cursive;
   font-style: normal;
-  font-weight: 400;
-  font-size: 32px;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-xxl;
   line-height: 24px;
   text-align: center;
   margin-bottom: 0;
 }
 
-.loginHeader p {
+.loginPrompt {
   color: $grey-color;
-  font-size: 12px;
+  font-size: $font-size-xs;
   margin-bottom: 0;
 }

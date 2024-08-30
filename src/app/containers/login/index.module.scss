@@ -1,6 +1,6 @@
 @import "@/styles/variables.scss";
 
-.container {
+.loginPageContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -9,10 +9,12 @@
   overflow: hidden;
   background-color: $input-color;
 }
-.card {
-  transition: 0.3s all ease-in-out !important;
+
+.loginCard {
+  transition: 0.3s all ease-in-out;
 }
-.contents {
+
+.loginCardContent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,12 +22,13 @@
 }
 
 @media (max-width: 580px) {
-  .card {
-    width: 400px !important;
+  .loginCard {
+    width: 400px;
   }
 }
+
 @media (max-width: 480px) {
-  .card {
-    width: 280px !important;
+  .loginCard {
+    width: 280px;
   }
 }
