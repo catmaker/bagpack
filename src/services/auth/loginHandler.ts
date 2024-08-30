@@ -25,12 +25,11 @@ export const loginHandler = async ({ email, password }: Props) => {
     if (response) {
       alert("로그인이 완료되었습니다.");
       return true;
-    } else {
-      alert(
-        "로그인에 실패하였습니다. 존재하지 않는 계정이거나 비밀번호가 틀렸습니다.",
-      );
-      return false;
     }
+    alert(
+      "로그인에 실패하였습니다. 존재하지 않는 계정이거나 비밀번호가 틀렸습니다.",
+    );
+    return false;
   } catch (error) {
     console.error(error);
     return false;

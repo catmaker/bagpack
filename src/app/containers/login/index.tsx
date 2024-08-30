@@ -1,32 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Card from "@/components/ui/Card";
-import { loginHandler } from "@/services/auth/loginHandler";
+import { useLoginForm } from "@/hooks/useLoginForm";
 import AuthLinks from "./AuthLinks";
 import LoginForm from "./LoginForm";
 import LoginHeader from "./LoginHeader";
 import styles from "./index.module.scss";
 
 const Login = () => {
-  const router = useRouter();
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const togglePasswordVisible = () => {
-    setPasswordVisible((prev) => !prev);
-  };
-
-  const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const isLoggedIn = await loginHandler({ email, password });
-    if (isLoggedIn) {
-      router.push("/home");
-    }
-  };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    passwordVisible,
+    togglePasswordVisible,
+    handleLogin,
+  } = useLoginForm();
 
   return (
     <div className={styles.loginPageContainer}>
