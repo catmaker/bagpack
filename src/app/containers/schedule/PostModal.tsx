@@ -1,31 +1,27 @@
-import React, { useRef } from "react";
+import React from "react";
 // components
 import Tiptap from "@/components/tiptap/Tiptap";
 import Modal from "@/components/ui/modal/Modal";
 // zustand
 import useScheduleStore from "@/store/schedule";
+import { PostModalProps } from "@/types/schedule";
 
-type PostModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
 const PostModal = ({ isOpen, onClose }: PostModalProps) => {
-  const selectedDate = useScheduleStore((state) => state.selectedDate);
-  const selectedDayOfWeek = useScheduleStore(
-    (state) => state.selectedDayOfWeek,
+  const { selectedDate, selectedDayOfWeek, selectedMood } = useScheduleStore(
+    (state) => ({
+      selectedDate: state.selectedDate,
+      selectedDayOfWeek: state.selectedDayOfWeek,
+      selectedMood: state.selectedMood,
+    }),
   );
-  const selectedMood = useScheduleStore((state) => state.selectedMood);
-  console.log(selectedDate + selectedDayOfWeek + selectedMood);
-  const postHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-  };
-  const handleCloseModal = () => {
-    onClose();
-  };
+  if (process.env.NODE_ENV === "development") {
+    console.log({ selectedDate, selectedDayOfWeek, selectedMood });
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
-      <form action="">
-        <Tiptap onClose={handleCloseModal} />
+      <form onSubmit={(e) => e.preventDefault()}>
+        <Tiptap onClose={onClose} />
       </form>
     </Modal>
   );

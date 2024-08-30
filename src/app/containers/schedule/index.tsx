@@ -8,7 +8,6 @@ import Calendar from "@/app/containers/schedule/calendar/Calendar";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
 import SideBar from "@/components/ui/SideBar/SideBar";
-import UserAlert from "@/components/ui/UserAlert";
 import useScheduleStore from "@/store/schedule";
 import StepOneModal from "./StepOneModal";
 import StepTwoModal from "./StepTwoModal";
@@ -19,7 +18,6 @@ import "react-datepicker/dist/react-datepicker.css";
 // zustand
 
 const ScheduleClient = () => {
-  const router = useRouter();
   const user = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNextModalOpen, setIsNextModalOpen] = useState(false);
@@ -29,8 +27,6 @@ const ScheduleClient = () => {
     setSelectedMood,
     selectedDate,
     setSelectedDate,
-    selectedDayOfWeek,
-    setSelectedDayOfWeek,
     fetchPosts, // 데이터 가져오기 함수 추가
     posts, // 가져온 데이터 추가
   } = useScheduleStore();

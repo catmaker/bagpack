@@ -1,21 +1,21 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { UserContext } from "@/app/provider/UserProvider";
+import { isWithinInterval, addDays, format } from "date-fns";
 import Modal from "@/components/ui/modal/Modal";
 // zustand
+import { useDateManagement } from "@/hooks/useDateManagement";
 import useScheduleStore from "@/store/schedule";
 // axios
-import { getPosts } from "@/utils/axios/fetcher/schedule";
+import { StepTwoModalProps } from "@/types/schedule";
 import PostModal from "./PostModal";
 import styles from "./StepTwoModal.module.scss";
-
-type StepTwoModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  setIsNextModalOpen: (isOpen: boolean) => void;
-  setIsModalOpen: (isOpen: boolean) => void;
-};
 
 const StepTwoModal = ({
   isOpen,
@@ -24,71 +24,54 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const selectedMood = useScheduleStore((state) => state.selectedMood);
-  const selectedDate = useScheduleStore((state) => state.selectedDate);
-  const user = useContext(UserContext);
-  const startDate = useScheduleStore((state) => state.startDate);
-  const setStartDate = useScheduleStore((state) => state.setStartDate);
-  const endDate = useScheduleStore((state) => state.endDate);
-  const setEndDate = useScheduleStore((state) => state.setEndDate);
-  const selectedDayOfWeek = useScheduleStore(
-    (state) => state.selectedDayOfWeek,
-  );
-  const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
-  const posts = useScheduleStore((state) => state.posts);
-  const setPosts = useScheduleStore((state) => state.setPosts);
-  const handleGetPosts = async () => {
-    try {
-      const data = await getPosts(user?.email);
-      setPosts(data);
-      setPostsUpdate(false);
-    } catch (error) {
-      console.error("게시물 가져오기 중 에러 발생:", error);
-    }
-  };
-  useEffect(() => {
-    handleGetPosts();
-  }, [user, setPostsUpdate]);
+  const {
+    selectedDate,
+    startDate,
+    endDate,
+    handleStartDateChange,
+    handleEndDateChange,
+  } = useDateManagement();
 
-  console.log(`
+  const { selectedMood, selectedDayOfWeek, setPostsUpdate, posts, setPosts } =
+    useScheduleStore((state) => ({
+      selectedMood: state.selectedMood,
+      selectedDayOfWeek: state.selectedDayOfWeek,
+      setPostsUpdate: state.setPostsUpdate,
+      posts: state.posts,
+      setPosts: state.setPosts,
+    }));
+
+  if (process.env.NODE_ENV === "development") {
+    console.log(`
     Mood: ${selectedMood}
     Start Date: ${startDate}
     End Date: ${endDate}
-    Selected Date: ${selectedDate}
-`);
+      Selected Date: ${selectedDate}
+    `);
+  }
 
-  const filteredPosts = posts.filter((item) => {
-    if (!startDate || !endDate) return false;
-    const startDateObj = new Date(item.startDate);
-    const endDateObj = new Date(item.endDate);
-    return (
-      startDateObj >= new Date(startDate) &&
-      startDateObj < new Date(endDate.getTime() + 86400000) // 86400000은 하루를 밀리초로 환산한 값
-    );
-  });
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월을 2자리로
-    const day = String(date.getDate()).padStart(2, "0"); // 일을 2자리로
-    return `${year}. ${month}. ${day}`; // 마지막 마침표 없음
-  };
+  const filteredPosts = useMemo(() => {
+    if (!startDate || !endDate) return [];
+
+    return posts.filter((item) => {
+      const postStartDate = new Date(item.startDate);
+      return isWithinInterval(postStartDate, {
+        start: startDate,
+        end: addDays(endDate, 1),
+      });
+    });
+  }, [posts, startDate, endDate]);
+
+  const formatDate = useCallback((dateString: string) => {
+    return format(new Date(dateString), "yyyy. MM. dd");
+  }, []);
 
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
         <div>
           <div className={styles.nextModal_header}>
-            <h1 className={styles.nextModal_h1}>
-              {/* {startDate && endDate
-                ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()} - ${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()}`
-                : startDate
-                  ? `${startDate.getFullYear()}.${startDate.getMonth() + 1}.${startDate.getDate()}`
-                  : endDate
-                    ? `${endDate.getFullYear()}.${endDate.getMonth() + 1}.${endDate.getDate()}`
-                    : "날짜를 선택해주세요"} */}
-              새로운 경험 기록하기
-            </h1>
+            <h1 className={styles.nextModal_h1}>새로운 경험 기록하기</h1>
             <Image
               className={styles.nextModal_plusIcon}
               src="/bagPackIcon/plus.svg"

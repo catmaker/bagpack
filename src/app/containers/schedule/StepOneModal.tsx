@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import HappyIcon from "@/asset/svg/happy.svg";
@@ -9,40 +9,32 @@ import SadIcon from "@/asset/svg/sad.svg";
 import SmileIcon from "@/asset/svg/smile.svg";
 import TerribleIcon from "@/asset/svg/terrible.svg";
 import Modal from "@/components/ui/modal/Modal";
+import { useDateManagement } from "@/hooks/useDateManagement";
 import useScheduleStore from "@/store/schedule";
+import { StepOneModalProps } from "@/types/schedule";
 import styles from "./StepOneModal.module.scss";
 import "./StepOneModalDatePicker.css";
 
-type StepOneModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  handleGoToNextModal: () => void;
-  user: any;
-  handleMoodClick: (mood: string) => void;
-};
+const moodIcons = [
+  { Icon: TerribleIcon, mood: "terrible", paletteIndex: 0, label: "매우 나쁨" },
+  { Icon: SadIcon, mood: "sad", paletteIndex: 4, label: "나쁨" },
+  { Icon: NaturalIcon, mood: "natural", paletteIndex: 2, label: "보통" },
+  { Icon: SmileIcon, mood: "smile", paletteIndex: 3, label: "좋음" },
+  { Icon: HappyIcon, mood: "happy", paletteIndex: 1, label: "매우 좋음" },
+];
 
-const StepOneModal = ({
+const StepOneModal: React.FC<StepOneModalProps> = ({
   isOpen,
   onClose,
   handleGoToNextModal,
   user,
   handleMoodClick,
-}: StepOneModalProps) => {
+}) => {
   const mood = useScheduleStore((state) => state.selectedMood);
-  const selectedDate = useScheduleStore((state) => state.selectedDate);
-  const setSelectedDate = useScheduleStore((state) => state.setSelectedDate);
-  const iconStyle = { width: "35px", height: "35px" };
-  const startDate = useScheduleStore((state) => state.startDate);
-  const setStartDate = useScheduleStore((state) => state.setStartDate);
-  const endDate = useScheduleStore((state) => state.endDate);
-  const setEndDate = useScheduleStore((state) => state.setEndDate);
+  const { startDate, endDate, handleStartDateChange, handleEndDateChange } =
+    useDateManagement();
 
-  useEffect(() => {
-    if (selectedDate) {
-      setStartDate(selectedDate);
-      setEndDate(selectedDate);
-    }
-  }, [selectedDate, setStartDate, setEndDate]);
+  const iconStyle = { width: "35px", height: "35px" };
 
   const handleNextClick = () => {
     if (!mood) {
@@ -50,10 +42,6 @@ const StepOneModal = ({
       return;
     }
     handleGoToNextModal();
-  };
-
-  const handleCloseModal = () => {
-    onClose();
   };
 
   return (
@@ -70,12 +58,7 @@ const StepOneModal = ({
           <p className={styles.pickerLabel}>시작일</p>
           <DatePicker
             selected={startDate}
-            onChange={(date) => {
-              setStartDate(date || undefined);
-              if (endDate && date && date > endDate) {
-                setEndDate(date);
-              }
-            }}
+            onChange={handleStartDateChange}
             selectsStart
             startDate={startDate}
             endDate={endDate}
@@ -90,7 +73,7 @@ const StepOneModal = ({
           <p className={styles.pickerLabel}>종료일</p>
           <DatePicker
             selected={endDate}
-            onChange={(date) => setEndDate(date || undefined)}
+            onChange={handleEndDateChange}
             selectsEnd
             startDate={startDate}
             endDate={endDate}
@@ -106,54 +89,19 @@ const StepOneModal = ({
         <div>
           <p className={styles.moodPicker}>오늘의 기분을 선택해 주세요</p>
           <div className={styles.iconBox}>
-            {user?.palette && (
-              <TerribleIcon
-                className={
-                  mood === "terrible" ? styles.modal_moodIcon_selected : ""
-                }
-                style={{ ...iconStyle, color: user.palette[0] }}
-                viewBox="0 0 478.125 478.125"
-                onClick={() => handleMoodClick("terrible")}
-              />
-            )}
-            {user?.palette && (
-              <SadIcon
-                className={mood === "sad" ? styles.modal_moodIcon_selected : ""}
-                style={{ ...iconStyle, color: user.palette[4] }}
-                viewBox="0 0 478.125 478.125"
-                onClick={() => handleMoodClick("sad")}
-              />
-            )}
-            {user?.palette && (
-              <NaturalIcon
-                className={
-                  mood === "natural" ? styles.modal_moodIcon_selected : ""
-                }
-                style={{ ...iconStyle, color: user.palette[2] }}
-                viewBox="0 0 478.125 478.125"
-                onClick={() => handleMoodClick("natural")}
-              />
-            )}
-            {user?.palette && (
-              <SmileIcon
-                className={
-                  mood === "smile" ? styles.modal_moodIcon_selected : ""
-                }
-                style={{ ...iconStyle, color: user.palette[3] }}
-                viewBox="0 0 478.125 478.125"
-                onClick={() => handleMoodClick("smile")}
-              />
-            )}
-            {user?.palette && (
-              <HappyIcon
-                className={
-                  mood === "happy" ? styles.modal_moodIcon_selected : ""
-                }
-                style={{ ...iconStyle, color: user.palette[1] }}
-                viewBox="0 0 478.125 478.125"
-                onClick={() => handleMoodClick("happy")}
-              />
-            )}
+            {user?.palette &&
+              moodIcons.map(({ Icon, mood: iconMood, paletteIndex, label }) => (
+                <Icon
+                  key={iconMood}
+                  className={
+                    mood === iconMood ? styles.modal_moodIcon_selected : ""
+                  }
+                  style={{ ...iconStyle, color: user.palette[paletteIndex] }}
+                  viewBox="0 0 478.125 478.125"
+                  onClick={() => handleMoodClick(iconMood)}
+                  aria-label={label}
+                />
+              ))}
           </div>
         </div>
       </div>
@@ -167,7 +115,7 @@ const StepOneModal = ({
         </button>
         <button
           type="button"
-          onClick={handleCloseModal}
+          onClick={onClose}
           className={styles.modal_close_button}
         >
           닫기
