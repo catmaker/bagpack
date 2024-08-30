@@ -1,11 +1,10 @@
 "use client";
+
 import React, { useEffect, useContext, useState, useRef } from "react";
-import { UserContext } from "@/app/provider/UserProvider";
 import { useRouter } from "next/navigation";
-// component
+import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
 import Header from "./Header";
-// css
 import styles from "./index.module.scss";
 
 const HomeClient: React.FC = () => {
@@ -28,7 +27,7 @@ const HomeClient: React.FC = () => {
 
   return (
     user && (
-      <div className={styles.container}>
+      <div className={styles.homeContainer}>
         <Header user={user} />
       </div>
     )

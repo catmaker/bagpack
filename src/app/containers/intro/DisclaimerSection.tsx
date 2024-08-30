@@ -1,5 +1,6 @@
 import React from "react";
-import styles from "./index.module.scss";
+import styles from "./DisclaimerSection.module.scss";
+
 const DisclaimerSection = () => {
   return (
     <div>

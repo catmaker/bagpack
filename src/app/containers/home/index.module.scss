@@ -1,12 +1,9 @@
 @import "@/styles/variables.scss";
-// container
-.container {
+
+.homeContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
   overflow: hidden;
-  background-color: #f9f9f9;
+  background-color: $container-background-color;
 }
-
-// search
-/* Ellipse 12 */

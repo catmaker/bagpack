@@ -1,9 +1,10 @@
 import React from "react";
-import LoginInput from "@/components/ui/LoginInput";
-import styles from "./LoginForm.module.scss";
 import Button from "@/components/ui/Button";
-//svg
+import LoginInput from "@/components/ui/LoginInput";
 import { Mail, Lock, Eye, EyeSlash } from "../../../../public/svg";
+import styles from "./LoginForm.module.scss";
+// svg
+
 interface Props {
   email: string;
   setEmail: (value: string) => void;

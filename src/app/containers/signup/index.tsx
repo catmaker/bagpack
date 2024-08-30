@@ -1,14 +1,16 @@
 "use client";
+
 import React, { useState } from "react";
-import Card from "@/components/ui/Card";
-import styles from "./index.module.scss";
-import Button from "@/components/ui/Button";
-import LoginInput from "@/components/ui/LoginInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
+import LoginInput from "@/components/ui/LoginInput";
+import { signUp } from "@/utils/axios/fetcher/signup";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
 import { Mail, Lock, Eye, EyeSlash, User } from "../../../../public/svg";
-import { signUp } from "@/utils/axios/fetcher/signup";
+import styles from "./index.module.scss";
+
 const SignUpClient = () => {
   const router = useRouter();
   const [id, setId] = useState("");
@@ -137,10 +139,10 @@ const SignUpClient = () => {
               </Button>
             </form>
             <div className={styles.signUpMenu}>
-              <Link href={"/login"} className={styles.login}>
+              <Link href="/login" className={styles.login}>
                 로그인
               </Link>
-              <Link href={"/forgot"} className={styles.forgot}>
+              <Link href="/forgot" className={styles.forgot}>
                 비밀번호찾기
               </Link>
             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./LoginHeader.module.scss";
+
 const LoginHeader = () => {
   return (
     <div className={styles.loginHeader}>

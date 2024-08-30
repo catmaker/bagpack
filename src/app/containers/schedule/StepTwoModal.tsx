@@ -1,14 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
-import Modal from "@/components/ui/modal/Modal";
 import Image from "next/image";
-import styles from "./StepTwoModal.module.scss";
-import PostModal from "./PostModal";
+import Link from "next/link";
+import { UserContext } from "@/app/provider/UserProvider";
+import Modal from "@/components/ui/modal/Modal";
 // zustand
 import useScheduleStore from "@/store/schedule";
 // axios
 import { getPosts } from "@/utils/axios/fetcher/schedule";
-import { UserContext } from "@/app/provider/UserProvider";
-import Link from "next/link";
+import PostModal from "./PostModal";
+import styles from "./StepTwoModal.module.scss";
+
 type StepTwoModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -90,7 +91,7 @@ const StepTwoModal = ({
             </h1>
             <Image
               className={styles.nextModal_plusIcon}
-              src={"/bagPackIcon/plus.svg"}
+              src="/bagPackIcon/plus.svg"
               width={20}
               height={20}
               alt="post_icon"
@@ -114,6 +115,7 @@ const StepTwoModal = ({
             </ul>
           </div>
           <button
+            type="button"
             onClick={() => {
               setIsNextModalOpen(false); // 현재 모달 닫기
               setIsModalOpen(true); // 이전 모달 열기

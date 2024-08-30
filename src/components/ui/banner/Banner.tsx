@@ -1,7 +1,7 @@
 // components/Banner.tsx
 import React, { useState, useEffect } from "react";
-import styles from "./Banner.module.scss";
 import Image from "next/image";
+import styles from "./Banner.module.scss";
 
 interface Slide {
   title: string;

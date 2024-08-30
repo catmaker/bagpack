@@ -1,15 +1,13 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-
 import Card from "@/components/ui/Card";
-import LoginHeader from "./LoginHeader";
-import LoginForm from "./LoginForm";
-import AuthLinks from "./AuthLinks";
-
-import styles from "./index.module.scss";
-
 import { loginHandler } from "@/services/auth/loginHandler";
+import AuthLinks from "./AuthLinks";
+import LoginForm from "./LoginForm";
+import LoginHeader from "./LoginHeader";
+import styles from "./index.module.scss";
 
 const Login = () => {
   const router = useRouter();

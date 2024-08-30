@@ -1,12 +1,14 @@
-import FeatureItem from "./FeatureItem";
 import Image from "next/image";
-import styles from "./index.module.scss";
+import FeatureItem from "./FeatureItem";
+import styles from "./FeaturesSection.module.scss";
 
 const FeaturesSection = () => (
-  <section className={styles.secondSection}>
-    <h2 className={styles.secondTitle}>왜 TimeInK를 사용해야 할까요?</h2>
-    <div className={styles.sectionContentFlex}>
-      <div className={styles.sectionContentBox}>
+  <section className={styles.featuresSection}>
+    <h2 className={styles.featuresSectionTitle}>
+      왜 TimeInK를 사용해야 할까요?
+    </h2>
+    <div className={styles.featuresContainer}>
+      <div className={styles.featureColumn}>
         <FeatureItem
           iconSrc="/bagpackIcon/schedule.png"
           title="효율적인 일정 관리"
@@ -19,14 +21,14 @@ const FeaturesSection = () => (
         />
       </div>
       <Image
-        src={"/bagpackIcon/world.gif"}
+        src="/bagpackIcon/world.gif"
         width={444}
         height={444}
         style={{ objectFit: "contain" }}
-        alt=""
-        className={styles.earth}
+        alt="세계 지도 애니메이션"
+        className={styles.worldMapImage}
       />
-      <div className={styles.sectionContentBox}>
+      <div className={styles.featureColumn}>
         <FeatureItem
           iconSrc="/bagpackIcon/interface.png"
           title="사용자 친화적인 인터페이스"

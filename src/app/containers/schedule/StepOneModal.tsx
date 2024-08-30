@@ -1,17 +1,17 @@
 "use client";
+
 import React, { useEffect } from "react";
-import Modal from "@/components/ui/modal/Modal";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TerribleIcon from "@/asset/svg/terrible.svg";
 import HappyIcon from "@/asset/svg/happy.svg";
 import NaturalIcon from "@/asset/svg/natural.svg";
-import SmileIcon from "@/asset/svg/smile.svg";
 import SadIcon from "@/asset/svg/sad.svg";
+import SmileIcon from "@/asset/svg/smile.svg";
+import TerribleIcon from "@/asset/svg/terrible.svg";
+import Modal from "@/components/ui/modal/Modal";
+import useScheduleStore from "@/store/schedule";
 import styles from "./StepOneModal.module.scss";
 import "./StepOneModalDatePicker.css";
-// zustand
-import useScheduleStore from "@/store/schedule";
 
 type StepOneModalProps = {
   isOpen: boolean;
@@ -158,10 +158,15 @@ const StepOneModal = ({
         </div>
       </div>
       <div className={styles.modal_footer}>
-        <button className={styles.modal_next_button} onClick={handleNextClick}>
+        <button
+          type="button"
+          className={styles.modal_next_button}
+          onClick={handleNextClick}
+        >
           다음
         </button>
         <button
+          type="button"
           onClick={handleCloseModal}
           className={styles.modal_close_button}
         >

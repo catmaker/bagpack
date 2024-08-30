@@ -1,21 +1,22 @@
 "use client";
+
 import React, { useContext, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 // components
 import Calendar from "@/app/containers/schedule/calendar/Calendar";
+import { UserContext } from "@/app/provider/UserProvider";
+import Loading from "@/components/Loading";
 import SideBar from "@/components/ui/SideBar/SideBar";
+import UserAlert from "@/components/ui/UserAlert";
+import useScheduleStore from "@/store/schedule";
 import StepOneModal from "./StepOneModal";
 import StepTwoModal from "./StepTwoModal";
-import UserAlert from "@/components/ui/UserAlert";
-import Loading from "@/components/Loading";
 // context
-import { UserContext } from "@/app/provider/UserProvider";
 // css
 import styles from "./index.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 // zustand
-import useScheduleStore from "@/store/schedule";
 
 const ScheduleClient = () => {
   const router = useRouter();

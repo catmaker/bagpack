@@ -1,0 +1,59 @@
+@import "@/styles/variables.scss";
+
+.featuresSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid $grey-line;
+  padding-top: 20px;
+  flex-direction: column;
+  transition: 0.5s all linear;
+}
+
+.featuresContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.worldMapImage {
+  flex: 1;
+}
+
+.featureColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 40px;
+}
+
+@media (max-width: 600px) {
+  .featuresContainer > img {
+    display: none;
+  }
+  .featuresContainer {
+    flex-direction: column;
+    height: auto;
+  }
+  .featureColumn {
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+  .featuresSectionTitle {
+    font-size: 22px;
+  }
+  .featuresSection {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .featuresContainer > img {
+    width: 200px;
+    height: 200px;
+  }
+}

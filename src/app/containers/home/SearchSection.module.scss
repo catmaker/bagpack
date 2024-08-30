@@ -1,0 +1,19 @@
+@import "@/styles/variables.scss";
+
+.searchSectionContainer {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.searchBarWrapper {
+  position: relative;
+  margin-left: 35px;
+}
+
+.searchIconImage {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-left: 18px;
+}

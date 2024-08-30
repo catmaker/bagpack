@@ -1,36 +1,25 @@
 "use client";
+
 import React from "react";
 import { motion } from "framer-motion";
-import styles from "./index.module.scss";
-import Header from "@/components/ui/header/Header";
 import Banner from "@/components/ui/banner/Banner";
 import Footer from "@/components/ui/Footer/Footer";
-import Loading from "@/components/Loading";
-import WelcomeSection from "./WelcomeSection";
-import FeaturesSection from "./FeaturesSection";
+import Header from "@/components/ui/header/Header";
+import { introSlides } from "@/data/slide";
 import CallToActionSection from "./CallToActionSection";
 import DisclaimerSection from "./DisclaimerSection";
-const Intro = () => {
-  const slides = [
-    {
-      title: "Welcome to Our TimeInK",
-      subtitle: "We are glad to have you here!",
-      imageUrl: "/bagpackIcon/banner.jpg",
-    },
-    {
-      title: "Our Services",
-      subtitle: "We offer a variety of services to help you.",
-      imageUrl: "/bagpackIcon/banner2.jpg",
-    },
-  ];
+import FeaturesSection from "./FeaturesSection";
+import WelcomeSection from "./WelcomeSection";
+import styles from "./index.module.scss";
 
+const Intro = () => {
   return (
-    <motion.div>
+    <motion.div className={styles.introContainer}>
       <Header />
-      <div className={styles.imageBox}>
-        <Banner slides={slides} />
+      <div className={styles.bannerWrapper}>
+        <Banner slides={introSlides} />
       </div>
-      <article className={styles.articleIntro}>
+      <article className={styles.introContent}>
         <WelcomeSection />
         <FeaturesSection />
         <CallToActionSection />
