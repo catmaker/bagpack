@@ -1,73 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import React from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import LoginInput from "@/components/ui/LoginInput";
-import { signUp } from "@/utils/axios/fetcher/signup";
-import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
+import InputWithIcon from "@/components/ui/InputWithIcon";
+import { useSignUpForm } from "@/hooks/useSignUpForm";
+import SignUpFooter from "./SignUpFooter";
+import SignUpHeader from "./SignUpHeader";
 import { Mail, Lock, Eye, EyeSlash, User } from "../../../../public/svg";
 import styles from "./index.module.scss";
 
-const SignUpClient = () => {
-  const router = useRouter();
-  const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const svgColor = "#FE9A8A";
-  const togglePasswordVisible = () => {
-    setPasswordVisible((prev) => !prev);
-  };
+const svgColor = "#FE9A8A";
 
-  const registerHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!emailRegex.test(email)) {
-      alert("이메일 형식이 올바르지 않습니다.");
-      return;
-    }
-    if (!passwordRegex.test(password)) {
-      alert("비밀번호는 최소 8자리 이상, 문자 및 숫자를 포함해야 합니다.");
-      return;
-    }
-    if (nickname.length < 2) {
-      alert("닉네임은 2자리 이상이어야 합니다.");
-      return;
-    }
-    if (nickname.length > 10) {
-      alert("닉네임은 10자리 이하이어야 합니다.");
-      return;
-    }
-    try {
-      await signUp(email, password, nickname);
-      alert("회원가입이 완료되었습니다.");
-      router.push("/login");
-    } catch (error) {
-      console.error("회원가입 중 에러 발생:", error);
-    }
-  };
+const SignUpClient = () => {
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    nickname,
+    setNickname,
+    passwordVisible,
+    togglePasswordVisible,
+    registerHandler,
+  } = useSignUpForm();
 
   return (
-    <div>
-      <div className={styles.container}>
-        <Card width={500} height={550} className={styles.card}>
-          <div className={styles.contents}>
-            <div className={styles.loginHeader}>
-              <h1>Time InK</h1>
-              <p>Create your new account</p>
-            </div>
-            <form className={styles.form} onSubmit={registerHandler}>
-              <div className={styles.inputBox}>
-                <LoginInput
-                  type="text"
-                  placeholder="Email"
-                  className={styles.input}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+    <div className={styles.container}>
+      <Card width={500} height={550} className={styles.card}>
+        <div className={styles.contents}>
+          <SignUpHeader />
+          <form className={styles.form} onSubmit={registerHandler}>
+            <InputWithIcon
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              icon={
                 <Mail
                   className={styles.icon}
                   alt="email"
@@ -75,15 +44,14 @@ const SignUpClient = () => {
                   height={20}
                   fill={svgColor}
                 />
-              </div>
-              <div className={styles.inputBox}>
-                <LoginInput
-                  type={passwordVisible ? "text" : "password"}
-                  placeholder="Password"
-                  className={styles.input}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              }
+            />
+            <InputWithIcon
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              icon={
                 <Lock
                   className={styles.icon}
                   alt="password"
@@ -91,7 +59,9 @@ const SignUpClient = () => {
                   height={20}
                   fill={svgColor}
                 />
-                {passwordVisible ? (
+              }
+              rightIcon={
+                passwordVisible ? (
                   <Eye
                     width={23}
                     height={23}
@@ -109,16 +79,15 @@ const SignUpClient = () => {
                     onClick={togglePasswordVisible}
                     fill={svgColor}
                   />
-                )}
-              </div>
-              <div className={styles.inputBox}>
-                <LoginInput
-                  type="text"
-                  placeholder="Nickname"
-                  className={styles.input}
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                />
+                )
+              }
+            />
+            <InputWithIcon
+              type="text"
+              placeholder="Nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              icon={
                 <User
                   className={styles.icon}
                   alt="nickname"
@@ -126,29 +95,22 @@ const SignUpClient = () => {
                   height={20}
                   fill={svgColor}
                 />
-              </div>
-              <Button
-                width={370}
-                backgroundColor="#F7F1F0"
-                className={styles.signUp}
-                borderRadius={15}
-                height={50}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              >
-                회원가입
-              </Button>
-            </form>
-            <div className={styles.signUpMenu}>
-              <Link href="/login" className={styles.login}>
-                로그인
-              </Link>
-              <Link href="/forgot" className={styles.forgot}>
-                비밀번호찾기
-              </Link>
-            </div>
-          </div>
-        </Card>
-      </div>
+              }
+            />
+            <Button
+              width={370}
+              backgroundColor="#F7F1F0"
+              className={styles.signUp}
+              borderRadius={15}
+              height={50}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            >
+              회원가입
+            </Button>
+          </form>
+          <SignUpFooter />
+        </div>
+      </Card>
     </div>
   );
 };
