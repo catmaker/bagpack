@@ -60,11 +60,11 @@
   margin-top: 20px;
   text-decoration: none;
   color: $primary-color !important;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   transition: 0.3s all ease-in-out !important;
 
   &:hover {
-    color: white !important;
+    color: $white !important;
     background-color: $primary-color !important;
   }
 }
