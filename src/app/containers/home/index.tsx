@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
@@ -11,7 +11,6 @@ const HomeClient: React.FC = () => {
   const router = useRouter();
   const user = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-  console.log(user);
 
   useEffect(() => {
     if (user !== null) {

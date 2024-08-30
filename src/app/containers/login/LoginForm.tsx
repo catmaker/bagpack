@@ -1,18 +1,9 @@
 import React from "react";
 import Button from "@/components/ui/Button";
-import LoginInput from "@/components/ui/LoginInput";
+import InputWithIcon from "@/components/ui/InputWithIcon";
+import { LoginFormProps } from "@/types/login";
 import { Mail, Lock, Eye, EyeSlash } from "../../../../public/svg";
 import styles from "./LoginForm.module.scss";
-
-interface LoginFormProps {
-  email: string;
-  setEmail: (value: string) => void;
-  password: string;
-  setPassword: (value: string) => void;
-  passwordVisible: boolean;
-  togglePasswordVisible: () => void;
-  handleLogin: (e: React.FormEvent<HTMLFormElement>) => void;
-}
 
 const svgColor = "#FE9A8A";
 
@@ -27,55 +18,55 @@ const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
   return (
     <form className={styles.loginForm} onSubmit={handleLogin}>
-      <div className={styles.inputContainer}>
-        <LoginInput
-          type="text"
-          placeholder="Email"
-          className={styles.inputField}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Mail
-          className={styles.inputIcon}
-          fill={svgColor}
-          alt="email icon"
-          width={20}
-          height={20}
-        />
-      </div>
-      <div className={styles.inputContainer}>
-        <LoginInput
-          type={passwordVisible ? "text" : "password"}
-          placeholder="Password"
-          className={styles.inputField}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Lock
-          className={styles.inputIcon}
-          fill={svgColor}
-          alt="password icon"
-          width={20}
-          height={20}
-        />
-        {passwordVisible ? (
-          <Eye
-            className={styles.passwordToggleIcon}
-            width={23}
-            height={23}
+      <InputWithIcon
+        type="text"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        icon={
+          <Mail
+            className={styles.inputIcon}
             fill={svgColor}
-            onClick={togglePasswordVisible}
+            alt="email icon"
+            width={20}
+            height={20}
           />
-        ) : (
-          <EyeSlash
-            className={styles.passwordToggleIcon}
-            width={23}
-            height={23}
+        }
+      />
+      <InputWithIcon
+        type={passwordVisible ? "text" : "password"}
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        icon={
+          <Lock
+            className={styles.inputIcon}
             fill={svgColor}
-            onClick={togglePasswordVisible}
+            alt="password icon"
+            width={20}
+            height={20}
           />
-        )}
-      </div>
+        }
+        rightIcon={
+          passwordVisible ? (
+            <Eye
+              className={styles.passwordToggleIcon}
+              width={23}
+              height={23}
+              fill={svgColor}
+              onClick={togglePasswordVisible}
+            />
+          ) : (
+            <EyeSlash
+              className={styles.passwordToggleIcon}
+              width={23}
+              height={23}
+              fill={svgColor}
+              onClick={togglePasswordVisible}
+            />
+          )
+        }
+      />
 
       <Button
         width={370}
