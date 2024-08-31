@@ -7,23 +7,7 @@ import styles from "@/app/containers/schedule/[id]/index.module.scss";
 import { format } from "date-fns";
 import { deletePost } from "@/utils/axios/fetcher/schedule";
 import { useRouter } from "next/navigation";
-type ScheduleDetailParams = {
-  id: string;
-};
-
-type Post = {
-  id: string;
-  content: string;
-  mood: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-};
-
-type ScheduleDetailProps = {
-  params: ScheduleDetailParams;
-  data: Post;
-};
+import { Post, ScheduleDetailProps } from "@/types/schedule";
 
 const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
   const router = useRouter();

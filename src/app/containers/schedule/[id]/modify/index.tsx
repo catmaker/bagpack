@@ -3,18 +3,8 @@ import React, { useEffect, useState } from "react";
 import Tiptap from "@/components/tiptap/Tiptap";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
-type ModifyProps = {
-  params: {
-    id: string;
-  };
-  data: Post;
-};
-type Post = {
-  content: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-};
+import { Post, ModifyProps } from "@/types/schedule";
+
 const Modify = ({ params, data }: ModifyProps) => {
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);

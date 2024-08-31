@@ -18,23 +18,7 @@ import useScheduleStore from "@/store/schedule";
 import { updatePostDates } from "@/utils/axios/fetcher/schedule";
 import styles from "./Calendar.module.scss";
 import "./styles.css";
-
-type CalendarProps = {
-  onDateClick?: (info: any) => void;
-};
-
-type Event = {
-  id: string;
-  title: string;
-  date: string;
-  backgroundColor: string;
-  end: string;
-  content?: string;
-};
-type EventContentProps = {
-  arg: EventContentArg;
-  eventTitles: { [key: string]: string };
-};
+import { CalendarProps, Event, EventContentProps } from "@/types/calendar";
 
 const EventContent = ({ arg, eventTitles }: EventContentProps) => (
   <div className={styles["event-content"]}>
