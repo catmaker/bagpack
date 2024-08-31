@@ -1,8 +1,8 @@
-$primary-color: #fe9a8a;
-$primary-color-hover: rgb(255, 119, 119);
-$grey-color: #838383;
-$grey-color-hover: #292929;
-$input-color: #f7f1f0;
+@import "@/styles/typography.scss";
+@import "@/styles/breakpoints.scss";
+@import "@/styles/layout.scss";
+@import "@/styles/colors.scss";
+
 $primary-font-size: 24px;
 $paragraph-font-size: 14px;
 $white: white;
@@ -11,6 +11,7 @@ $button-primary-color: #fe9a8a;
 $button-border-color: black;
 $hover-background-color: #838383;
 $aside-text-color: white;
+$black: black;
 @font-face {
   font-family: "YellowTail";
   src: url("/fonts/Yellowtail-Regular.ttf") format("truetype");

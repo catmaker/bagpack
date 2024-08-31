@@ -1,85 +1,99 @@
-import create from "zustand";
-import { UserContext } from "@/app/provider/UserProvider";
-import { useContext } from "react";
-// 스토어 상태와 함수에 대한 인터페이스 정의
-type Post = {
-  id: string;
-  content?: string;
-  mood?: string;
-  title?: string;
-  startDate: string;
-  endDate: string;
-};
-type User = {
-  email: string;
-};
-interface ScheduleState {
+import { create } from "zustand";
+import { devtools } from "zustand/middleware";
+import { Post, User } from "@/types/store";
+
+interface DateState {
+  selectedDate: Date | null;
+  startDate: Date;
+  endDate: Date;
+  selectedDayOfWeek: string;
+}
+
+interface PostState {
+  posts: Post[];
+  postsUpdate: boolean;
+}
+
+interface ScheduleState extends DateState, PostState {
   selectedMood: string | null;
   setSelectedMood: (mood: string | null) => void;
-  selectedDate: Date | null;
   setSelectedDate: (date: Date | null) => void;
-  selectedDayOfWeek: string;
-  setSelectedDayOfWeek: (day: string) => void;
-  startDate: Date | undefined;
-  setStartDate: (date: Date | undefined) => void;
-  endDate: Date | undefined;
-  setEndDate: (date: Date | undefined) => void;
-  postsUpdate: boolean;
+  setStartDate: (date: Date) => void;
+  setEndDate: (date: Date) => void;
   setPostsUpdate: (update: boolean) => void;
-  posts: Post[];
   setPosts: (posts: Post[]) => void;
   updatePost: (updatePost: Post) => void;
   fetchPosts: (user: User) => Promise<void>;
 }
-// 스토어 생성
-const useScheduleStore = create<ScheduleState>((set) => ({
-  selectedMood: null,
-  setSelectedMood: (mood) => set({ selectedMood: mood }),
-  selectedDate: new Date(),
-  setSelectedDate: (date) => {
-    const dayOfWeek = date
-      ? ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"][
-          date.getDay()
-        ]
-      : "";
-    set({ selectedDate: date, selectedDayOfWeek: dayOfWeek });
-  },
-  selectedDayOfWeek: "",
-  setSelectedDayOfWeek: (day) => set({ selectedDayOfWeek: day }),
-  startDate: new Date(), // 초기값 설정
-  setStartDate: (date) => set({ startDate: date }), // 함수 구현
-  endDate: new Date(), // 초기값 설정
-  setEndDate: (date) => set({ endDate: date }), // 함수 구현
-  postsUpdate: false,
-  setPostsUpdate: (update) => set({ postsUpdate: update }),
-  posts: [],
-  setPosts: (posts) => set({ posts }),
-  updatePost: (updatePost) =>
-    set((state) => ({
-      posts: state.posts.map((post) =>
-        post.id === updatePost.id ? updatePost : post,
-      ),
-    })),
-  fetchPosts: async (user) => {
-    try {
-      const response = await fetch("/api/user/getPost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: user.email }),
-      }); // 서버에서 데이터 가져오기
-      const data = await response.json();
-      console.log("Fetched data:", data.data); // 응답 데이터 로그 출력
-      if (Array.isArray(data.data)) {
-        set({ posts: data.data }); // 상태 업데이트
-      } else {
-        console.error("Fetched data.data is not an array:", data.data);
-      }
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-    }
-  },
-}));
+
+const useScheduleStore = create<ScheduleState>()(
+  devtools(
+    (set, get) => ({
+      selectedMood: null,
+      selectedDate: new Date(),
+      startDate: new Date(),
+      endDate: new Date(),
+      selectedDayOfWeek: "",
+      posts: [],
+      postsUpdate: false,
+
+      setSelectedMood: (mood) => set({ selectedMood: mood }),
+
+      setSelectedDate: (date) => {
+        if (date) {
+          const dayOfWeek = [
+            "일요일",
+            "월요일",
+            "화요일",
+            "수요일",
+            "목요일",
+            "금요일",
+            "토요일",
+          ][date.getDay()];
+          set({
+            selectedDate: date,
+            selectedDayOfWeek: dayOfWeek,
+            startDate: date,
+            endDate: date,
+          });
+        } else {
+          set({ selectedDate: null, selectedDayOfWeek: "" });
+        }
+      },
+
+      setStartDate: (date) => set({ startDate: date }),
+      setEndDate: (date) => set({ endDate: date }),
+
+      setPostsUpdate: (update) => set({ postsUpdate: update }),
+      setPosts: (posts) => set({ posts }),
+
+      updatePost: (updatePost) =>
+        set((state) => ({
+          posts: state.posts.map((post) =>
+            post.id === updatePost.id ? updatePost : post,
+          ),
+        })),
+
+      fetchPosts: async (user) => {
+        try {
+          const response = await fetch("/api/user/getPost", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: user.email }),
+          });
+          const data = await response.json();
+          if (Array.isArray(data.data)) {
+            set({ posts: data.data });
+          } else {
+            console.error("Fetched data.data is not an array:", data.data);
+          }
+        } catch (error) {
+          console.error("Failed to fetch posts:", error);
+        }
+      },
+    }),
+    { name: "schedule-store" },
+  ),
+);
 
 export default useScheduleStore;

@@ -1,0 +1,49 @@
+@import "@/styles/variables.scss";
+
+.welcomeSection {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $grey-line;
+  padding-bottom: 20px;
+  margin: auto;
+
+  .welcomeIcon {
+    padding-left: 50px;
+    width: 250px;
+    height: 250px;
+
+    &:hover {
+      scale: 1.05;
+      transition: 0.5s all ease;
+    }
+  }
+}
+
+.welcomeTitle {
+  font-size: 22px;
+  padding-left: 20px;
+}
+
+.welcomeDescription {
+  color: $grey-color;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .welcomeSection {
+    .welcomeIcon {
+      display: none;
+    }
+  }
+  .welcomeTitle {
+    font-size: 22px;
+    padding-top: 20px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .welcomeDescription {
+    font-size: 12px;
+  }
+}

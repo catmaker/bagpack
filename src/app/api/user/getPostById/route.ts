@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPostById } from "@/lib/firebase/firestore";
+
 export async function POST(request: NextRequest) {
-  const { id, email } = await request.json();
-  const post = await getPostById(id, email);
+  const { id } = await request.json();
+  console.log("getPostById api 요청:", id);
+  const post = await getPostById(id);
   if (!post) {
     return NextResponse.json(
       { message: "포스트를 가져오는데 실패했습니다." },

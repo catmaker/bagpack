@@ -1,32 +1,152 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
-  "plugins": ["prettier"],
   "env": {
     "browser": true,
-    "node": true
+    "es2021": true,
+    "jasmine": true,
+    "jest": true
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ],
-    "no-console": "off",
-    "eqeqeq": "error",
-    "indent": "off",
-    "comma-dangle": "off"
-  },
-  "overrides": [
-    {
-      "files": ["*.test.js"],
-      "rules": {
-        "no-unused-expressions": "off"
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "eslint-config-prettier",
+    "next/core-web-vitals"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "project": "."
       }
     }
-  ]
+  },
+  "rules": {
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 1, "maxBOF": 0, "maxEOF": 0 }
+    ],
+    "arrow-body-style": "off",
+    "no-plusplus": "off",
+    "react/display-name": "off",
+    "react/function-component-definition": [
+      "warn",
+      { "namedComponents": "arrow-function" }
+    ],
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
+    "no-restricted-exports": [
+      "error",
+      { "restrictDefaultExports": { "defaultFrom": false } }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["external", "builtin"],
+          "internal",
+          ["parent", "sibling", "index"],
+          "type",
+          "object"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "./*.module.scss",
+            "group": "object",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "next"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "import/no-anonymous-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.tsx",
+          "**/*.stories.*",
+          "**/.storybook/**/*.*",
+          "setupTests.ts"
+        ],
+        "peerDependencies": true
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-unused-expressions": ["warn"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/camelcase": "off",
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "lines-between-class-members": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": ["label"],
+        "labelAttributes": ["htmlFor"],
+        "controlComponents": ["input"]
+      }
+    ],
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "react/self-closing-comp": ["error", { "component": true, "html": true }]
+  }
 }

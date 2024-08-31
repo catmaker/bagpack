@@ -1,0 +1,34 @@
+@import "@/styles/variables.scss";
+
+.loginPageContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: $input-color;
+}
+
+.loginCard {
+  transition: 0.3s all ease-in-out;
+}
+
+.loginCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+@media (max-width: 580px) {
+  .loginCard {
+    width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginCard {
+    width: 280px;
+  }
+}

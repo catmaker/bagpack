@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updatePost } from "@/lib/firebase/firestore";
+
 export async function POST(request: NextRequest) {
   try {
     const { email, post, startDate, endDate, mood, title, id } =

@@ -1,0 +1,47 @@
+@import "@/styles/variables.scss";
+
+.featureItemWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.featureHeader {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.featureTitle {
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.featureDescription {
+  font-size: $font-size-s;
+  color: $feature-item-description-color;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .featureHeader {
+    font-size: $font-size-s;
+  }
+  .featureDescription {
+    font-size: $font-size-xs;
+  }
+}
+
+@media (max-width: 600px) {
+  .featureHeader {
+    font-size: $font-size-m;
+  }
+  .featureDescription {
+    font-size: $font-size-s;
+  }
+  .featureItemWrapper {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}

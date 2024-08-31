@@ -1,0 +1,44 @@
+@import "@/styles/variables.scss";
+
+.userSectionContainer {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.userInfoWrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 230px;
+}
+
+.alarmIconWrapper {
+  margin-right: 20px;
+}
+
+.alarmIconWrapper,
+.avatarWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userProfileContainer {
+  width: 240px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+}
+
+.userNickname {
+  margin-left: 15px;
+  font-size: $font-size-m;
+  font-weight: $font-weight-bold;
+}
+
+.avatarWrapper {
+  margin-left: 6px;
+  position: relative;
+}

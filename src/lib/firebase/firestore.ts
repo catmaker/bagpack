@@ -1,5 +1,13 @@
 import { FirebaseError, initializeApp } from "firebase/app";
 import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  Auth,
+} from "firebase/auth";
+import {
   getFirestore,
   collection,
   query,
@@ -12,14 +20,7 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  Auth,
-} from "firebase/auth";
+import { User } from "@/types/user";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -36,15 +37,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export default app;
 // 모든 유저 가져오기
-type User = {
-  id: string;
-  email: string;
-  password: string;
-  created_at: string;
-  isDone: boolean;
-  palette?: string[];
-  nickname: string;
-};
 
 // 유저 추가하기
 export async function signUp(
@@ -57,17 +49,16 @@ export async function signUp(
   }
 
   const auth = getAuth();
-  const db = getFirestore();
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password,
     );
-    const user = userCredential.user;
+    const { user } = userCredential;
     if (user) {
-      const userDoc = doc(db, "users", user.uid);
-      await setDoc(userDoc, {
+      const userDocRef = doc(db, "users", user.uid);
+      await setDoc(userDocRef, {
         email: user.email,
         created_at: Timestamp.now(),
         isDone: false,
@@ -130,40 +121,45 @@ export async function signOutClient(): Promise<void> {
 }
 // 유저 정보 가져오기
 export async function getUser(uid: string): Promise<User> {
-  const db = getFirestore();
-  const docSnap = await getDoc(doc(db, "users", uid));
-  if (docSnap.exists()) {
-    return docSnap.data() as User;
-  } else {
-    throw new Error("No such user!");
+  const userDocRef = doc(db, "users", uid);
+  const userDocSnap = await getDoc(userDocRef);
+  if (userDocSnap.exists()) {
+    return userDocSnap.data() as User;
   }
+  throw new Error("No such user!");
 }
 // 유저 정보 확인
 export function getCurrentUser(): Promise<User | null> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        try {
-          const userData = await getUser(user.uid);
-          resolve(userData);
-        } catch (error) {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (user) => {
+        unsubscribe(); // 여러 번 호출되는거 방지 (한 번만 호출되도록)
+        if (user) {
+          try {
+            const userData = await getUser(user.uid);
+            resolve(userData);
+          } catch (error) {
+            reject(error);
+          }
+        } else {
           resolve(null);
         }
-      } else {
-        resolve(null);
-      }
-    });
+      },
+      reject,
+    );
   });
 }
+
 // 팔레트 색상 저장하기
 export async function addPalette(email: string, palette: string[]) {
-  const db = getFirestore();
-  const userSnapshot = await getDocs(collection(db, "users"));
-  userSnapshot.docs.forEach(async (doc) => {
-    if (doc.data().email === email) {
-      await updateDoc(doc.ref, {
-        palette: palette,
+  const usersCollectionRef = collection(db, "users");
+  const userSnapshot = await getDocs(usersCollectionRef);
+  userSnapshot.docs.forEach(async (userDoc) => {
+    if (userDoc.data().email === email) {
+      await updateDoc(userDoc.ref, {
+        palette,
         isDone: true,
       });
     }
@@ -180,32 +176,32 @@ export async function addPost(
   title: string,
 ): Promise<boolean> {
   console.log(email, post, startDate, endDate, mood, title);
-  const db = getFirestore();
   try {
-    const userSnapshot = await getDocs(collection(db, "users"));
-    const updatePromises = userSnapshot.docs.map(async (doc) => {
-      if (doc.data().email === email) {
-        const existingPosts = doc.data().posts || []; // 기존 포스트 배열을 가져오거나, 없으면 빈 배열 사용
+    const usersCollectionRef = collection(db, "users");
+    const userSnapshot = await getDocs(usersCollectionRef);
+    const updatePromises = userSnapshot.docs.map(async (userDoc) => {
+      if (userDoc.data().email === email) {
+        const existingPosts = userDoc.data().posts || [];
         const newPost = {
           id: Date.now().toString(),
           content: post,
-          startDate: startDate, // 인자로 받은 날짜 사용
-          endDate: endDate,
-          mood: mood,
-          title: title,
-        }; // 새 포스트 객체 생성
-        await updateDoc(doc.ref, {
-          posts: [...existingPosts, newPost], // 기존 포스트 배열에 새 포스트 추가
+          startDate,
+          endDate,
+          mood,
+          title,
+        };
+        await updateDoc(userDoc.ref, {
+          posts: [...existingPosts, newPost],
         });
-        return true; // 성공적으로 업데이트 되었을 때 true 반환
+        return true;
       }
-      return false; // 해당 이메일을 가진 문서가 아닐 경우 false 반환
+      return false;
     });
-    const results = await Promise.all(updatePromises); // 모든 업데이트 작업을 병렬로 처리
-    return results.includes(true); // 하나라도 업데이트에 성공했다면 true 반환
+    const results = await Promise.all(updatePromises);
+    return results.includes(true);
   } catch (error) {
     console.error("Error adding post: ", error);
-    return false; // 예외 발생 시 false 반환
+    return false;
   }
 }
 type Post = {
@@ -218,12 +214,13 @@ type Post = {
 
 // 유저 포스트 가져오기
 export async function getPosts(email: string) {
-  const db = getFirestore();
-  const userSnapshot = await getDocs(collection(db, "users"));
+  const usersCollectionRef = collection(db, "users");
+  const userSnapshot = await getDocs(usersCollectionRef);
   let posts: Post[] = [];
-  userSnapshot.docs.forEach((doc) => {
-    if (doc.data().email === email) {
-      posts = doc.data().posts;
+  userSnapshot.docs.forEach((userDoc) => {
+    const { email: userEmail, posts: userPosts } = userDoc.data();
+    if (userEmail === email) {
+      posts = userPosts;
     }
   });
   return posts;
@@ -234,19 +231,20 @@ type PostById = {
   email: string;
 };
 // 유저 포스트 id로 가져오기
-export async function getPostById(id: string, email: string) {
-  const db = getFirestore();
-  const userSnapshot = await getDocs(collection(db, "users"));
-  let post: Post | null = null;
-  userSnapshot.docs.forEach((doc) => {
-    if (doc.data().email === email) {
-      const posts = doc.data().posts;
-      if (posts) {
-        post = posts.find((post: any) => post.id === id) || null;
+export async function getPostById(id: string) {
+  const usersCollectionRef = collection(db, "users");
+  const userSnapshot = await getDocs(usersCollectionRef);
+  let foundPost: Post | null = null; // 'post'를 'foundPost'로 변경
+  userSnapshot.docs.forEach((userDoc) => {
+    const { posts } = userDoc.data();
+    if (posts) {
+      const matchingPost = posts.find((postItem: any) => postItem.id === id); // 'post'를 'postItem'으로 변경
+      if (matchingPost) {
+        foundPost = matchingPost; // 'post'를 'foundPost'로 변경
       }
     }
   });
-  return post;
+  return foundPost; // 'post'를 'foundPost'로 변경
 }
 // 유저 포스트 수정하기
 export async function updatePost(
@@ -258,12 +256,12 @@ export async function updatePost(
   title: string,
   id: string,
 ) {
-  const db = getFirestore();
   try {
-    const userSnapshot = await getDocs(collection(db, "users"));
-    const updatePromises = userSnapshot.docs.map(async (doc) => {
-      if (doc.data().email === email) {
-        const existingPosts = doc.data().posts || [];
+    const usersCollectionRef = collection(db, "users");
+    const userSnapshot = await getDocs(usersCollectionRef);
+    const updatePromises = userSnapshot.docs.map(async (userDoc) => {
+      if (userDoc.data().email === email) {
+        const existingPosts = userDoc.data().posts || [];
         const updatedPosts = existingPosts.map((existingPost: any) => {
           if (existingPost.id === id) {
             return {
@@ -277,7 +275,7 @@ export async function updatePost(
           }
           return existingPost;
         });
-        await updateDoc(doc.ref, {
+        await updateDoc(userDoc.ref, {
           posts: updatedPosts,
         });
         return true;
@@ -291,36 +289,32 @@ export async function updatePost(
     return false;
   }
 }
-
 // 유저 포스트 삭제하기
 export async function deletePost(email: string, id: string) {
-  const db = getFirestore(); // Firebase db 가져오기
   try {
-    const userSnapshot = await getDocs(collection(db, "users")); // users 컬렉션의 모든 문서 가져오기
-    const updatePromises = userSnapshot.docs.map(async (doc) => {
-      // 모든 문서에 대해 반복
-      if (doc.data().email === email) {
-        // 이메일이 일치하는 문서 찾기
-        const existingPosts = doc.data().posts || []; // 해당 문서의 포스트 배열 가져오기
+    const usersCollectionRef = collection(db, "users");
+    const userSnapshot = await getDocs(usersCollectionRef);
+    const updatePromises = userSnapshot.docs.map(async (userDoc) => {
+      if (userDoc.data().email === email) {
+        const existingPosts = userDoc.data().posts || [];
         const updatedPosts = existingPosts.filter(
-          // 삭제할 포스트를 제외한 새로운 포스트 배열 생성
-          (existingPost: any) => existingPost.id !== id, // id가 일치하지 않는 포스트만 남김
+          (existingPost: any) => existingPost.id !== id,
         );
-        await updateDoc(doc.ref, {
-          // 새로운 포스트 배열로 문서 업데이트
+        await updateDoc(userDoc.ref, {
           posts: updatedPosts,
         });
         return true;
       }
       return false;
     });
-    const results = await Promise.all(updatePromises); // 모든 업데이트 작업을 병렬로 처리
-    return results.includes(true); // 하나라도 업데이트에 성공했다면 true 반환
+    const results = await Promise.all(updatePromises);
+    return results.includes(true);
   } catch (error) {
     console.error("Error deleting post: ", error);
     return false;
   }
 }
+
 // 유저 포스트 날짜 수정하기
 export async function updatePostDates(
   email: string,
@@ -328,12 +322,12 @@ export async function updatePostDates(
   startDate: string,
   endDate: string,
 ): Promise<boolean> {
-  const db = getFirestore();
   try {
-    const userSnapshot = await getDocs(collection(db, "users"));
-    const updatePromises = userSnapshot.docs.map(async (doc) => {
-      if (doc.data().email === email) {
-        const existingPosts = doc.data().posts || [];
+    const usersCollectionRef = collection(db, "users");
+    const userSnapshot = await getDocs(usersCollectionRef);
+    const updatePromises = userSnapshot.docs.map(async (userDoc) => {
+      if (userDoc.data().email === email) {
+        const existingPosts = userDoc.data().posts || [];
         const updatedPosts = existingPosts.map((existingPost: any) => {
           if (existingPost.id === id) {
             return {
@@ -344,7 +338,7 @@ export async function updatePostDates(
           }
           return existingPost;
         });
-        await updateDoc(doc.ref, {
+        await updateDoc(userDoc.ref, {
           posts: updatedPosts,
         });
         return true;
@@ -358,18 +352,3 @@ export async function updatePostDates(
     return false;
   }
 }
-
-module.exports = {
-  signUp,
-  signIn,
-  getCurrentUser,
-  getUser,
-  addPalette,
-  addPost,
-  getPosts,
-  getPostById,
-  updatePost,
-  deletePost,
-  updatePostDates,
-  signOutClient,
-};

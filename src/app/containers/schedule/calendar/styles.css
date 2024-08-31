@@ -1,0 +1,59 @@
+.fc-daygrid-day-top {
+  display: flex !important;
+  flex-direction: row !important;
+}
+.fc .fc-button-primary {
+  background-color: #fe9a8a !important; /* 배경색을 빨간색으로 설정 */
+  border-color: white !important;
+}
+.fc .fc-button-group {
+  gap: 1px !important;
+}
+.fc-toolbar-chunk {
+  display: flex !important;
+  /* margin-top: 20px !important; */
+  align-items: center !important;
+  justify-content: center;
+}
+
+.fc-prev-button {
+  width: 30px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-right: 10px !important;
+}
+.fc-next-button {
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 10px !important;
+}
+.fc-toolbar-title {
+  margin: 0 !important;
+}
+
+.fc-header-toolbar > * {
+  flex: 1 !important; /* 각 버튼이 동일한 비율로 공간 차지 */
+  text-align: center !important; /* 버튼 텍스트 중앙 정렬 */
+  margin-top: 25px !important;
+}
+/* 일요일 날짜: 빨간색 */
+.fc-day-sun a {
+  color: red;
+}
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+  color: blue;
+}
+.fc-theme-standard {
+  border-radius: 10px !important;
+}
+.fc-h-event {
+  border: none !important;
+}

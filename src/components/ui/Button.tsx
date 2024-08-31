@@ -1,6 +1,7 @@
 import React from "react";
+
 type ButtonProps = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   width?: number | string;
   height?: number | string;
   borderRadius?: number;
@@ -12,36 +13,43 @@ type ButtonProps = {
   className?: string;
   backgroundColor?: string;
   onClick?: () => void;
+  display?: string;
 };
+
 const Button = ({
-  children = "Button",
-  width = 100,
-  height = 50,
-  borderRadius = 15,
-  padding,
+  children,
+  width,
+  height,
+  borderRadius = 5,
+  padding = "10px 20px",
   margin,
   border = "none",
-  boxShadow = "0px 4px 4px rgba(0, 0, 0, 0.25)",
+  boxShadow,
   cursor = "pointer",
   className,
   backgroundColor = "#FFFFFF",
+  display = "flex",
   onClick,
 }: ButtonProps) => {
   return (
     <button
+      type="button"
       className={className}
       onClick={onClick}
       style={{
-        width: width,
-        height: height,
-        borderRadius: borderRadius,
-        padding: padding,
-        backgroundColor: backgroundColor,
+        width,
+        height,
+        borderRadius,
+        padding,
+        backgroundColor,
         color: "black",
-        border: border,
-        boxShadow: boxShadow,
-        cursor: cursor,
-        margin: margin,
+        border,
+        boxShadow,
+        cursor,
+        margin,
+        display,
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       {children}

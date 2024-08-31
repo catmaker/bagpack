@@ -27,13 +27,13 @@ const Card = ({
     <div
       className={className}
       style={{
-        width: width,
-        height: height,
-        borderRadius: borderRadius,
-        padding: padding,
-        boxShadow: boxShadow,
-        border: border,
-        backgroundColor: backgroundColor,
+        width,
+        height,
+        borderRadius,
+        padding,
+        boxShadow,
+        border,
+        backgroundColor,
       }}
     >
       {children}

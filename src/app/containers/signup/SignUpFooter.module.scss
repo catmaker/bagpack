@@ -1,0 +1,30 @@
+@import "@/styles/variables.scss";
+
+.signUpFooter {
+  width: 370px;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-xs;
+  padding-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.loginLink {
+  text-decoration: none;
+  color: $primary-color;
+  font-weight: $font-weight-bold;
+  transition: 0.1s all ease-in-out !important;
+
+  &:hover {
+    color: $primary-color-hover !important;
+  }
+}
+
+.forgotPasswordLink {
+  text-decoration: none;
+  color: $grey-color;
+
+  &:hover {
+    color: $grey-color-hover !important;
+  }
+}

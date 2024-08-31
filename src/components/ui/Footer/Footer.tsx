@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "./Footer.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./Footer.module.scss";
+
 const Footer = () => {
   return (
     <footer className={styles.footer}>
@@ -16,13 +17,13 @@ const Footer = () => {
         <a href="#contact">고객 지원</a>
       </div>
       <div className={styles.footerSocials}>
-        <a href={"https://github.com/catmaker"} target="_blank">
+        <a href="https://github.com/catmaker" target="_blank">
           <Image
-            src={"/bagpackIcon/github.png"}
+            src="/bagpackIcon/github.png"
             width={40}
             height={40}
             alt="github_icon"
-          ></Image>
+          />
         </a>
       </div>
       <div className={styles.footerBottom}>

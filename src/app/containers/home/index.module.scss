@@ -1,0 +1,9 @@
+@import "@/styles/variables.scss";
+
+.homeContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  background-color: $container-background-color;
+}

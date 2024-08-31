@@ -1,0 +1,32 @@
+@import "@/styles/variables.scss";
+
+.bannerWrapper {
+  width: 100vw;
+  height: 450px;
+  position: relative;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.introContent {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  .content {
+    span {
+      font-size: 10px;
+    }
+    div {
+      align-items: center;
+      span {
+        font-size: 12px;
+      }
+    }
+  }
+}

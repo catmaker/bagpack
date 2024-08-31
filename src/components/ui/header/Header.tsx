@@ -1,11 +1,13 @@
 "use client";
+
 import React, { useContext } from "react";
-import { UserContext } from "@/app/provider/UserProvider";
-import { signOutClient } from "@/lib/firebase/firestore";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/app/provider/UserProvider";
+import { signOutClient } from "@/lib/firebase/firestore";
+import { Logo } from "../../../../public/svg/index";
 import styles from "./Header.module.scss";
-import Image from "next/image";
 
 const Header = () => {
   const user = useContext(UserContext);
@@ -24,25 +26,18 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.leftBox}>
-        <Link href={"/intro"} className={styles.logoLink}>
-          <Image
-            className={styles.logo}
-            src={"/bagpackIcon/NewLogo.svg"}
-            width={140}
-            height={40}
-            alt="logo"
-            sizes="100vw"
-          />
+        <Link href="/intro" className={styles.logoLink}>
+          <Logo width={140} height={40} className={styles.logo} />
         </Link>
         <ul className={styles.navList}>
           <li>
-            <Link href={`/home`}>HOME</Link>
+            <Link href="/home">HOME</Link>
           </li>
           <li>
-            <Link href={`/schedule`}>일정</Link>
+            <Link href="/schedule">일정</Link>
           </li>
           <li>
-            <Link href={`/mypage`}>마이페이지</Link>
+            <Link href="/mypage">마이페이지</Link>
           </li>
         </ul>
       </div>
@@ -50,19 +45,19 @@ const Header = () => {
         <ul className={styles.navList}>
           <li>
             {user ? (
-              <a
-                href="#"
+              <button
+                type="button"
                 onClick={handleLogout}
                 className={styles.logoutButton}
               >
                 로그아웃
-              </a>
+              </button>
             ) : (
               <div className={styles.buttonBox}>
-                <Link className={styles.signupLink} href={"/signup"}>
+                <Link className={styles.signupLink} href="/signup">
                   회원가입
                 </Link>
-                <Link href={`/login`} className={styles.loginButton}>
+                <Link href="/login" className={styles.loginButton}>
                   로그인
                 </Link>
               </div>
