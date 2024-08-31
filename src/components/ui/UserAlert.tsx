@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import { UserContext } from "@/app/provider/UserProvider";
 import { useRouter } from "next/navigation";
+import { UserContext } from "@/app/provider/UserProvider";
 
 const UserAlert = () => {
   const router = useRouter();

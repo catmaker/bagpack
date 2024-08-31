@@ -25,17 +25,17 @@ const Pallette = ({
 }: PalletteProps) => {
   const style = {
     backgroundColor: color,
-    width: width,
-    height: height,
-    border: border,
-    borderRadius: borderRadius,
-    boxShadow: boxShadow,
+    width,
+    height,
+    border,
+    borderRadius,
+    boxShadow,
   };
 
   return (
-    <div className={className} style={style} onClick={onClick}>
+    <button type="button" className={className} style={style} onClick={onClick}>
       {children}
-    </div>
+    </button>
   );
 };
 

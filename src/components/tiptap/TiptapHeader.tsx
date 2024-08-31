@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { useCurrentEditor } from "@tiptap/react";
 import {
   Bold,
   Italic,
@@ -13,8 +15,6 @@ import {
   Undo,
   Redo,
 } from "../../../public/svg";
-import React, { useState } from "react";
-import { useCurrentEditor } from "@tiptap/react";
 
 const MenuBar = () => {
   const [color, setColor] = useState("#958DF1");
@@ -29,6 +29,7 @@ const MenuBar = () => {
       <div className="tiptap-button-group">
         <div className="button-1">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleBold().run();
@@ -36,9 +37,10 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleBold().run()}
             className={editor.isActive("bold") ? "is-active" : ""}
           >
-            <Bold width={20} height={20} alt="bold_icon"></Bold>
+            <Bold width={20} height={20} alt="bold_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleItalic().run();
@@ -46,9 +48,10 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleItalic().run()}
             className={editor.isActive("italic") ? "is-active" : ""}
           >
-            <Italic width={20} height={20} alt="italic_icon"></Italic>
+            <Italic width={20} height={20} alt="italic_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleStrike().run();
@@ -56,11 +59,12 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleStrike().run()}
             className={editor.isActive("strike") ? "is-active" : ""}
           >
-            <Strike width={20} height={20} alt="strike_icon"></Strike>
+            <Strike width={20} height={20} alt="strike_icon" />
           </button>
         </div>
         <div className="button-1">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleCode().run();
@@ -68,18 +72,20 @@ const MenuBar = () => {
             disabled={!editor.can().chain().focus().toggleCode().run()}
             className={editor.isActive("code") ? "is-active" : ""}
           >
-            <Code width={20} height={20} alt="code_icon"></Code>
+            <Code width={20} height={20} alt="code_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().setParagraph().run();
             }}
             className={editor.isActive("paragraph") ? "is-active" : ""}
           >
-            <Paragraph width={20} height={20} alt="paragraph_icon"></Paragraph>
+            <Paragraph width={20} height={20} alt="paragraph_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleHeading({ level: 1 }).run();
@@ -91,6 +97,7 @@ const MenuBar = () => {
             <H1 width={20} height={20} alt="h1" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleHeading({ level: 2 }).run();
@@ -102,6 +109,7 @@ const MenuBar = () => {
             <H2 width={20} height={20} alt="h2" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleHeading({ level: 3 }).run();
@@ -115,63 +123,56 @@ const MenuBar = () => {
         </div>
         <div className="button-1">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleBulletList().run();
             }}
             className={editor.isActive("bulletList") ? "is-active" : ""}
           >
-            <BulletList
-              width={32}
-              height={24}
-              alt="bulletList_icon"
-            ></BulletList>
+            <BulletList width={32} height={24} alt="bulletList_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleOrderedList().run();
             }}
             className={editor.isActive("orderedList") ? "is-active" : ""}
           >
-            <OrderedList
-              width={32}
-              height={24}
-              alt="orderedList_icon"
-            ></OrderedList>
+            <OrderedList width={32} height={24} alt="orderedList_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().toggleBlockquote().run();
             }}
             className={editor.isActive("blockquote") ? "is-active" : ""}
           >
-            <Blockquote
-              width={32}
-              height={24}
-              alt="blockquote_icon"
-            ></Blockquote>
+            <Blockquote width={32} height={24} alt="blockquote_icon" />
           </button>
         </div>
         <div className="button-1">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().undo().run();
             }}
             disabled={!editor.can().chain().focus().undo().run()}
           >
-            <Undo width={20} height={20} fill="none" alt="undo_icon"></Undo>
+            <Undo width={20} height={20} fill="none" alt="undo_icon" />
           </button>
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               editor.chain().focus().redo().run();
             }}
             disabled={!editor.can().chain().focus().redo().run()}
           >
-            <Redo width={20} height={20} fill="none" alt="redo_icon"></Redo>
+            <Redo width={20} height={20} fill="none" alt="redo_icon" />
           </button>
         </div>
         <input

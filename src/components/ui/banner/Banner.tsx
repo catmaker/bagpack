@@ -52,7 +52,7 @@ const Banner: React.FC<BannerProps> = ({ slides, interval = 5000 }) => {
     <div className={styles.banner}>
       {slides.map((slide, index) => (
         <div
-          key={index}
+          key={slide.title}
           className={`${styles.imageContainer} ${index === currentIndex ? styles.fadeIn : styles.fadeOut}`}
         >
           <Image
@@ -67,10 +67,10 @@ const Banner: React.FC<BannerProps> = ({ slides, interval = 5000 }) => {
         <h1>{slides[currentIndex].title}</h1>
         <p>{slides[currentIndex].subtitle}</p>
       </div>
-      <button className={styles.prevButton} onClick={prevSlide}>
+      <button className={styles.prevButton} type="button" onClick={prevSlide}>
         ‹
       </button>
-      <button className={styles.nextButton} onClick={nextSlide}>
+      <button className={styles.nextButton} type="button" onClick={nextSlide}>
         ›
       </button>
     </div>

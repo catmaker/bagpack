@@ -1,12 +1,15 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jasmine": true,
+    "jest": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "extends": [
     "airbnb",
@@ -16,18 +19,9 @@
     "eslint-config-prettier",
     "next/core-web-vitals"
   ],
-  "globals": {
-    "NodeJS": true
-  },
   "plugins": ["@typescript-eslint"],
-  "env": {
-    "browser": true,
-    "jasmine": true,
-    "jest": true
-  },
   "settings": {
     "react": {
-      // Tells eslint-plugin-react to automatically detect the version of React to use.
       "version": "detect"
     },
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -42,6 +36,10 @@
     }
   },
   "rules": {
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 1, "maxBOF": 0, "maxEOF": 0 }
+    ],
     "arrow-body-style": "off",
     "no-plusplus": "off",
     "react/display-name": "off",
@@ -68,54 +66,40 @@
     "import/order": [
       "error",
       {
+        "groups": [
+          ["external", "builtin"],
+          "internal",
+          ["parent", "sibling", "index"],
+          "type",
+          "object"
+        ],
         "pathGroups": [
           {
-            "pattern": "@/lib/**",
-            "group": "external"
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
           },
           {
-            "pattern": "{types/*,@/types*,./types}",
-            "group": "type"
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
           },
           {
-            "pattern": "{hooks,@/hooks/**/*,./hooks/**,./use**,../use**,../../use**,../../../use**,,../../hooks/**,./_hooks/**,../../../_hooks/**}",
+            "pattern": "@/**",
             "group": "internal"
           },
           {
-            "pattern": "{utils/**/*,./utils,../utils,../../utils,../../../utils}",
-            "group": "type"
-          },
-          {
-            "pattern": "{@/constants/*,./constants}",
-            "group": "type"
-          },
-          {
-            "pattern": "{states/**/*,./states*,./**/states*,../states*,../../states*,../../../states*,,../../../../states*,**/**/**/states*}",
-            "group": "type"
-          },
-          {
-            "pattern": "@/services/**",
-            "group": "type"
-          },
-          {
-            "pattern": "{./helpers,./data,./config,./defaults,../../../defaults}",
-            "group": "type"
-          },
-          {
-            "pattern": "{components,components/_common/**,@/components,@/components/**,svgs,@/assets/**/*,@/app/**,routes/**,public/**}",
-            "group": "index"
-          },
-          {
-            "pattern": "{styles,./*.scss,../*.scss,../*.module.scss}",
-            "group": "index"
+            "pattern": "./*.module.scss",
+            "group": "object",
+            "position": "after"
           }
         ],
-        "groups": [
-          ["external", "builtin"],
-          ["type", "internal", "object"],
-          ["parent", "sibling", "index"]
-        ],
-        "newlines-between": "always"
+        "pathGroupsExcludedImportTypes": ["react", "next"],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
       }
     ],
     "import/no-anonymous-default-export": "off",
@@ -151,10 +135,6 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "argsIgnorePattern": "^_" }
-    ],
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "lines-between-class-members": "off",
     "jsx-a11y/click-events-have-key-events": "off",
@@ -165,7 +145,8 @@
         "labelAttributes": ["htmlFor"],
         "controlComponents": ["input"]
       }
-    ]
-  },
-  "globals": { "navigation": "readonly", "globalThis": false, "NodeJS": true }
+    ],
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "react/self-closing-comp": ["error", { "component": true, "html": true }]
+  }
 }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addPost } from "@/lib/firebase/firestore";
+
 export async function POST(request: NextRequest) {
   const { email, post, startDate, mood, title, endDate } = await request.json();
   const savePost = await addPost(email, post, startDate, endDate, mood, title);

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPostById } from "@/lib/firebase/firestore";
+
 export async function POST(request: NextRequest) {
   const { id } = await request.json();
   console.log("getPostById api 요청:", id);

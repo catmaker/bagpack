@@ -1,14 +1,15 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import Tiptap from "@/components/tiptap/Tiptap";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
+import Tiptap from "@/components/tiptap/Tiptap";
 import { Post, ModifyProps } from "@/types/schedule";
 
 const Modify = ({ params, data }: ModifyProps) => {
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
-  const id = params.id;
+  const { id } = params;
   console.log("data: ", data);
   useEffect(() => {
     if (data === undefined) {

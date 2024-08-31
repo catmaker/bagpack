@@ -1,6 +1,7 @@
 import React from "react";
 // css
 import styles from "./SearchBar.module.scss";
+
 type SearchBarProps = {
   children?: React.ReactNode;
   width?: string;
@@ -19,9 +20,9 @@ const SearchBar = ({
     <div className={className}>
       <input
         className={styles.search}
-        style={{ width: width, height: height }}
+        style={{ width, height }}
         placeholder={placeholder}
-      ></input>
+      />
       {children}
     </div>
   );

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import HomeIcon from "@/asset/svg/home.svg";
+import ScheduleIcon from "@/asset/svg/schedule.svg";
+import SettingIcon from "@/asset/svg/setting.svg";
 import styles from "./SideBar.module.scss";
 
-// svg
-import HomeIcon from "@/asset/svg/home.svg";
-import SettingIcon from "@/asset/svg/setting.svg";
-import ScheduleIcon from "@/asset/svg/schedule.svg";
 const SideBar = () => {
   const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState("home");
@@ -25,9 +24,9 @@ const SideBar = () => {
     <div className={styles.aside}>
       <aside>
         <section className={styles.sectionWrapper}>
-          <Link href={"/"} className={styles.logoContainer}>
+          <Link href="/" className={styles.logoContainer}>
             <Image
-              src={"/bagpackIcon/logoIcon.png"}
+              src="/bagpackIcon/logoIcon.png"
               width={50}
               height={50}
               alt="logoIcon"
@@ -36,12 +35,12 @@ const SideBar = () => {
           </Link>
           <ul className={styles.menuList}>
             <li className={activeMenu === "home" ? styles.active : ""}>
-              <Link href={"/home"}>
+              <Link href="/home">
                 <div>
                   <HomeIcon
                     fill={activeMenu === "home" ? "white" : "#ABB5BA"}
-                    width={"24"}
-                    height={"24"}
+                    width="24"
+                    height="24"
                   />
                   <p className={activeMenu === "home" ? styles.activeText : ""}>
                     HOME
@@ -50,12 +49,12 @@ const SideBar = () => {
               </Link>
             </li>
             <li className={activeMenu === "schedule" ? styles.active : ""}>
-              <Link href={"/schedule"}>
+              <Link href="/schedule">
                 <div>
                   <ScheduleIcon
                     fill={activeMenu === "schedule" ? "white" : "#ABB5BA"}
-                    width={"24"}
-                    height={"24"}
+                    width="24"
+                    height="24"
                   />
                   <p
                     className={

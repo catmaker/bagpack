@@ -15,10 +15,10 @@ import Loading from "@/components/Loading";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/modal/Modal";
 import useScheduleStore from "@/store/schedule";
+import { CalendarProps, Event, EventContentProps } from "@/types/calendar";
 import { updatePostDates } from "@/utils/axios/fetcher/schedule";
 import styles from "./Calendar.module.scss";
 import "./styles.css";
-import { CalendarProps, Event, EventContentProps } from "@/types/calendar";
 
 const EventContent = ({ arg, eventTitles }: EventContentProps) => (
   <div className={styles["event-content"]}>

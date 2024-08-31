@@ -26,7 +26,7 @@ export const signUp = async (
       throw new Error("signUp return 데이터가 비어있습니다.");
     }
 
-    const data = response.data;
+    const { data } = response;
     console.log(data);
     alert("회원가입이 완료되었습니다.");
   } catch (error) {

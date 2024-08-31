@@ -240,7 +240,11 @@ const EditorComponent = ({
       />
       {contents ? (
         <div className={styles.modal_footer}>
-          <button onClick={updateContent} className={styles.button}>
+          <button
+            type="button"
+            onClick={updateContent}
+            className={styles.button}
+          >
             수정
           </button>
           <Link className={styles.button} href={`/schedule/${id}`}>
@@ -249,10 +253,10 @@ const EditorComponent = ({
         </div>
       ) : (
         <div className={styles.modal_footer}>
-          <button onClick={saveContent} className={styles.button}>
+          <button type="button" onClick={saveContent} className={styles.button}>
             저장
           </button>
-          <button onClick={onClose} className={styles.button}>
+          <button type="button" onClick={onClose} className={styles.button}>
             닫기
           </button>
         </div>

@@ -1,13 +1,14 @@
 "use client";
+
 import React, { useState, useContext, useEffect } from "react";
-import { UserContext } from "@/app/provider/UserProvider";
 import Link from "next/link";
-import SideBar from "@/components/ui/SideBar/SideBar";
-import styles from "@/app/containers/schedule/[id]/index.module.scss";
-import { format } from "date-fns";
-import { deletePost } from "@/utils/axios/fetcher/schedule";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import styles from "@/app/containers/schedule/[id]/index.module.scss";
+import { UserContext } from "@/app/provider/UserProvider";
+import SideBar from "@/components/ui/SideBar/SideBar";
 import { Post, ScheduleDetailProps } from "@/types/schedule";
+import { deletePost } from "@/utils/axios/fetcher/schedule";
 
 const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "";
     const date = new Date(dateStr);
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       console.error("Invalid date:", dateStr);
       return dateStr; // Invalid date string 그대로 반환
     }
@@ -53,11 +54,13 @@ const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
               <p>{formatDate(post?.endDate || "")}</p>
             </>
           )}
-          <div dangerouslySetInnerHTML={{ __html: post?.content || "" }}></div>
+          <div dangerouslySetInnerHTML={{ __html: post?.content || "" }} />
           <Link href={`/schedule/${id}/modify`}>
-            <button>수정</button>
+            <button type="button">수정</button>
           </Link>
-          <button onClick={handleDeletePost}>삭제</button>
+          <button type="button" onClick={handleDeletePost}>
+            삭제
+          </button>
         </div>
       </div>
     </div>

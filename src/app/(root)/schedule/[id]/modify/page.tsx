@@ -1,6 +1,7 @@
 import React from "react";
 import Modify from "@/app/containers/schedule/[id]/modify";
 import { getPostById } from "@/utils/axios/fetcher/schedule";
+
 interface Props {
   params: {
     id: string;
