@@ -1,19 +1,20 @@
 "use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import DatePicker from "react-datepicker";
-import { parseISO } from "date-fns";
-import { EditorProvider } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
-import styles from "./Tiptap.module.scss";
-import MenuBar from "./TiptapHeader";
+import { EditorProvider } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { parseISO } from "date-fns";
+import DatePicker from "react-datepicker";
 import { UserContext } from "@/app/provider/UserProvider";
 import useScheduleStore from "@/store/schedule";
 import { savePost, updatePost } from "@/utils/axios/fetcher/schedule";
+import MenuBar from "./TiptapHeader";
+import styles from "./Tiptap.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 
@@ -65,11 +66,11 @@ const EditorComponent = ({
   const setEndDate = useScheduleStore((state) => state.setEndDate);
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
   const userEmail = user?.email;
-  console.log("userEmail" + userEmail);
-  console.log("post" + currentContent);
-  console.log("date" + selectedDate);
-  console.log("mood" + selectedMood);
-  console.log("title" + currentTitle);
+  console.log(`userEmail${userEmail}`);
+  console.log(`post${currentContent}`);
+  console.log(`date${selectedDate}`);
+  console.log(`mood${selectedMood}`);
+  console.log(`title${currentTitle}`);
   useEffect(() => {
     if (contentStartDate) {
       setStartDate(parseISO(contentStartDate));
@@ -87,10 +88,9 @@ const EditorComponent = ({
     setCurrentTitle(e.target.value); // 입력 필드의 값이 변경될 때마다 currentTitle 업데이트
   };
 
-  const saveContent = async (e: any) => {
+  const saveContent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // currentContent가 없다면 경고 메시지 표시 후 함수 종료
     if (!currentContent) {
       alert("내용을 입력해주세요.");
       return;
@@ -100,17 +100,19 @@ const EditorComponent = ({
       return;
     }
 
+    const getEndDate = (): string => {
+      if (endDate) return endDate.toISOString();
+      if (startDate) return startDate.toISOString();
+      return "error";
+    };
+
     const payload = {
-      email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
-      post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
-      startDate: startDate ? startDate.toISOString() : "error", // startDate가 Date 객체라면 ISO 문자열로 변환
-      endDate: endDate
-        ? endDate.toISOString()
-        : startDate
-          ? startDate.toISOString()
-          : "error", // endDate가 Date 객체라면 ISO 문자열로 변환, startDate가 undefined이면 "error" 사용
-      title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
-      mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
+      email: userEmail ?? "error",
+      post: currentContent, // 이미 체크했으므로 fallback 불필요
+      startDate: startDate?.toISOString() ?? "error",
+      endDate: getEndDate(),
+      title: currentTitle, // 이미 체크했으므로 fallback 불필요
+      mood: selectedMood ?? "error",
     };
 
     console.log(payload);
@@ -129,27 +131,31 @@ const EditorComponent = ({
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
+      alert("저장 중 오류가 발생했습니다.");
     }
   };
 
-  const updateContent = async (e: any) => {
+  const updateContent = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("Selected Date:", selectedDate);
 
+    const getEndDate = (): string => {
+      if (endDate) return endDate.toISOString();
+      if (startDate) return startDate.toISOString();
+      return "error";
+    };
+
     // 전송될 데이터 객체 생성
     const payload = {
-      email: userEmail ?? "error", // userEmail이 undefined이면 "error" 사용
-      post: currentContent ?? "내용이 없습니다.", // currentContent가 undefined이면 "내용이 없습니다." 사용
-      startDate: startDate ? startDate.toISOString() : "error", // startDate가 Date 객체라면 ISO 문자열로 변환
-      endDate: endDate
-        ? endDate.toISOString()
-        : startDate
-          ? startDate.toISOString()
-          : "error", // endDate가 Date 객체라면 ISO 문자열로 변환, startDate가 undefined이면 "error" 사용
-      title: currentTitle ?? "무제", // currentTitle이 undefined이면 "무제" 사용
-      mood: selectedMood ?? "error", // selectedMood가 undefined이면 "error" 사용
-      id: id ?? "error", // id가 undefined이면 "error" 사용
+      email: userEmail ?? "error",
+      post: currentContent ?? "내용이 없습니다.",
+      startDate: startDate ? startDate.toISOString() : "error",
+      endDate: getEndDate(),
+      title: currentTitle ?? "무제",
+      mood: selectedMood ?? "error",
+      id: id ?? "error",
     };
+
     // 전송될 데이터 로그로 출력
     console.log("Sending payload:", payload);
 
@@ -168,6 +174,7 @@ const EditorComponent = ({
       router.push("/schedule");
     } catch (error) {
       console.error("Error:", error);
+      alert("수정 중 오류가 발생했습니다.");
     }
   };
 
@@ -181,10 +188,10 @@ const EditorComponent = ({
             <input
               className={styles.title_input}
               type="text"
-              value={currentTitle ? currentTitle : ""}
+              value={currentTitle || ""}
               onChange={handleTitleChange}
-              placeholder={currentTitle ? currentTitle : ""}
-            ></input>
+              placeholder={currentTitle || ""}
+            />
             {contents ? (
               <div className={styles.datePickerBox}>
                 <div className={styles.datePickerWrapper}>
@@ -192,7 +199,7 @@ const EditorComponent = ({
                     selected={startDate}
                     onChange={(date) => {
                       console.log("Date selected:", date);
-                      setStartDate(date || undefined);
+                      setStartDate(date ?? new Date());
                     }}
                     selectsStart
                     startDate={startDate}
@@ -207,7 +214,7 @@ const EditorComponent = ({
                     selected={endDate}
                     onChange={(date) => {
                       console.log("Date selected:", date);
-                      setEndDate(date || undefined);
+                      setEndDate(date ?? new Date());
                     }}
                     selectsEnd
                     startDate={startDate}
@@ -228,7 +235,7 @@ const EditorComponent = ({
           </>
         }
         extensions={extensions}
-        content={currentContent ? currentContent : content}
+        content={currentContent || content}
         onUpdate={handleEditorUpdate}
       />
       {contents ? (
