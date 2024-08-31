@@ -75,6 +75,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         height={50}
         borderRadius={15}
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+        type="submit"
       >
         로그인
       </Button>

@@ -13,10 +13,10 @@ type ButtonProps = {
   className?: string;
   backgroundColor?: string;
   onClick?: () => void;
-  display?: string;
+  type?: "button" | "submit" | "reset";
 };
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   width,
   height,
@@ -28,12 +28,12 @@ const Button = ({
   cursor = "pointer",
   className,
   backgroundColor = "#FFFFFF",
-  display = "flex",
   onClick,
-}: ButtonProps) => {
+  type = "button",
+}) => {
   return (
     <button
-      type="button"
+      type={type}
       className={className}
       onClick={onClick}
       style={{
@@ -47,7 +47,7 @@ const Button = ({
         boxShadow,
         cursor,
         margin,
-        display,
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
