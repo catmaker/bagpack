@@ -87,11 +87,12 @@ export const savePost = async (
   endDate: string,
   title: string,
   mood: string,
+  priority: string,
 ) => {
   try {
     const response = await axiosInstance.post(
       "/api/user/post",
-      { email, post, startDate, endDate, title, mood },
+      { email, post, startDate, endDate, title, mood, priority },
       {
         headers: {
           "Content-Type": "application/json",
@@ -119,11 +120,12 @@ export const updatePost = async (
   mood: string,
   title: string,
   id: string,
+  priority: string,
 ) => {
   try {
     const response = await axiosInstance.post(
       "/api/user/updatePost",
-      { email, post, startDate, endDate, mood, title, id },
+      { email, post, startDate, endDate, mood, title, id, priority },
       {
         headers: {
           "Content-Type": "application/json",
@@ -148,11 +150,12 @@ export const updatePostDates = async (
   id: string,
   startDate: string,
   endDate: string,
+  priority: string,
 ) => {
   try {
     const response = await axiosInstance.post(
       "/api/user/updatePostDates",
-      { email, id, startDate, endDate },
+      { email, id, startDate, endDate, priority },
       {
         headers: {
           "Content-Type": "application/json",
