@@ -1,5 +1,7 @@
+import { setCookie } from "cookies-next";
 import { signIn } from "@/lib/firebase/firestore";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
+
 // Props 인터페이스 정의
 interface Props {
   email: string;
@@ -8,7 +10,6 @@ interface Props {
 
 export const loginHandler = async ({ email, password }: Props) => {
   // 이메일 형식 검사
-
   if (!emailRegex.test(email)) {
     alert("이메일 형식이 올바르지 않습니다.");
     return false;
@@ -23,6 +24,14 @@ export const loginHandler = async ({ email, password }: Props) => {
   try {
     const response = await signIn(email, password);
     if (response) {
+      // 로그인 성공 시 쿠키 설정
+      setCookie("auth-status", "true", {
+        maxAge: 60 * 60 * 24 * 7, // 7일 유효
+        path: "/",
+        secure: process.env.NODE_ENV === "production", // HTTPS에서만 전송 (프로덕션 환경)
+        sameSite: "strict", // CSRF 방지
+      });
+      console.log("Auth cookie set");
       alert("로그인이 완료되었습니다.");
       return true;
     }
