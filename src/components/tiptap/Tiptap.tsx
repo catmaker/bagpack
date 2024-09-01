@@ -66,11 +66,15 @@ const EditorComponent = ({
   const setEndDate = useScheduleStore((state) => state.setEndDate);
   const setPostsUpdate = useScheduleStore((state) => state.setPostsUpdate);
   const userEmail = user?.email;
-  console.log(`userEmail${userEmail}`);
-  console.log(`post${currentContent}`);
-  console.log(`date${selectedDate}`);
-  console.log(`mood${selectedMood}`);
-  console.log(`title${currentTitle}`);
+  const [priority, setPriority] = useState<string>("low");
+  /* eslint-disable no-console */
+  if (process.env.NODE_ENV === "development") {
+    console.log(`userEmail${userEmail}`);
+    console.log(`post${currentContent}`);
+    console.log(`date${selectedDate}`);
+    console.log(`mood${selectedMood}`);
+    console.log(`title${currentTitle}`);
+  }
   useEffect(() => {
     if (contentStartDate) {
       setStartDate(parseISO(contentStartDate));
@@ -113,6 +117,7 @@ const EditorComponent = ({
       endDate: getEndDate(),
       title: currentTitle, // 이미 체크했으므로 fallback 불필요
       mood: selectedMood ?? "error",
+      priority,
     };
 
     console.log(payload);
@@ -125,6 +130,7 @@ const EditorComponent = ({
         payload.endDate,
         payload.title,
         payload.mood,
+        payload.priority,
       );
       setPostsUpdate(true);
       alert("저장에 성공했습니다!");
@@ -154,6 +160,7 @@ const EditorComponent = ({
       title: currentTitle ?? "무제",
       mood: selectedMood ?? "error",
       id: id ?? "error",
+      priority,
     };
 
     // 전송될 데이터 로그로 출력
@@ -168,6 +175,7 @@ const EditorComponent = ({
         payload.mood,
         payload.title,
         payload.id,
+        payload.priority,
       );
       setPostsUpdate(true);
       alert("수정에 성공했습니다!");
@@ -177,7 +185,9 @@ const EditorComponent = ({
       alert("수정 중 오류가 발생했습니다.");
     }
   };
-
+  if (process.env.NODE_ENV === "development") {
+    console.log(priority);
+  }
   return (
     <>
       <EditorProvider
@@ -192,6 +202,16 @@ const EditorComponent = ({
               onChange={handleTitleChange}
               placeholder={currentTitle || ""}
             />
+            <p className={styles.importance_label}>중요도를 선택해주세요.</p>
+            <select
+              className={styles.priority_select}
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <option value="low">낮음</option>
+              <option value="medium">중간</option>
+              <option value="high">높음</option>
+            </select>
             {contents ? (
               <div className={styles.datePickerBox}>
                 <div className={styles.datePickerWrapper}>
