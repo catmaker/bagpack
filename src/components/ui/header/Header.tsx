@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next";
 import { UserContext } from "@/app/provider/UserProvider";
 import { signOutClient } from "@/lib/firebase/firestore";
 import { Logo } from "../../../../public/svg/index";
@@ -16,6 +17,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await signOutClient();
+      deleteCookie("auth-status");
       router.push("/intro");
       window.location.reload();
     } catch (error) {
