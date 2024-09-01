@@ -25,6 +25,7 @@
     "@tiptap/react": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
     "axios": "^1.7.3",
+    "cookies-next": "^4.2.1",
     "date-fns": "^3.6.0",
     "firebase": "^10.12.2",
     "framer-motion": "^11.2.10",
@@ -33,6 +34,7 @@
     "react": "^18",
     "react-datepicker": "^7.1.0",
     "react-dom": "^18",
+    "react-firebase-hooks": "^5.1.1",
     "sass": "^1.77.4",
     "zustand": "^4.5.4"
   },
