@@ -61,3 +61,14 @@
     color: $primary-color;
   }
 }
+
+.sortButton {
+  padding: 10px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out !important;
+  &:hover {
+    color: $primary-color;
+  }
+}
