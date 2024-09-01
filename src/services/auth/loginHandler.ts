@@ -31,8 +31,9 @@ export const loginHandler = async ({ email, password }: Props) => {
         secure: process.env.NODE_ENV === "production", // HTTPS에서만 전송 (프로덕션 환경)
         sameSite: "strict", // CSRF 방지
       });
-      console.log("Auth cookie set");
+      console.log("로그인 성공 쿠키 설정 완료");
       alert("로그인이 완료되었습니다.");
+      window.location.href = "/home";
       return true;
     }
     alert(
