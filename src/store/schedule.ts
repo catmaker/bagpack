@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { Post, User } from "@/types/store";
+import { Post } from "@/types/schedule";
+import { User } from "@/types/store";
 
 interface DateState {
   selectedDate: Date | null;
