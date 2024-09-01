@@ -163,8 +163,9 @@ export async function addPost(
   endDate: string,
   mood: string,
   title: string,
+  priority: string,
 ): Promise<boolean> {
-  console.log(email, post, startDate, endDate, mood, title);
+  console.log(email, post, startDate, endDate, mood, title, priority);
   try {
     const usersCollectionRef = collection(db, "users");
     const userSnapshot = await getDocs(usersCollectionRef);
@@ -178,6 +179,7 @@ export async function addPost(
           endDate,
           mood,
           title,
+          priority,
         };
         await updateDoc(userDoc.ref, {
           posts: [...existingPosts, newPost],
@@ -199,6 +201,7 @@ type Post = {
   date: string;
   mood: string;
   title: string;
+  priority: string;
 };
 
 // 유저 포스트 가져오기
@@ -244,6 +247,7 @@ export async function updatePost(
   mood: string,
   title: string,
   id: string,
+  priority: string,
 ) {
   try {
     const usersCollectionRef = collection(db, "users");
@@ -260,6 +264,7 @@ export async function updatePost(
               endDate,
               mood,
               title,
+              priority,
             };
           }
           return existingPost;

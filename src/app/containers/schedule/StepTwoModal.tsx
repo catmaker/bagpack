@@ -1,19 +1,11 @@
-import React, {
-  useState,
-  useContext,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { isWithinInterval, addDays, format } from "date-fns";
 import Modal from "@/components/ui/modal/Modal";
-// zustand
 import { useDateManagement } from "@/hooks/useDateManagement";
 import useScheduleStore from "@/store/schedule";
-// axios
-import { StepTwoModalProps } from "@/types/schedule";
+import { StepTwoModalProps, Post } from "@/types/schedule";
 import PostModal from "./PostModal";
 import styles from "./StepTwoModal.module.scss";
 
@@ -24,31 +16,17 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const {
-    selectedDate,
-    startDate,
-    endDate,
-    handleStartDateChange,
-    handleEndDateChange,
-  } = useDateManagement();
+  const { startDate, endDate } = useDateManagement();
+  const [sortedPosts, setSortedPosts] = useState<Post[]>([]);
+  const [isDescending, setIsDescending] = useState(true); // 정렬 순서를 추적하는 상태
 
-  const { selectedMood, selectedDayOfWeek, setPostsUpdate, posts, setPosts } =
-    useScheduleStore((state) => ({
-      selectedMood: state.selectedMood,
-      selectedDayOfWeek: state.selectedDayOfWeek,
-      setPostsUpdate: state.setPostsUpdate,
-      posts: state.posts,
-      setPosts: state.setPosts,
-    }));
-
-  if (process.env.NODE_ENV === "development") {
-    console.log(`
-    Mood: ${selectedMood}
-    Start Date: ${startDate}
-    End Date: ${endDate}
-      Selected Date: ${selectedDate}
-    `);
-  }
+  const { posts } = useScheduleStore((state) => ({
+    selectedMood: state.selectedMood,
+    selectedDayOfWeek: state.selectedDayOfWeek,
+    setPostsUpdate: state.setPostsUpdate,
+    posts: state.posts,
+    setPosts: state.setPosts,
+  }));
 
   const filteredPosts = useMemo(() => {
     if (!startDate || !endDate) return [];
@@ -65,6 +43,55 @@ const StepTwoModal = ({
   const formatDate = useCallback((dateString: string) => {
     return format(new Date(dateString), "yyyy. MM. dd");
   }, []);
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "#fc5353";
+      case "medium":
+        return "#fe9a8a";
+      case "low":
+        return "#46a4fc";
+      default:
+        return "#000"; // 기본 색상
+    }
+  };
+
+  const getMoodColor = (mood: string) => {
+    switch (mood) {
+      case "happy":
+        return "#46a4fc";
+      case "sad":
+        return "#fc5353";
+      case "neutral":
+        return "#fe9a8a";
+      case "terrible":
+        return "#fc5353";
+      case "smile":
+        return "#57f338";
+      default:
+        return "#000"; // 기본 색상
+    }
+  };
+
+  const priorityOrder: { [key: string]: number } = {
+    high: 1,
+    medium: 2,
+    low: 3,
+  };
+
+  const handleSortToggle = () => {
+    const sorted = [...filteredPosts].sort((a, b) => {
+      return isDescending
+        ? priorityOrder[a.priority] - priorityOrder[b.priority]
+        : priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
+    setSortedPosts(sorted);
+    setIsDescending(!isDescending); // 정렬 순서를 토글합니다.
+    if (process.env.NODE_ENV === "development") {
+      console.log(sorted);
+    }
+  };
 
   return (
     <>
@@ -83,18 +110,43 @@ const StepTwoModal = ({
           </div>
           <div>
             <p>선택한 기간의 작성한 글 목록</p>
+            <button onClick={handleSortToggle} className={styles.sortButton}>
+              {isDescending ? "중요도 ▲" : "중요도 ▼"}
+            </button>
             <ul className={styles.filterPostList}>
-              {filteredPosts.map((filteredItem) => (
-                <li key={filteredItem.id}>
-                  <Link href={`/schedule/${filteredItem.id}`}>
-                    <span>
-                      {formatDate(filteredItem.startDate)}~
-                      {formatDate(filteredItem.endDate)}
-                    </span>
-                    {filteredItem.title}
-                  </Link>
-                </li>
-              ))}
+              {(sortedPosts.length > 0 ? sortedPosts : filteredPosts).map(
+                (filteredItem) => (
+                  <li key={filteredItem.id}>
+                    <Link href={`/schedule/${filteredItem.id}`}>
+                      <span>
+                        {formatDate(filteredItem.startDate)}~
+                        {formatDate(filteredItem.endDate)}
+                      </span>
+                      <div>
+                        {filteredItem.priority && (
+                          <span
+                            style={{
+                              color: getPriorityColor(filteredItem.priority),
+                            }}
+                          >
+                            {filteredItem.priority}
+                          </span>
+                        )}
+                        {filteredItem.mood && (
+                          <span
+                            style={{
+                              color: getMoodColor(filteredItem.mood),
+                            }}
+                          >
+                            {filteredItem.mood}
+                          </span>
+                        )}
+                      </div>
+                      {filteredItem.title}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
           <button

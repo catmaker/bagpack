@@ -25,6 +25,7 @@ export type Post = {
   title: string;
   startDate: string;
   endDate: string;
+  priority: string;
 };
 
 export type ScheduleDetailParams = {

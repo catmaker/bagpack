@@ -3,10 +3,19 @@ import { updatePost } from "@/lib/firebase/firestore";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, post, startDate, endDate, mood, title, id } =
+    const { email, post, startDate, endDate, mood, title, id, priority } =
       await request.json();
     // 입력 데이터 검증 로직 추가 (예시)
-    if (!email || !post || !startDate || !endDate || !mood || !title || !id) {
+    if (
+      !email ||
+      !post ||
+      !startDate ||
+      !endDate ||
+      !mood ||
+      !title ||
+      !id ||
+      !priority
+    ) {
       return NextResponse.json(
         { message: "입력 데이터가 유효하지 않습니다." },
         { status: 400 },
@@ -20,9 +29,10 @@ export async function POST(request: NextRequest) {
       mood,
       title,
       id,
+      priority,
     );
     console.log(
-      `updatedPost: ${email}, ${post}, ${startDate}, ${endDate}, ${mood}, ${title}, ${id}`,
+      `updatedPost: ${email}, ${post}, ${startDate}, ${endDate}, ${mood}, ${title}, ${id}, ${priority}`,
     );
     if (!updatedPost) {
       return NextResponse.json(
