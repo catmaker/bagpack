@@ -3,7 +3,7 @@
   flex-direction: row !important;
 }
 .fc .fc-button-primary {
-  background-color: #fe9a8a !important; /* 배경색을 빨간색으로 설정 */
+  background-color: #fe9a8a !important;
   border-color: white !important;
 }
 .fc .fc-button-group {
@@ -56,4 +56,24 @@
 }
 .fc-h-event {
   border: none !important;
+}
+.event-content {
+  /* 기본 스타일 */
+  padding: 3px;
+  border-radius: 4px;
+  border: none;
+  margin-left: 3px;
+  display: flex;
+  gap: 5px;
+}
+.event-content.priority-low {
+  background-color: #e6f3ff !important;
+}
+
+.event-content.priority-medium {
+  background-color: #fe9a8a !important;
+}
+
+.event-content.priority-high {
+  background-color: #ffe6e6 !important;
 }
