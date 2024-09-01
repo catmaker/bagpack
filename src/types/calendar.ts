@@ -13,9 +13,10 @@ export type Event = {
   id: string;
   title: string;
   date: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   end: string;
   content?: string;
+  classNames?: string[];
 };
 
 export type EventContentProps = {
