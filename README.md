@@ -135,3 +135,6 @@ TimeInk 프로젝트는 다음과 같은 최신 웹 기술과 도구들을 사�
 TimeInk는 현재 [[bagpack.vercel.app](https://bagpack.vercel.app)]에서 사용 가능합니다. 언제 어디서나 접근하여 일정을 관리할 수 있습니다.
 ![image](https://github.com/user-attachments/assets/cc75213a-4ec3-4491-b1b2-fb07f613cbba)
 
+### 트러블 슈팅
+
+문제 해결에 대한 자세한 내용은 [여기에서 확인하실 수 있습니다](https://sinjisoo97.tistory.com/category/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85) (티스토리 블로그로 이동됩니다) 📝.
