@@ -33,7 +33,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
+export const auth = getAuth(app);
 const db = getFirestore(app);
 export default app;
 // 모든 유저 가져오기
@@ -48,7 +48,6 @@ export async function signUp(
     throw new Error("Nickname cannot be undefined");
   }
 
-  const auth = getAuth();
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -76,7 +75,6 @@ export async function signUp(
 }
 // 유저 로그인
 export async function signIn(email: string, password: string) {
-  const auth = getAuth();
   try {
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -95,15 +93,6 @@ export async function signIn(email: string, password: string) {
 }
 // 유저 로그아웃
 export async function signOutClient(): Promise<void> {
-  let auth: Auth;
-
-  try {
-    auth = getAuth();
-  } catch (error) {
-    console.error("Failed to initialize Firebase Auth:", error);
-    throw new Error("Firebase 인증 초기화 실패");
-  }
-
   try {
     await signOut(auth);
     console.log("User signed out successfully");
@@ -119,6 +108,7 @@ export async function signOutClient(): Promise<void> {
     }
   }
 }
+
 // 유저 정보 가져오기
 export async function getUser(uid: string): Promise<User> {
   const userDocRef = doc(db, "users", uid);
@@ -131,7 +121,6 @@ export async function getUser(uid: string): Promise<User> {
 // 유저 정보 확인
 export function getCurrentUser(): Promise<User | null> {
   return new Promise((resolve, reject) => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(
       auth,
       async (user) => {
