@@ -14,6 +14,7 @@ const PostModal = ({ isOpen, onClose }: PostModalProps) => {
       selectedMood: state.selectedMood,
     }),
   );
+  /* eslint-disable no-console */
   if (process.env.NODE_ENV === "development") {
     console.log({ selectedDate, selectedDayOfWeek, selectedMood });
   }
