@@ -132,4 +132,6 @@ TimeInk 프로젝트는 다음과 같은 최신 웹 기술과 도구들을 사�
 - 일정 반복 기능 추가
 - 일정 태그 기능 추가
 
-TimeInk는 현재 [[bagpack.vercel.com](https://bagpack.vercel.com)]에서 사용 가능합니다. 언제 어디서나 접근하여 일정을 관리할 수 있습니다.
+TimeInk는 현재 [[bagpack.vercel.app](https://bagpack.vercel.app)]에서 사용 가능합니다. 언제 어디서나 접근하여 일정을 관리할 수 있습니다.
+![image](https://github.com/user-attachments/assets/cc75213a-4ec3-4491-b1b2-fb07f613cbba)
+
