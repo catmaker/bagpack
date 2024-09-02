@@ -162,6 +162,9 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
         select={onDateClick}
         events={calendarEvents} // 이벤트 목록
         height="100%"
+        // aspectRatio={1.35}
+        // contentHeight="auto"
+        eventDisplay="block"
         eventTimeFormat={{
           hour: "2-digit",
           minute: "2-digit",
