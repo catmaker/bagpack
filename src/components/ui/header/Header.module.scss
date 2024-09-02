@@ -3,17 +3,16 @@
   display: flex;
   list-style: none;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
-  height: 40px;
+  height: 44px;
   margin: 0px;
   padding: 0px;
   padding-top: 10px;
   padding-bottom: 10px;
   white-space: nowrap;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
+
   li,
   ul {
     list-style: none;
@@ -26,15 +25,14 @@
   text-decoration: none;
   cursor: pointer;
 }
-.leftBox {
+.TopBox {
   display: flex;
   align-items: center;
+  gap: 20px;
+  position: relative;
 }
-.logoLink {
-  padding-right: 10px;
-}
+
 .logo {
-  padding-left: 30px;
   cursor: pointer;
 }
 .logo:hover {
@@ -49,7 +47,8 @@
   display: flex;
   list-style: none;
   padding: 0px;
-  gap: 40px;
+  align-items: center;
+  gap: 50px;
   a {
     color: black;
     text-decoration: none;
@@ -91,15 +90,89 @@
 }
 .logoutButton {
   cursor: pointer;
-  border: 1px solid black;
-  border-radius: 19px;
-  padding: 10px;
-  width: 100px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
 }
-.logoutButton:hover {
-  background-color: $primary-color;
-  border-color: $primary-color;
-  color: $white !important;
+
+.headerShadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+//menu
+.menu {
+  padding-top: 10px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 64px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.menuItem {
+  position: relative;
+  cursor: pointer;
+}
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  animation: dropdownAnimation 0.3s forwards;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.dropdownMenu li {
+  padding: 10px;
+  opacity: 0;
+  animation: dropdownItemAnimation 0.5s forwards;
+}
+
+.dropdownMenu li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.dropdownMenu li:nth-child(2) {
+  animation-delay: 0.2s;
+}
+@keyframes dropdownItemAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes dropdownAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.dropdownMenu li {
+  padding: 10px;
 }
 @media (max-width: 575px) {
   .header {

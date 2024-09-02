@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { UserContext } from "@/app/provider/UserProvider";
 import { signOutClient } from "@/lib/firebase/firestore";
-import { Logo } from "../../../../public/svg/index";
+import { Logo, Analysis, Menu } from "../../../../public/svg/index";
 import styles from "./Header.module.scss";
 
 const Header = () => {
   const user = useContext(UserContext);
-  console.log(user);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
   const router = useRouter();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleLogout = async () => {
     try {
       await signOutClient();
@@ -25,13 +27,32 @@ const Header = () => {
       alert("로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setDropdownVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setDropdownVisible(false);
+    }, 500); // 0.5초 지연 시간
+  };
+
   return (
-    <header className={styles.header}>
-      <div className={styles.leftBox}>
-        <Link href="/intro" className={styles.logoLink}>
-          <Logo width={140} height={40} className={styles.logo} />
-        </Link>
+    <header className={`${styles.header}`}>
+      <div className={styles.TopBox}>
         <ul className={styles.navList}>
+          <Link href="/intro" className={styles.logoLink}>
+            <Image
+              src="/bagpackicon/logoIcon.png"
+              width={32}
+              height={32}
+              alt="logo"
+            />
+          </Link>
           <li>
             <Link href="/home">HOME</Link>
           </li>
@@ -41,10 +62,6 @@ const Header = () => {
           <li>
             <Link href="/mypage">마이페이지</Link>
           </li>
-        </ul>
-      </div>
-      <nav className={styles.nav}>
-        <ul className={styles.navList}>
           <li>
             {user ? (
               <button
@@ -59,14 +76,29 @@ const Header = () => {
                 <Link className={styles.signupLink} href="/signup">
                   회원가입
                 </Link>
-                <Link href="/login" className={styles.loginButton}>
-                  로그인
-                </Link>
+                <Link href="/login">로그인</Link>
               </div>
             )}
           </li>
+          <li
+            className={styles.menuItemWrapper}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <span className={styles.menuItem}>메뉴</span>
+            {isDropdownVisible && (
+              <ul className={styles.dropdownMenu}>
+                <li>
+                  <Link href="/schedule">일정</Link>
+                </li>
+                <li>
+                  <Link href="/dashboard">대시보드</Link>
+                </li>
+              </ul>
+            )}
+          </li>
         </ul>
-      </nav>
+      </div>
     </header>
   );
 };
