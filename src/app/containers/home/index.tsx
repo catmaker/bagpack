@@ -2,7 +2,9 @@
 
 import React, { useContext } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
-import Header from "./Header";
+import Header from "@/components/ui/header/Header";
+import MainSection from "./MainSection";
+import UserSection from "./UserSection";
 import styles from "./index.module.scss";
 
 const HomeClient: React.FC = () => {
@@ -12,10 +14,13 @@ const HomeClient: React.FC = () => {
   }
 
   return (
-    <div className={styles.homeContainer}>
-      <Header user={user} />
-      {/* 홈 페이지의 나머지 내용 */}
-    </div>
+    <>
+      <Header />
+      <div className={styles.homeContainer}>
+        <UserSection user={user} />
+        <MainSection user={user} />
+      </div>
+    </>
   );
 };
 
