@@ -94,6 +94,9 @@ const Header = () => {
                 <li>
                   <Link href="/dashboard">대시보드</Link>
                 </li>
+                <li>
+                  <Link href="/setting">설정</Link>
+                </li>
               </ul>
             )}
           </li>
