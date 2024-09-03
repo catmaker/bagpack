@@ -1,0 +1,60 @@
+@import "@/styles/variables.scss";
+
+.mainSectionContainer {
+  display: flex;
+  box-sizing: border-box;
+  flex: 2;
+  width: 100%;
+  min-height: 80vh;
+  border-left: 1px solid $border-color;
+}
+
+.mainSectionWrapper {
+  max-width: 800px;
+  padding-left: 4rem;
+  padding-right: 2rem;
+}
+
+.mainSectionHeader {
+  margin-bottom: 2rem;
+}
+
+.mainSectionTitle {
+  font-size: $font-size-xxl;
+  color: #333333;
+  margin: 0;
+}
+
+.mainSectionTitleText {
+  line-height: 1.4;
+}
+
+.mainSectionStatistics {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainSectionStatisticsTitle {
+  font-size: $font-size-xl;
+  color: #333333;
+  margin: 0;
+}
+.mainSectionStatisticsItem {
+  margin-top: 1rem;
+}
+.mainSectionStatisticsItemTitle {
+  font-size: $font-size-l;
+  font-weight: $font-weight-bold;
+  color: #333333;
+  margin: 0;
+}
+.mainSectionStatisticsChart {
+  margin-top: 1rem;
+}
+.flex {
+  margin-top: 2rem;
+  display: flex;
+  gap: 5rem;
+  border-top: 1px solid $border-color;
+  padding: 1rem;
+}
