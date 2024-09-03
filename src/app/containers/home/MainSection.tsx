@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,6 +29,9 @@ ChartJS.register(
 const MainSection = ({ user }: { user: User }) => {
   const { posts, fetchPosts } = useScheduleStore();
   const [isLoading, setIsLoading] = useState(true);
+  const [currentSchedules, setCurrentSchedules] = useState<
+    Array<{ id: string; title: string }>
+  >([]);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -37,6 +41,18 @@ const MainSection = ({ user }: { user: User }) => {
     };
     loadPosts();
   }, [fetchPosts, user]);
+
+  useEffect(() => {
+    const now = new Date();
+    const current = posts
+      .filter((post) => {
+        const startDate = new Date(post.startDate);
+        const endDate = new Date(post.endDate);
+        return startDate <= now && now <= endDate;
+      })
+      .map((post) => ({ id: post.id, title: post.title }));
+    setCurrentSchedules(current);
+  }, [posts]);
 
   const { monthlyPostCounts, totalPosts, moodCounts } = useMemo(() => {
     const monthlyCounts = new Array(12).fill(0);
@@ -174,6 +190,20 @@ const MainSection = ({ user }: { user: User }) => {
                 {totalPosts}
               </p>
             </div>
+            {currentSchedules.length > 0 && (
+              <div className={styles.mainSectionCurrentSchedules}>
+                <h3>현재 진행 중인 일정</h3>
+                <ul>
+                  {currentSchedules.map((schedule) => (
+                    <li key={schedule.id}>
+                      <Link href={`/schedule/${schedule.id}`}>
+                        {schedule.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className={styles.flex}>
               <div className={styles.mainSectionStatisticsItem}>
                 <p className={styles.mainSectionStatisticsItemTitle}>
