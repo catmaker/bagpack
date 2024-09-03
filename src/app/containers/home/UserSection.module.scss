@@ -4,41 +4,33 @@
   display: flex;
   box-sizing: border-box;
   align-items: center;
-}
-
-.userInfoWrapper {
-  display: flex;
-  align-items: center;
-  margin-left: 230px;
-}
-
-.alarmIconWrapper {
-  margin-right: 20px;
-}
-
-.alarmIconWrapper,
-.avatarWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.userProfileContainer {
-  width: 240px;
-  height: 50px;
-  border-radius: 30px;
-  background-color: $white;
-  display: flex;
-  align-items: center;
+  flex-direction: column;
+  flex: 1;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .userNickname {
-  margin-left: 15px;
-  font-size: $font-size-m;
+  font-size: $font-size-xl;
   font-weight: $font-weight-bold;
 }
 
 .avatarWrapper {
-  margin-left: 6px;
   position: relative;
+}
+.editProfileLink {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: $primary-color;
+  color: $white;
+  font-size: $font-size-m;
+  font-weight: $font-weight-bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.editProfileLink:hover {
+  background-color: $primary-color-hover;
 }
