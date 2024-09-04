@@ -1,20 +1,17 @@
 @import "@/styles/variables.scss";
 
-.homeContainer {
-  display: flex;
+.mypageContainer {
   width: 90vw;
   margin: 0 auto;
-  overflow: hidden;
   margin-top: 100px;
+  background-color: $white;
+  display: flex;
+  transition: all 0.2s;
 }
 
-@media (max-width: $desktop) {
-  .homeContainer {
-    width: 100%;
-  }
-}
 @media (max-width: $tablet) {
-  .homeContainer {
+  .mypageContainer {
     flex-direction: column;
+    margin-top: 50px;
   }
 }

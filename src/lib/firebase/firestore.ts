@@ -5,7 +5,9 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updatePassword,
   Auth,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -36,7 +38,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const db = getFirestore(app);
 export default app;
-// 모든 유저 가져오기
 
 // 유저 추가하기
 export async function signUp(
@@ -45,7 +46,7 @@ export async function signUp(
   nickname: string | undefined,
 ) {
   if (nickname === undefined) {
-    throw new Error("Nickname cannot be undefined");
+    throw new Error("닉네임이 정의되지 않았습니다");
   }
 
   try {
@@ -68,11 +69,12 @@ export async function signUp(
   } catch (error) {
     const firebaseError = error as FirebaseError;
     console.error(
-      `Error: ${firebaseError.code}, Message: ${firebaseError.message}`,
+      `오류: ${firebaseError.code}, 메시지: ${firebaseError.message}`,
     );
     return null;
   }
 }
+
 // 유저 로그인
 export async function signIn(email: string, password: string) {
   try {
@@ -81,29 +83,28 @@ export async function signIn(email: string, password: string) {
       email,
       password,
     );
-    console.log(userCredential.user);
+    console.log("로그인된 사용자:", userCredential.user);
     return userCredential.user;
   } catch (error) {
     const firebaseError = error as FirebaseError;
     console.error(
-      `Error: ${firebaseError.code}, Message: ${firebaseError.message}`,
+      `오류: ${firebaseError.code}, 메시지: ${firebaseError.message}`,
     );
     return null;
   }
 }
+
 // 유저 로그아웃
 export async function signOutClient(): Promise<void> {
   try {
     await signOut(auth);
-    console.log("User signed out successfully");
+    console.log("사용자가 성공적으로 로그아웃되었습니다");
   } catch (error) {
     if (error instanceof FirebaseError) {
-      console.error(
-        `Firebase sign out error: [${error.code}] ${error.message}`,
-      );
+      console.error(`Firebase 로그아웃 오류: [${error.code}] ${error.message}`);
       throw new Error(`로그아웃 실패: ${error.message}`);
     } else {
-      console.error("Unexpected error during sign out:", error);
+      console.error("로그아웃 중 예상치 못한 오류 발생:", error);
       throw new Error("알 수 없는 오류로 로그아웃 실패");
     }
   }
@@ -116,15 +117,16 @@ export async function getUser(uid: string): Promise<User> {
   if (userDocSnap.exists()) {
     return userDocSnap.data() as User;
   }
-  throw new Error("No such user!");
+  throw new Error("해당 사용자가 존재하지 않습니다!");
 }
+
 // 유저 정보 확인
 export function getCurrentUser(): Promise<User | null> {
   return new Promise((resolve, reject) => {
     const unsubscribe = onAuthStateChanged(
       auth,
       async (user) => {
-        unsubscribe(); // 여러 번 호출되는거 방지 (한 번만 호출되도록)
+        unsubscribe(); // 여러 번 호출되는 것을 방지 (한 번만 호출되도록)
         if (user) {
           try {
             const userData = await getUser(user.uid);
@@ -165,7 +167,16 @@ export async function addPost(
   title: string,
   priority: string,
 ): Promise<boolean> {
-  console.log(email, post, startDate, endDate, mood, title, priority);
+  console.log(
+    "포스트 추가 정보:",
+    email,
+    post,
+    startDate,
+    endDate,
+    mood,
+    title,
+    priority,
+  );
   try {
     const usersCollectionRef = collection(db, "users");
     const userSnapshot = await getDocs(usersCollectionRef);
@@ -191,10 +202,11 @@ export async function addPost(
     const results = await Promise.all(updatePromises);
     return results.includes(true);
   } catch (error) {
-    console.error("Error adding post: ", error);
+    console.error("포스트 추가 중 오류 발생: ", error);
     return false;
   }
 }
+
 type Post = {
   id: string;
   content: string;
@@ -222,22 +234,24 @@ type PostById = {
   id: string;
   email: string;
 };
+
 // 유저 포스트 id로 가져오기
 export async function getPostById(id: string) {
   const usersCollectionRef = collection(db, "users");
   const userSnapshot = await getDocs(usersCollectionRef);
-  let foundPost: Post | null = null; // 'post'를 'foundPost'로 변경
+  let foundPost: Post | null = null;
   userSnapshot.docs.forEach((userDoc) => {
     const { posts } = userDoc.data();
     if (posts) {
-      const matchingPost = posts.find((postItem: any) => postItem.id === id); // 'post'를 'postItem'으로 변경
+      const matchingPost = posts.find((postItem: any) => postItem.id === id);
       if (matchingPost) {
-        foundPost = matchingPost; // 'post'를 'foundPost'로 변경
+        foundPost = matchingPost;
       }
     }
   });
-  return foundPost; // 'post'를 'foundPost'로 변경
+  return foundPost;
 }
+
 // 유저 포스트 수정하기
 export async function updatePost(
   email: string,
@@ -279,10 +293,11 @@ export async function updatePost(
     const results = await Promise.all(updatePromises);
     return results.includes(true);
   } catch (error) {
-    console.error("Error updating post: ", error);
+    console.error("포스트 수정 중 오류 발생: ", error);
     return false;
   }
 }
+
 // 유저 포스트 삭제하기
 export async function deletePost(email: string, id: string) {
   try {
@@ -304,7 +319,7 @@ export async function deletePost(email: string, id: string) {
     const results = await Promise.all(updatePromises);
     return results.includes(true);
   } catch (error) {
-    console.error("Error deleting post: ", error);
+    console.error("포스트 삭제 중 오류 발생: ", error);
     return false;
   }
 }
@@ -342,7 +357,42 @@ export async function updatePostDates(
     const results = await Promise.all(updatePromises);
     return results.includes(true);
   } catch (error) {
-    console.error("Error updating post dates: ", error);
+    console.error("포스트 날짜 수정 중 오류 발생: ", error);
+    return false;
+  }
+}
+
+// 유저 닉네임 수정하기
+export async function updateUserNickname(email: string, nickname: string) {
+  try {
+    const usersCollectionRef = collection(db, "users");
+    const q = query(usersCollectionRef, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.error("해당 이메일을 가진 사용자를 찾을 수 없습니다:", email);
+      return false;
+    }
+
+    const userDoc = querySnapshot.docs[0];
+    await updateDoc(userDoc.ref, { nickname });
+
+    console.log("닉네임이 성공적으로 업데이트되었습니다. 이메일:", email);
+    return true;
+  } catch (error) {
+    console.error("사용자 닉네임 수정 중 오류 발생: ", error);
+    return false;
+  }
+}
+
+// 유저 비밀번호 수정하기
+export async function sendPasswordReset(email: string): Promise<boolean> {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log("비밀번호 재설정 이메일이 성공적으로 전송되었습니다.");
+    return true;
+  } catch (error) {
+    console.error("비밀번호 재설정 이메일 전송 중 오류 발생: ", error);
     return false;
   }
 }

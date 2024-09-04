@@ -77,3 +77,42 @@
 .event-content.priority-high {
   background-color: #ffe6e6 !important;
 }
+.fc-h-event {
+  background: none !important;
+}
+.calendar {
+  height: 100%;
+
+  :global(.fc) {
+    height: 100%;
+  }
+
+  :global(.fc-view-harness) {
+    height: auto !important;
+  }
+
+  :global(.fc-daygrid-event) {
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+.fc-event-title {
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+  white-space: nowrap;
+}
+
+.fc-event-time {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
