@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { UserContext } from "@/app/provider/UserProvider";
 import { signOutClient } from "@/lib/firebase/firestore";
-import { Logo, Analysis, Menu } from "../../../../public/svg/index";
 import styles from "./Header.module.scss";
 
 const Header = () => {
