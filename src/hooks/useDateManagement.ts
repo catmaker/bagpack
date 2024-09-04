@@ -45,3 +45,5 @@ export const useDateManagement = () => {
     handleEndDateChange,
   };
 };
+
+// 이 훅은 날짜 선택 및 변경을 관리합니다.
