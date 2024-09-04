@@ -1,0 +1,17 @@
+@import "@/styles/variables.scss";
+
+.mypageContainer {
+  width: 90vw;
+  margin: 0 auto;
+  margin-top: 100px;
+  background-color: $white;
+  display: flex;
+  transition: all 0.2s;
+}
+
+@media (max-width: $tablet) {
+  .mypageContainer {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+}

@@ -12,7 +12,6 @@ const HomeClient: React.FC = () => {
   if (!user) {
     return null; // 또는 로딩 컴포넌트를 반환
   }
-
   return (
     <>
       <Header />

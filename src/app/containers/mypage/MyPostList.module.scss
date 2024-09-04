@@ -1,0 +1,61 @@
+@import "@/styles/variables.scss";
+
+.myPostListContainer {
+  flex: 2;
+}
+.postDate {
+  display: flex;
+  gap: 10px;
+}
+.myPostListTitle {
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 20px;
+  margin-top: 0;
+}
+.myPostList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  a {
+    text-decoration: none;
+    color: $black;
+    transition: 0.2s all;
+    h2 {
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      color: $grey-color;
+    }
+  }
+  a:hover {
+    color: $primary-color;
+  }
+}
+.myPostListButton {
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: $white;
+  color: $black;
+  transition: 0.2s all;
+  margin-bottom: 10px;
+}
+.myPostListButton:hover {
+  background-color: $primary-color;
+  color: $white;
+  border: 1px solid $primary-color;
+}
+
+@media (max-width: $tablet) {
+  .myPostListTitle {
+    margin-top: 20px;
+    font-size: $font-size-xl;
+  }
+  .myPostList {
+    gap: 10px;
+    padding-bottom: 20px;
+    font-size: $font-size-s;
+  }
+}
