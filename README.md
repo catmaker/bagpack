@@ -138,12 +138,13 @@ TimeInk 프로젝트는 다음과 같은 최신 웹 기술과 도구들을 사�
 TimeInk는 현재 [[bagpack.vercel.app](https://bagpack.vercel.app)]에서 사용 가능합니다. 언제 어디서나 접근하여 일정을 관리할 수 있습니다.
 ![image](https://github.com/user-attachments/assets/cc75213a-4ec3-4491-b1b2-fb07f613cbba)
 
-### 트러블 슈팅
+### 🛠️ 트러블 슈팅
 
 문제 해결에 대한 자세한 내용은 [여기에서 확인하실 수 있습니다](https://sinjisoo97.tistory.com/category/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85) (티스토리 블로그로 이동됩니다) 📝.
-[ESLint 관련 트러블 슈팅](https://sinjisoo97.tistory.com/40)
-[FirebaseE API 오류](https://sinjisoo97.tistory.com/42)
-[Firebase와 React의 비동기 지옥에서 벗어나기: 로그인 후 리다이렉트 문제 해결기](https://sinjisoo97.tistory.com/43)
-[사용자 인증 상태 지연 삽질하기](https://sinjisoo97.tistory.com/44)
-[Chart.js와 useMemo를 활용한 효율적인 통계 시각화 구현](https://sinjisoo97.tistory.com/46)
-[Firebase Authentication 비밀번호 변경 트러블슈팅](https://sinjisoo97.tistory.com/47)
+
+- [🔧 ESLint 관련 트러블 슈팅](https://sinjisoo97.tistory.com/40)
+- [🔥 FirebaseE API 오류](https://sinjisoo97.tistory.com/42)
+- [🚀 Firebase와 React의 비동기 지옥에서 벗어나기: 로그인 후 리다이렉트 문제 해결기](https://sinjisoo97.tistory.com/43)
+- [🔐 사용자 인증 상태 지연 삽질하기](https://sinjisoo97.tistory.com/44)
+- [📊 Chart.js와 useMemo를 활용한 효율적인 통계 시각화 구현](https://sinjisoo97.tistory.com/46)
+- [🔄 Firebase Authentication 비밀번호 변경 트러블슈팅](https://sinjisoo97.tistory.com/47)
