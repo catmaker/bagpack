@@ -68,3 +68,41 @@
     color: $primary-color;
   }
 }
+
+@media (max-width: $desktop) {
+  .flex {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: $mobile) {
+  .mainSectionContainer {
+    border-left: none;
+  }
+  .mainSectionWrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .mainSectionTitleText {
+    font-size: $font-size-l;
+  }
+  .flex {
+    padding: 0;
+  }
+  .mainSectionStatisticsChart {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+  .mainSectionContainer {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+  .mainSectionStatistics {
+    margin: 0 auto;
+  }
+}

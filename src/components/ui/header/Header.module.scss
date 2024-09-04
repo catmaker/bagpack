@@ -81,6 +81,7 @@
   justify-content: center;
   box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
   transition: background-color 0.2s linear; /* Only transition background color */
+  font-size: $font-size-m;
 }
 
 .loginButton:hover {
@@ -94,7 +95,7 @@
   border: none;
   padding: 0;
   margin: 0;
-  font-size: 16px;
+  font-size: $font-size-m;
 }
 .logoutButton:hover {
   color: $primary-color;
@@ -185,9 +186,8 @@
 .dropdownMenu li {
   padding: 10px;
 }
-@media (max-width: 575px) {
+@media (max-width: $tablet) {
   .header {
-    font-size: 11px;
     transition: 0.3s;
   }
   .logoLink {
@@ -203,9 +203,33 @@
     padding-right: 20px;
   }
   .navList {
-    gap: 10px;
+    gap: 30px;
+  }
+  .buttonBox {
+    gap: 30px;
+  }
+}
+
+@media (max-width: $mobile) {
+  .header {
+    font-size: $font-size-xs;
+  }
+  .logo {
+    width: 80px;
+  }
+  .nav {
+    padding-right: 10px;
+  }
+  .navList {
+    gap: 20px;
   }
   .buttonBox {
     gap: 10px;
+  }
+  .loginButton {
+    font-size: $font-size-xs;
+  }
+  .logoutButton {
+    font-size: $font-size-xs;
   }
 }
