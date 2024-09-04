@@ -52,6 +52,7 @@
   a {
     color: black;
     text-decoration: none;
+    cursor: pointer;
   }
 }
 .navList > li > a:hover {
@@ -61,10 +62,12 @@
 .buttonBox {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
   box-sizing: border-box;
 }
-
+.signupLink {
+  cursor: pointer;
+}
 .signupLink:hover {
   color: $primary-color;
   transition: all 0.2s;
@@ -226,7 +229,7 @@
     gap: 20px;
   }
   .buttonBox {
-    gap: 10px;
+    gap: 20px;
   }
   .loginButton {
     font-size: $font-size-xs;

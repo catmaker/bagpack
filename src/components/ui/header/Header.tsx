@@ -45,7 +45,7 @@ const Header = () => {
         <ul className={styles.navList}>
           <Link href="/intro" className={styles.logoLink}>
             <Image
-              src="/bagpackicon/logoIcon.png"
+              src="/bagpackIcon/logoIcon.png"
               width={32}
               height={32}
               alt="logo"
@@ -60,7 +60,7 @@ const Header = () => {
           <li>
             <Link href="/mypage">마이페이지</Link>
           </li>
-          <li>
+          <li className={styles.buttonBox}>
             {user ? (
               <button
                 type="button"
@@ -70,12 +70,14 @@ const Header = () => {
                 로그아웃
               </button>
             ) : (
-              <div className={styles.buttonBox}>
+              <>
                 <Link className={styles.signupLink} href="/signup">
                   회원가입
                 </Link>
-                <Link href="/login">로그인</Link>
-              </div>
+                <Link className={styles.loginLink} href="/login">
+                  로그인
+                </Link>
+              </>
             )}
           </li>
           <li
