@@ -1,37 +1,17 @@
-import { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from "chart.js";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import useCurrentSchedules from "@/hooks/useCurrentSchedules";
+import usePostStatistics from "@/hooks/usePostStatistics";
 import useScheduleStore from "@/store/schedule";
 import { User } from "@/types/user";
+import CurrentSchedules from "./CurrentSchedules";
+import MonthlyPostChart from "./MonthlyPostChart";
+import MoodDistributionChart from "./MoodDistributionChart";
+import StatisticsItem from "./StatisticsItems";
 import styles from "./MainSection.module.scss";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend,
-);
 
 const MainSection = ({ user }: { user: User }) => {
   const { posts, fetchPosts } = useScheduleStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [currentSchedules, setCurrentSchedules] = useState<
-    Array<{ id: string; title: string }>
-  >([]);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -42,126 +22,9 @@ const MainSection = ({ user }: { user: User }) => {
     loadPosts();
   }, [fetchPosts, user]);
 
-  useEffect(() => {
-    const now = new Date();
-    const current = posts
-      .filter((post) => {
-        const startDate = new Date(post.startDate);
-        const endDate = new Date(post.endDate);
-        return startDate <= now && now <= endDate;
-      })
-      .map((post) => ({ id: post.id, title: post.title }));
-    setCurrentSchedules(current);
-  }, [posts]);
-
-  const { monthlyPostCounts, totalPosts, moodCounts } = useMemo(() => {
-    const monthlyCounts = new Array(12).fill(0);
-    const moodCountsObj = {
-      happy: 0,
-      smile: 0,
-      neutral: 0,
-      sad: 0,
-      terrible: 0,
-    };
-    posts.forEach((post) => {
-      const month = new Date(post.startDate).getMonth();
-      monthlyCounts[month]++;
-      moodCountsObj[post.mood as keyof typeof moodCountsObj]++;
-    });
-    return {
-      monthlyPostCounts: monthlyCounts,
-      totalPosts: posts.length,
-      moodCounts: moodCountsObj,
-    };
-  }, [posts]);
-
-  const monthlyChartData = useMemo(
-    () => ({
-      labels: [
-        "1월",
-        "2월",
-        "3월",
-        "4월",
-        "5월",
-        "6월",
-        "7월",
-        "8월",
-        "9월",
-        "10월",
-        "11월",
-        "12월",
-      ],
-      datasets: [
-        {
-          label: "월별 글 수",
-          data: monthlyPostCounts,
-          backgroundColor: "rgba(75, 192, 192, 0.6)",
-        },
-      ],
-    }),
-    [monthlyPostCounts],
-  );
-
-  const moodChartData = useMemo(
-    () => ({
-      labels: ["행복", "미소", "중립", "슬픔", "최악"],
-      datasets: [
-        {
-          data: [
-            moodCounts.happy,
-            moodCounts.smile,
-            moodCounts.neutral,
-            moodCounts.sad,
-            moodCounts.terrible,
-          ],
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.8)",
-            "rgba(54, 162, 235, 0.8)",
-            "rgba(255, 206, 86, 0.8)",
-            "rgba(75, 192, 192, 0.8)",
-            "rgba(153, 102, 255, 0.8)",
-          ],
-        },
-      ],
-    }),
-    [moodCounts],
-  );
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-        onClick: () => {},
-      },
-      title: {
-        display: true,
-        text: "월별 글 통계",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          precision: 0,
-          stepSize: 1,
-        },
-      },
-    },
-  };
-
-  const moodChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-      title: {
-        display: true,
-        text: "감정 분포",
-      },
-    },
-  };
+  const currentSchedules = useCurrentSchedules(posts);
+  const { monthlyPostCounts, totalPosts, moodCounts } =
+    usePostStatistics(posts);
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -184,51 +47,11 @@ const MainSection = ({ user }: { user: User }) => {
         <div className={styles.mainSectionStatistics}>
           <h2 className={styles.mainSectionStatisticsTitle}>통계</h2>
           <div className={styles.mainSectionStatisticsContent}>
-            <div className={styles.mainSectionStatisticsItem}>
-              <p className={styles.mainSectionStatisticsItemTitle}>총 글 수</p>
-              <p className={styles.mainSectionStatisticsItemValue}>
-                {totalPosts}
-              </p>
-            </div>
-            {currentSchedules.length > 0 && (
-              <div className={styles.mainSectionCurrentSchedules}>
-                <h3>현재 진행 중인 일정</h3>
-                <ul>
-                  {currentSchedules.map((schedule) => (
-                    <li key={schedule.id}>
-                      <Link href={`/schedule/${schedule.id}`}>
-                        {schedule.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            <StatisticsItem title="총 글 수" value={totalPosts} />
+            <CurrentSchedules schedules={currentSchedules} />
             <div className={styles.flex}>
-              <div className={styles.mainSectionStatisticsItem}>
-                <p className={styles.mainSectionStatisticsItemTitle}>
-                  월별 글 수
-                </p>
-                <div className={styles.mainSectionStatisticsChart}>
-                  <Bar
-                    data={monthlyChartData}
-                    options={chartOptions}
-                    height={300}
-                  />
-                </div>
-              </div>
-              <div className={styles.mainSectionStatisticsItem}>
-                <p className={styles.mainSectionStatisticsItemTitle}>
-                  감정 분포
-                </p>
-                <div className={styles.mainSectionStatisticsChart}>
-                  <Doughnut
-                    data={moodChartData}
-                    options={moodChartOptions}
-                    height={300}
-                  />
-                </div>
-              </div>
+              <MonthlyPostChart monthlyPostCounts={monthlyPostCounts} />
+              <MoodDistributionChart moodCounts={moodCounts} />
             </div>
           </div>
         </div>
