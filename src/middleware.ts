@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   console.log("인증 상태 쿠키: ", authStatus ? "존재" : "없음");
 
   // 보호된 경로 목록
-  const protectedPaths = ["/home", "/schedule"];
+  const protectedPaths = ["/home", "/schedule", "/mypage"];
   console.log("보호된 경로 목록: ", protectedPaths);
 
   // 현재 경로가 보호된 경로인지 확인
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 설정
 export const config = {
-  matcher: ["/home", "/schedule", "/login"],
+  matcher: ["/home", "/schedule", "/mypage", "/login"],
 };
 
 console.log("미들웨어 설정 완료. 매칭 경로: ", config.matcher);
