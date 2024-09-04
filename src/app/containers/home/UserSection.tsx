@@ -16,9 +16,7 @@ const UserSection = ({ user }: { user: User }) => {
         />
       </Circle>
       <p className={styles.userNickname}>{user?.nickname}</p>
-      <Link href="/mypage" className={styles.editProfileLink}>
-        Edit Profile
-      </Link>
+      <p className={styles.userEmail}>{user?.email}</p>
     </section>
   );
 };

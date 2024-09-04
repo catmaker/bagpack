@@ -2,9 +2,11 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
 import { Post } from "@/types/schedule";
+import { User } from "@/types/user";
+import EditProfile from "./EditProfile";
 import styles from "./MyPostList.module.scss";
 
-const MyPostList = ({ posts }: { posts: Post[] }) => {
+const MyPostList = ({ posts, user }: { posts: Post[]; user: User }) => {
   const [isPriorityReverse, setIsPriorityReverse] = useState(false);
   const formatDate = (date: string) => {
     const parsedDate = parseISO(date);
@@ -57,6 +59,7 @@ const MyPostList = ({ posts }: { posts: Post[] }) => {
           </Link>
         ))}
       </div>
+      <EditProfile user={user} />
     </div>
   );
 };
