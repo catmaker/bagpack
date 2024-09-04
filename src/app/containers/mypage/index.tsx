@@ -25,7 +25,7 @@ const MyPageContainer = () => {
       <Header />
       <div className={styles.mypageContainer}>
         <UserSection user={user} />
-        <MyPostList posts={posts} />
+        <MyPostList posts={posts} user={user} />
       </div>
     </>
   );

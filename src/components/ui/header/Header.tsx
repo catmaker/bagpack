@@ -20,8 +20,7 @@ const Header = () => {
     try {
       await signOutClient();
       deleteCookie("auth-status");
-      router.push("/intro");
-      window.location.reload();
+      window.location.href = "/intro";
     } catch (error) {
       console.error("로그아웃 중 오류 발생 :", error);
       alert("로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
