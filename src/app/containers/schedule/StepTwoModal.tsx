@@ -101,7 +101,7 @@ const StepTwoModal = ({
             <h1 className={styles.nextModal_h1}>새로운 경험 기록하기</h1>
             <Image
               className={styles.nextModal_plusIcon}
-              src="/bagPackIcon/plus.svg"
+              src="/bagpackIcon/plus.svg"
               width={20}
               height={20}
               alt="post_icon"
