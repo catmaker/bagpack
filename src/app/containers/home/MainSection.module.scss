@@ -3,16 +3,12 @@
 .mainSectionContainer {
   display: flex;
   box-sizing: border-box;
-  flex: 2;
   width: 100%;
-  min-height: 80vh;
-  border-left: 1px solid $border-color;
 }
 
 .mainSectionWrapper {
-  max-width: 800px;
-  padding-left: 4rem;
-  padding-right: 2rem;
+  width: 100%;
+  padding: 2rem;
 }
 
 .mainSectionHeader {
@@ -58,6 +54,8 @@
   gap: 5rem;
   border-top: 1px solid $border-color;
   padding: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 .mainSectionCurrentSchedules {
   a {
