@@ -18,6 +18,7 @@ import Menu from "./menu.svg";
 import OrderedList from "./ordered-list.svg";
 import Paragraph from "./paragraph.svg";
 import Redo from "./redo.svg";
+import Save from "./save.svg";
 import Strike from "./strike.svg";
 import Undo from "./undo.svg";
 import User from "./user.svg";
@@ -46,4 +47,5 @@ export {
   Color,
   Menu,
   Analysis,
+  Save,
 };
