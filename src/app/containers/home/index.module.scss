@@ -2,20 +2,57 @@
 
 .homeContainer {
   display: flex;
-  width: 90vw;
-  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
-  margin-top: 100px;
+  width: calc(100% - 80px); // 전체 너비에서 양쪽으로 20px씩 뺀 값
+  margin-left: max(20px, calc((100% - 1200px) / 2));
+  margin-right: max(20px, calc((100% - 1200px) / 2));
+}
+.homeHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  background: $white;
+  width: 80%;
+  margin-top: 50px;
+}
+.homeMain {
+  display: flex;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  background: $white;
+  margin-top: 50px;
+}
+.card {
+  width: 200px;
+  height: 260px;
+  background-color: #212121;
+  box-shadow:
+    15px 15px 30px #191919,
+    -15px -15px 30px #292929;
+  transition:
+    border-radius cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s,
+    transform cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.02);
 }
 
 @media (max-width: $desktop) {
   .homeContainer {
-    width: 100%;
     margin-top: 50px;
   }
 }
 @media (max-width: $tablet) {
   .homeContainer {
+    flex-direction: column;
+  }
+  .card {
     flex-direction: column;
   }
 }
