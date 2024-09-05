@@ -5,9 +5,11 @@
   box-sizing: border-box;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
   flex: 1;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding: 20px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .userNickname {
@@ -16,7 +18,7 @@
 }
 
 .avatarWrapper {
-  position: relative;
+  box-sizing: border-box;
 }
 .editProfileLink {
   margin-top: 1rem;
@@ -39,4 +41,10 @@
   font-size: $font-size-m;
   font-weight: $font-weight-bold;
   color: $grey-color;
+}
+
+@media (max-width: $tablet) {
+  .userSectionContainer {
+    border-right: none;
+  }
 }

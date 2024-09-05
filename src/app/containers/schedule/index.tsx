@@ -1,21 +1,16 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-// components
 import Calendar from "@/app/containers/schedule/calendar/Calendar";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
-import SideBar from "@/components/ui/SideBar/SideBar";
+import Header from "@/components/ui/header/Header";
 import useScheduleStore from "@/store/schedule";
 import StepOneModal from "./StepOneModal";
 import StepTwoModal from "./StepTwoModal";
-// context
-// css
 import styles from "./index.module.scss";
 import "react-datepicker/dist/react-datepicker.css";
-// zustand
 
 const ScheduleClient = () => {
   const user = useContext(UserContext);
@@ -88,31 +83,32 @@ const ScheduleClient = () => {
   }
 
   return (
-    <div className={styles.container}>
-      {/* <UserAlert /> */}
-      <SideBar />
-      <motion.div
-        layout
-        initial={{ opacity: 0, scale: 1 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className={`${styles.calendar} ${isModalOpen ? styles.modalBackground : ""}`}
-      >
-        <Calendar onDateClick={handleDateClick} />
-        <StepOneModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          handleGoToNextModal={handleGoToNextModal} // 다음 모달로 이동하는 함수
-          user={user} // 사용자 정보
-          handleMoodClick={handleMoodClick} // 기분 아이콘 클릭 핸들러
-        />
-        <StepTwoModal
-          isOpen={isNextModalOpen} // 다음 모달 열림 상태
-          onClose={() => setIsNextModalOpen(false)} // 다음 모달 닫기 함수
-          setIsModalOpen={setIsModalOpen} // 현재 모달 열림 상태 변경 함수
-          setIsNextModalOpen={setIsNextModalOpen} // 다음 모달 열림 상태 변경 함수
-        />
-      </motion.div>
-    </div>
+    <>
+      <Header />
+      <div className={styles.container}>
+        <motion.div
+          layout
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className={`${styles.calendar} ${isModalOpen ? styles.modalBackground : ""}`}
+        >
+          <Calendar onDateClick={handleDateClick} />
+          <StepOneModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            handleGoToNextModal={handleGoToNextModal} // 다음 모달로 이동하는 함수
+            user={user} // 사용자 정보
+            handleMoodClick={handleMoodClick} // 기분 아이콘 클릭 핸들러
+          />
+          <StepTwoModal
+            isOpen={isNextModalOpen} // 다음 모달 열림 상태
+            onClose={() => setIsNextModalOpen(false)} // 다음 모달 닫기 함수
+            setIsModalOpen={setIsModalOpen} // 현재 모달 열림 상태 변경 함수
+            setIsNextModalOpen={setIsNextModalOpen} // 다음 모달 열림 상태 변경 함수
+          />
+        </motion.div>
+      </div>
+    </>
   );
 };
 

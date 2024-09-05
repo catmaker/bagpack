@@ -26,24 +26,9 @@ const MainSection = ({ user }: { user: User }) => {
   const { monthlyPostCounts, totalPosts, moodCounts } =
     usePostStatistics(posts);
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
   return (
     <section className={styles.mainSectionContainer}>
       <div className={styles.mainSectionWrapper}>
-        <div className={styles.mainSectionHeader}>
-          <h1 className={styles.mainSectionTitle}>
-            <span className={styles.mainSectionTitleText}>
-              안녕하세요!
-              <br />
-              {user.nickname} 님👋
-              <br />
-              TimeInk에 오신 것을 환영합니다.
-            </span>
-          </h1>
-        </div>
         <div className={styles.mainSectionStatistics}>
           <h2 className={styles.mainSectionStatisticsTitle}>통계</h2>
           <div className={styles.mainSectionStatisticsContent}>

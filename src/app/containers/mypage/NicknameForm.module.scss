@@ -22,21 +22,72 @@
   padding: 0.5rem;
   box-sizing: border-box;
 }
+// .formButton {
+//   height: 2rem;
+//   width: 10rem;
+//   border: 1px solid $border-color;
+//   border-radius: 5px;
+//   padding: 0.5rem;
+//   cursor: pointer;
+//   transition: 0.2s all;
+// }
+// .formButton:hover {
+//   background-color: $primary-color;
+//   color: $white;
+//   border: 1px solid $primary-color;
+// }
 .formButton {
-  height: 2rem;
-  width: 10rem;
-  border: 1px solid $border-color;
-  border-radius: 5px;
-  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  transition: 0.2s all;
+  border: none;
+  width: 10rem;
+  height: 2rem;
+  border-radius: 5px;
+  border: 1px solid $border-color;
+  fill: $grey-color;
+}
+
+.formButton svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+.formButton span {
+  color: $black;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-s;
 }
 .formButton:hover {
   background-color: $primary-color;
-  color: $white;
   border: 1px solid $primary-color;
 }
+.svgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+.formButton:hover .svgWrapper {
+  transform: scale(1.25);
+  transition: 0.5s linear;
+}
 
+.formButton:hover svg {
+  transform: translateX(1.5em) scale(1.1);
+  fill: #fff;
+}
+
+.formButton:hover span {
+  opacity: 0;
+}
+
+.formButton:active {
+  transform: scale(0.95);
+}
 @media (max-width: $tablet) {
   .formItem {
     width: 100%;

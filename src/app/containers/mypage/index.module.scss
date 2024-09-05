@@ -1,11 +1,10 @@
 @import "@/styles/variables.scss";
 
 .mypageContainer {
-  width: 90vw;
+  width: 80%;
   margin: 0 auto;
   margin-top: 100px;
   background-color: $white;
-  display: flex;
   transition: all 0.2s;
 }
 

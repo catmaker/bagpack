@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { updateUserNickname } from "@/utils/axios/fetcher/mypage";
 import { nicknameRegex } from "@/utils/regexPatterns";
+import Save from "../../../../public/svg/save.svg";
 import styles from "./NicknameForm.module.scss";
 
 interface NicknameFormProps {
@@ -66,7 +67,12 @@ const NicknameForm: React.FC<NicknameFormProps> = ({
           onChange={handleNicknameChange}
         />
       </div>
-      <button className={styles.formButton}>Save Nickname</button>
+      <button className={styles.formButton}>
+        <div className={styles.svgWrapper}>
+          <Save width={30} height={30} />
+          <span>저장하기</span>
+        </div>
+      </button>
     </form>
   );
 };
