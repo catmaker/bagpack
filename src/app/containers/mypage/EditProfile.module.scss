@@ -30,6 +30,7 @@
   border: 1px solid $border-color;
   border-radius: 5px;
   padding: 0.5rem;
+  box-sizing: border-box;
 }
 
 .editProfileFormButton {
@@ -46,4 +47,13 @@
   background-color: $primary-color;
   color: $white;
   border: 1px solid $primary-color;
+}
+
+@media (max-width: $tablet) {
+  .editProfileTitle {
+    font-size: $font-size-xl;
+  }
+  .editProfileFormItem {
+    width: 100%;
+  }
 }

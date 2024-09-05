@@ -20,6 +20,7 @@
   border: 1px solid $border-color;
   border-radius: 5px;
   padding: 0.5rem;
+  box-sizing: border-box;
 }
 .formButton {
   height: 2rem;
@@ -34,4 +35,13 @@
   background-color: $primary-color;
   color: $white;
   border: 1px solid $primary-color;
+}
+
+@media (max-width: $tablet) {
+  .formItem {
+    width: 100%;
+  }
+  .formInput {
+    padding: 10px;
+  }
 }

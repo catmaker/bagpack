@@ -41,6 +41,7 @@
 }
 .mainSectionStatisticsItem {
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 .mainSectionStatisticsItemTitle {
   font-size: $font-size-l;
@@ -82,7 +83,7 @@
   .mainSectionWrapper {
     padding-left: 1rem;
     padding-right: 1rem;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
   }
   .mainSectionTitleText {
@@ -93,6 +94,9 @@
   }
   .mainSectionStatisticsChart {
     margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
   }
   .mainSectionContainer {
