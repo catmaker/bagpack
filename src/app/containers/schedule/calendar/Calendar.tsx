@@ -1,4 +1,12 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+"use client";
+
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
 import Link from "next/link";
 import {
   DayCellContentArg,
@@ -9,6 +17,7 @@ import {
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { format } from "date-fns";
 import { UserContext } from "@/app/provider/UserProvider";
 import Button from "@/components/ui/Button";
@@ -19,6 +28,7 @@ import { Post } from "@/types/schedule";
 import { updatePostDates } from "@/utils/axios/fetcher/schedule";
 import styles from "./Calendar.module.scss";
 import "./styles.css";
+
 // 날짜 셀의 내용을 렌더링하는 함수 ex 1일 2일 3일
 const renderDayCellContent = (info: DayCellContentArg) => {
   const number = document.createElement("a");
@@ -29,7 +39,7 @@ const renderDayCellContent = (info: DayCellContentArg) => {
 
 // 각 이벤트 내용 렌더링 함수
 const renderEventContent = (eventInfo: EventContentArg) => {
-  const priorityClass = `priority-${eventInfo.event.extendedProps.priority ? eventInfo.event.extendedProps.priority.toLowerCase() : "default"}`; // priority 확인 추가
+  const priorityClass = `priority-${eventInfo.event.extendedProps.priority ? eventInfo.event.extendedProps.priority.toLowerCase() : "default"}`;
   return (
     <div className={`event-content ${priorityClass}`}>
       <b>{eventInfo.timeText}</b>
@@ -40,38 +50,34 @@ const renderEventContent = (eventInfo: EventContentArg) => {
 
 // 캘린더 컴포넌트
 const Calendar = ({ onDateClick }: CalendarProps) => {
-  // 상태 관리
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null); // 선택된 이벤트
-  const [isOpen, setIsOpen] = useState(false); // 모달 열림 상태
-  const [loadingEventId, setLoadingEventId] = useState<string | null>(null); // 로딩 중인 이벤트 ID
-  const [calendarEvents, setCalendarEvents] = useState<Event[]>([]); // 캘린더 이벤트 목록
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [loadingEventId, setLoadingEventId] = useState<string | null>(null);
+  const [calendarEvents, setCalendarEvents] = useState<Event[]>([]);
 
-  // 스케줄 스토어에서 데이터 가져오기
   const posts = useScheduleStore((state) => state.posts);
   const updatePost = useScheduleStore((state) => state.updatePost);
   const fetchPosts = useScheduleStore((state) => state.fetchPosts);
-  const user = useContext(UserContext); // 사용자 정보
-
-  // 날짜 셀 내용 렌더링 함수 메모이제이션
+  const user = useContext(UserContext);
+  const calendarRef = useRef<FullCalendar | null>(null);
+  const [maxEventRows, setMaxEventRows] = useState<number | undefined>(
+    undefined,
+  );
   const memoizedRenderDayCellContent = useCallback(renderDayCellContent, []);
 
-  // 포스트 데이터가 변경될 때 이벤트 생성
   useEffect(() => {
     if (Array.isArray(posts)) {
-      // 이벤트 객체 생성
-      const events = posts.map((post) => {
-        return {
-          id: post.id,
-          title: post.title as string,
-          date: post.startDate,
-          end: post.endDate,
-          classNames: [
-            `priority-${post.priority ? post.priority.toLowerCase() : "default"}`,
-          ], // post.priority 확인 추가
-          content: post.content,
-          priority: post.priority,
-        };
-      });
+      const events = posts.map((post) => ({
+        id: post.id,
+        title: post.title as string,
+        date: post.startDate,
+        end: post.endDate,
+        classNames: [
+          `priority-${post.priority ? post.priority.toLowerCase() : "default"}`,
+        ],
+        content: post.content,
+        priority: post.priority,
+      }));
 
       if (process.env.NODE_ENV === "development") {
         console.log("All events:", events);
@@ -82,11 +88,24 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
       setCalendarEvents([]);
     }
   }, [posts]);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setMaxEventRows(2);
+      } else {
+        setMaxEventRows(undefined); // 768px 초과 시 제한 없음
+      }
+    };
 
-  // 사용자 정보가 없으면 null 반환
-  if (!user) return null;
+    // 초기 실행
+    handleResize();
 
-  // 이벤트 클릭 핸들러
+    // 리사이즈 이벤트 리스너 추가
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const handleEventClick = (clickInfo: EventClickArg) => {
     setSelectedEvent({
       id: clickInfo.event.id,
@@ -99,7 +118,6 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     setIsOpen(true);
   };
 
-  // 이벤트 드래그 앤 드롭 핸들러
   const handleEventDrop = async (dropInfo: EventDropArg) => {
     if (!dropInfo || !dropInfo.event) {
       console.error("dropInfo 또는 dropInfo.event가 null입니다", dropInfo);
@@ -138,41 +156,36 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
     }
   };
 
-  // 모달 닫기 핸들러
   const handleCloseModal = () => {
     setIsOpen(false);
     setSelectedEvent(null);
   };
 
-  // 날짜 포맷 함수
   const formatDate = (dateStr: string) =>
     format(new Date(dateStr), "yyyy-MM-dd HH:mm");
 
-  if (process.env.NODE_ENV === "development") {
-    console.log("calendarEvents:", calendarEvents);
-  }
+  if (!user) return null;
 
   return (
     <div className={styles.calendar}>
       <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         initialView="dayGridMonth"
         selectable
         editable
         select={onDateClick}
-        events={calendarEvents} // 이벤트 목록
         height="100%"
-        // aspectRatio={1.35}
-        // contentHeight="auto"
+        aspectRatio={1.35}
+        events={calendarEvents}
         eventDisplay="block"
         eventTimeFormat={{
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
         }}
-        eventContent={renderEventContent} // 이벤트 컨텐츠 렌더링
-        eventClick={handleEventClick} // 이벤트 클릭 핸들러
-        eventDrop={handleEventDrop} // 이벤트 드래그 앤 드롭 핸들러
+        eventContent={renderEventContent}
+        eventClick={handleEventClick}
+        eventDrop={handleEventDrop}
         headerToolbar={{
           left: "today",
           center: "prev title next",
@@ -183,7 +196,10 @@ const Calendar = ({ onDateClick }: CalendarProps) => {
           month: "long",
         }}
         locale="ko"
-        dayCellContent={memoizedRenderDayCellContent} // 날짜 셀 컨텐츠 렌더링
+        dayCellContent={memoizedRenderDayCellContent}
+        contentHeight="100%"
+        fixedWeekCount={false}
+        dayMaxEventRows={maxEventRows}
       />
       {selectedEvent && (
         <Modal

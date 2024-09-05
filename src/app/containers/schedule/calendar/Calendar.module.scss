@@ -1,10 +1,8 @@
 @import "@/styles/variables.scss";
 .calendar {
-  width: 95% !important;
-  height: 92% !important;
+  width: 100% !important;
   background-color: white;
-  border-radius: 10px;
-  padding: 10px;
+  height: calc(100vh - 100px);
 }
 @font-face {
   font-family: "Pretendard-Regular";
@@ -12,6 +10,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 .event-content {
   font-family: "Pretendard-Regular", sans-serif !important;
   background-color: $primary-color;

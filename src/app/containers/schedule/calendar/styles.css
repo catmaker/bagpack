@@ -1,10 +1,14 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 .fc-daygrid-day-top {
   display: flex !important;
   flex-direction: row !important;
 }
 .fc .fc-button-primary {
-  background-color: #fe9a8a !important;
-  border-color: white !important;
 }
 .fc .fc-button-group {
   gap: 1px !important;
@@ -67,36 +71,27 @@
   gap: 5px;
 }
 .event-content.priority-low {
-  background-color: #e6f3ff !important;
+  background-color: #ffd6d6 !important;
 }
 
 .event-content.priority-medium {
-  background-color: #fe9a8a !important;
+  background-color: #ff9999 !important;
 }
 
 .event-content.priority-high {
-  background-color: #ffe6e6 !important;
+  background-color: #990e17 !important;
 }
 .fc-h-event {
   background: none !important;
 }
 .calendar {
-  height: 100%;
+  width: 100%;
+  height: 100% !important;
+  display: flex;
+  flex-direction: column;
 
   :global(.fc) {
-    height: 100%;
-  }
-
-  :global(.fc-view-harness) {
-    height: auto !important;
-  }
-
-  :global(.fc-daygrid-event) {
-    white-space: normal;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    flex-grow: 1;
   }
 }
 .fc-event-title {
@@ -115,4 +110,79 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.fc-theme-standard {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.event-content i {
+  font-style: normal !important;
+  font-family: "Pretendard-Regular", sans-serif !important;
+}
+.fc-daygrid-more-indicator {
+  background-color: #f0f0f0;
+  color: #333;
+  font-size: 0.8em;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 2px;
+}
+.fc-popover {
+  padding: 30px !important;
+  border-radius: 10px !important;
+}
+.fc-popover-header {
+  background-color: white !important;
+}
+.fc-popover-title {
+  font-size: 1.2rem !important;
+  font-weight: bold !important;
+}
+.fc-daygrid-day-frame {
+  min-height: 120px !important;
+}
+@media (max-width: 768px) {
+  .event-content b {
+    display: none;
+  }
+  .fc-event-end {
+    margin: 0 !important;
+  }
+  .fc-direction-ltr .fc-daygrid-event.fc-event-start,
+  .fc-direction-rtl .fc-daygrid-event.fc-event-end {
+    margin-left: 0 !important;
+  }
+  .event-content {
+    margin: 0;
+  }
+  .event-content i {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .fc-event-title {
+    font-size: 0.8em; /* 폰트 크기를 줄입니다 */
+  }
+  .fc-toolbar-title {
+    font-size: 1rem !important;
+    white-space: nowrap;
+  }
+  .fc-button-group {
+    display: none !important;
+  }
+  .fc-prev-button {
+    border-radius: 50% !important;
+  }
+  .fc-next-button {
+    border-radius: 50% !important;
+  }
+  .fc-daygrid-day-bottom {
+    a {
+      font-size: 0.8em;
+    }
+  }
+  .fc-daygrid-day-frame {
+    min-height: 70px !important;
+    max-height: 70px !important;
+  }
 }
