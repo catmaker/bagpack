@@ -7,14 +7,15 @@ import styles from "./UserSection.module.scss";
 const UserSection = ({ user }: { user: User }) => {
   return (
     <section className={styles.userSectionContainer}>
-      <Circle className={styles.avatarWrapper} color="white" size={300}>
+      <div className={styles.avatarWrapper}>
         <Image
           src="/bagpackIcon/profile.jpg"
-          fill
+          width={250}
+          height={250}
           alt="userProfile"
           style={{ borderRadius: "50%" }}
         />
-      </Circle>
+      </div>
       <p className={styles.userNickname}>{user?.nickname}</p>
       <p className={styles.userEmail}>{user?.email}</p>
     </section>
