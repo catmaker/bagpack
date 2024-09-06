@@ -79,10 +79,11 @@
     border-left: none;
   }
   .mainSectionWrapper {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: 80%;
-    margin: 0 auto;
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
+  .mainSectionStatisticsItem {
+    width: 100%;
   }
   .mainSectionTitleText {
     font-size: $font-size-l;
@@ -90,6 +91,7 @@
   .flex {
     padding: 0;
   }
+
   .mainSectionStatisticsChart {
     margin-top: 0.5rem;
     display: flex;
