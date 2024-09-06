@@ -45,18 +45,8 @@ const EventModal: React.FC<EventModalProps> = ({
       <p className={styles.modal_content_title}>내용</p>
       <p dangerouslySetInnerHTML={{ __html: selectedEvent?.content || "" }} />
       <div className={styles.button_box}>
-        <Button
-          backgroundColor="#e6e6e6"
-          padding="10px 20px 10px 20px"
-          onClick={onClose}
-        >
-          닫기
-        </Button>
-        <Button
-          backgroundColor="#e6e6e6"
-          padding="10px 20px 10px 20px"
-          type="submit"
-        >
+        <Button onClick={onClose}>닫기</Button>
+        <Button type="submit">
           <Link
             href={`schedule/${selectedEvent.id}/modify`}
             className={styles.modal_modify_link}

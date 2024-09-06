@@ -67,7 +67,14 @@
     color: $primary-color;
   }
 }
-
+.modal_modify_button {
+  background-color: $primary-color;
+  color: white;
+}
+.modal_close_button {
+  background-color: $primary-color;
+  color: white;
+}
 @media (max-width: $desktop) {
   .flex {
     flex-direction: column;
