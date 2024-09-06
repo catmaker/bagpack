@@ -22,6 +22,7 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { User } from "@/types/user";
 
 const firebaseConfig = {
@@ -36,9 +37,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 export default app;
-
+export const storage = getStorage(app);
 // 유저 추가하기
 export async function signUp(
   email: string,
@@ -115,7 +116,11 @@ export async function getUser(uid: string): Promise<User> {
   const userDocRef = doc(db, "users", uid);
   const userDocSnap = await getDoc(userDocRef);
   if (userDocSnap.exists()) {
-    return userDocSnap.data() as User;
+    return {
+      id: uid,
+      profilePictureUrl: userDocSnap.data().profilePictureUrl,
+      ...userDocSnap.data(),
+    } as User;
   }
   throw new Error("해당 사용자가 존재하지 않습니다!");
 }

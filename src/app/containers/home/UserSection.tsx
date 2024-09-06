@@ -1,6 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
-import Circle from "@/components/ui/Circle";
 import { User } from "@/types/user";
 import styles from "./UserSection.module.scss";
 
@@ -9,7 +7,7 @@ const UserSection = ({ user }: { user: User }) => {
     <section className={styles.userSectionContainer}>
       <div className={styles.avatarWrapper}>
         <Image
-          src="/bagpackIcon/profile.jpg"
+          src={user?.profilePictureUrl}
           width={250}
           height={250}
           alt="userProfile"
