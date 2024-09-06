@@ -152,3 +152,4 @@ TimeInk는 현재 [[bagpack.vercel.app](https://bagpack.vercel.app)]에서 사�
 - [🔐 사용자 인증 상태 지연 삽질하기](https://sinjisoo97.tistory.com/44)
 - [📊 Chart.js와 useMemo를 활용한 효율적인 통계 시각화 구현](https://sinjisoo97.tistory.com/46)
 - [🔄 Firebase Authentication 비밀번호 변경 트러블슈팅](https://sinjisoo97.tistory.com/47)
+- [🖼️ Next.js와 Firebase로 프로필 이미지 업로드 구현](https://sinjisoo97.tistory.com/48)
