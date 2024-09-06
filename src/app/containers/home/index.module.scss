@@ -9,6 +9,7 @@
   width: calc(100% - 80px); // 전체 너비에서 양쪽으로 20px씩 뺀 값
   margin-left: max(20px, calc((100% - 1200px) / 2));
   margin-right: max(20px, calc((100% - 1200px) / 2));
+  margin-bottom: 2rem;
 }
 .homeHeader {
   display: flex;
