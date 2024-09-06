@@ -135,6 +135,10 @@ TimeInk 프로젝트는 다음과 같은 최신 웹 기술과 도구들을 사�
 - 일정 제외 디자인 변경
 - 통계 기능 추가 (총 글 작성 수, 글에 작성한 무드 통계, 월 별 글 작성 수)
 
+### ver.1.1.1
+
+- 전체적인 디자인 수정
+
 TimeInk는 현재 [[bagpack.vercel.app](https://bagpack.vercel.app)]에서 사용 가능합니다. 언제 어디서나 접근하여 일정을 관리할 수 있습니다.
 ![image](https://github.com/user-attachments/assets/cc75213a-4ec3-4491-b1b2-fb07f613cbba)
 
