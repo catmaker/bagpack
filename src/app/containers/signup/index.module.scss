@@ -1,72 +1,49 @@
 @import "@/styles/variables.scss";
-
-.container {
+@font-face {
+  font-family: "Yellowtail";
+  src: url("/fonts/Yellowtail-Regular.ttf") format("ttf");
+}
+.signUpPageContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   overflow: hidden;
-  background-color: $input-color;
 }
-.card {
-  transition: 0.3s all ease-in-out !important;
+.signUpCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 80px;
 }
-.contents {
+.title {
+  color: #333;
+  position: relative;
+  display: inline-block;
+  font-family: "Yellowtail";
+  font-weight: 400;
+  margin: 0;
+}
+.subtitle {
+  font-weight: 400;
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+.signUpCard {
+  transition: 0.3s all ease-in-out;
+}
+
+.signUpCardContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 1.5rem;
-  margin-top: 10px;
-}
-
-.input,
-.pwInput {
-  width: 320px;
-  height: 50px;
-  background: $input-color;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  border: none;
-  padding-left: 50px;
-  transition: 0.3s all ease-in-out !important;
-}
-
-.inputBox {
-  position: relative;
-}
-
-.icon {
-  position: absolute;
-  top: 16px;
-  left: 15px;
-}
-
-.eyeIcon {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-}
-
-.signUp {
-  margin-top: 20px;
-  text-decoration: none;
-  color: $primary-color !important;
-  font-weight: $font-weight-bold;
-  transition: 0.3s all ease-in-out !important;
-
-  &:hover {
-    color: $white !important;
-    background-color: $primary-color !important;
-  }
 }
 
 @media (max-width: 580px) {
@@ -86,5 +63,11 @@
 @media (max-width: 480px) {
   .card {
     width: 280px !important;
+  }
+}
+
+@media (max-width: $tablet) {
+  .signUpCard {
+    margin-top: 20px;
   }
 }

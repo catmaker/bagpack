@@ -5,25 +5,57 @@
   src: url("/fonts/Yellowtail-Regular.ttf");
 }
 
-.signUpHeader {
+.signUpHeaderContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px 0 2rem 0;
+  margin: 0px 0 2rem;
+}
 
-  h1 {
-    font-family: "YellowTail";
-    font-style: normal;
-    font-weight: $font-weight-regular;
-    font-size: $font-size-xxl;
-    line-height: 24px;
-    text-align: center;
-    margin-bottom: 0;
+.appTitle {
+  font-family: "YellowTail", cursive;
+  font-style: normal;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-xxl;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 0;
+}
+@keyframes subtleEmphasis {
+  0%,
+  100% {
+    opacity: 1;
   }
+  50% {
+    opacity: 0.7;
+  }
+}
 
-  p {
-    color: $grey-color;
-    font-size: $font-size-xs;
-    margin-bottom: 0;
-  }
+.appTitle span {
+  display: inline-block;
+  animation: subtleEmphasis 3s infinite;
+}
+
+.appTitle span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.appTitle span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.appTitle span:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.appTitle span:nth-child(5) {
+  animation-delay: 0.8s;
+}
+.appTitle span:nth-child(6) {
+  animation-delay: 1s;
+}
+.appTitle span:nth-child(7) {
+  animation-delay: 1.2s;
+}
+.signUpPrompt {
+  color: $grey-color;
+  font-size: $font-size-xs;
+  margin-bottom: 0;
 }
