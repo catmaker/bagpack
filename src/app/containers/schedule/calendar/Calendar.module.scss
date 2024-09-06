@@ -69,3 +69,16 @@
     text-decoration: none;
   }
 }
+.modal_content {
+  p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    white-space: normal !important;
+    overflow: visible;
+    box-sizing: border-box;
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+}

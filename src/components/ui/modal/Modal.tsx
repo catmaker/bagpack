@@ -15,6 +15,7 @@ type ModalProps = {
   className?: string;
   maxHeight?: string;
   maxWidth?: string;
+  isMobile?: boolean;
 };
 
 const Modal = ({
@@ -28,12 +29,25 @@ const Modal = ({
   maxHeight,
   maxWidth,
   className,
+  isMobile,
 }: ModalProps) => {
+  const modalVariants = isMobile
+    ? {
+        initial: { y: "100%" },
+        animate: { y: 0 },
+        exit: { y: "100%" },
+      }
+    : {
+        initial: { y: -50, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        exit: { y: -50, opacity: 0 },
+      };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className={styles.modal_overlay}
+          className={`${styles.modal_overlay} ${isMobile ? styles.mobile_overlay : ""}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -41,19 +55,20 @@ const Modal = ({
           onClick={onClose}
         >
           <motion.div
-            className={`${styles.modal_content} ${className || ""}`}
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
+            className={`${styles.modal_content} ${className || ""} ${isMobile ? styles.mobile_content : ""}`}
+            variants={modalVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             transition={{ duration: 0.3 }}
             onClick={(e) => e.stopPropagation()}
             style={{
-              width,
-              height,
-              minHeight,
-              minWidth,
-              maxHeight: maxHeight || "80vh",
-              maxWidth,
+              width: isMobile ? "100%" : width,
+              height: isMobile ? "70vh" : height,
+              minHeight: isMobile ? "50vh" : minHeight,
+              minWidth: isMobile ? "auto" : minWidth,
+              maxHeight: isMobile ? "80vh" : maxHeight,
+              maxWidth: isMobile ? "100%" : maxWidth,
             }}
           >
             {children}

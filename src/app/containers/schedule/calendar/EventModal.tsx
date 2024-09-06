@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import Button from "@/components/ui/Button";
@@ -17,6 +17,24 @@ const EventModal: React.FC<EventModalProps> = ({
   onClose,
   selectedEvent,
 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    console.log("EventModal useEffect is running");
+    const checkMobile = () => {
+      const newIsMobile = window.innerWidth <= 768;
+      console.log("Window width:", window.innerWidth);
+      console.log("isMobile:", newIsMobile);
+      setIsMobile(newIsMobile);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  console.log("EventModal rendering, isMobile:", isMobile);
+
   if (!selectedEvent) return null;
 
   const formatDate = (dateStr: string) =>
@@ -27,9 +45,10 @@ const EventModal: React.FC<EventModalProps> = ({
       className={styles.modal}
       isOpen={isOpen}
       onClose={onClose}
-      maxHeight="600px"
-      minWidth="60vw"
-      minHeight="60vh"
+      maxHeight={isMobile ? "80vh" : "600px"}
+      minWidth={isMobile ? "100%" : "60vw"}
+      minHeight={isMobile ? "auto" : "60vh"}
+      isMobile={isMobile}
     >
       <h2 className={styles.modal_title}>{selectedEvent.title}</h2>
       {selectedEvent.date === selectedEvent.end ? (
@@ -43,7 +62,10 @@ const EventModal: React.FC<EventModalProps> = ({
         </>
       )}
       <p className={styles.modal_content_title}>내용</p>
-      <p dangerouslySetInnerHTML={{ __html: selectedEvent?.content || "" }} />
+      <p
+        className={styles.modal_content}
+        dangerouslySetInnerHTML={{ __html: selectedEvent?.content || "" }}
+      />
       <div className={styles.button_box}>
         <Button onClick={onClose}>닫기</Button>
         <Button type="submit">
