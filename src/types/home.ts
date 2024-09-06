@@ -1,3 +1,4 @@
+import React from "react";
 // CurrentSchedules.tsx
 export type Schedule = {
   id: string;
@@ -30,4 +31,13 @@ export type MoodDistributionChartProps = {
 export type StatisticsItemProps = {
   title: string;
   value: number;
+};
+
+// ResponsiveMobileLayout.tsx
+
+export type ResponsiveMobileLayoutProps = {
+  isMobile: boolean;
+  userSection: React.ReactNode;
+  welcomeSection: React.ReactNode;
+  mainSection: React.ReactNode;
 };

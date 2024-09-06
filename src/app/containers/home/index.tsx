@@ -1,38 +1,40 @@
+// containers/home/index.tsx
+
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/app/provider/UserProvider";
-import Card from "@/components/ui/Card";
 import MainSection from "./MainSection";
+import ResponsiveMobileLayout from "./ResponsiveMobileLayout";
 import UserSection from "./UserSection";
 import WelcomeSection from "./WelcomeSection";
-import styles from "./index.module.scss";
 
 const HomeClient: React.FC = () => {
   const user = useContext(UserContext);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   if (!user) {
     return null; // 또는 로딩 컴포넌트를 반환
   }
+
   return (
-    <div className={styles.homeContainer}>
-      <Card
-        width="80%"
-        height="100%"
-        className={`${styles.homeHeader} ${styles.card}`}
-        boxShadow="0px 0px 10px 0px rgba(0, 0, 0, 0.1)"
-      >
-        <UserSection user={user} />
-        <WelcomeSection user={user} />
-      </Card>
-      <Card
-        width="80%"
-        height="100%"
-        className={`${styles.homeMain} ${styles.card}`}
-        boxShadow="0px 0px 10px 0px rgba(0, 0, 0, 0.1)"
-      >
-        <MainSection user={user} />
-      </Card>
-    </div>
+    <ResponsiveMobileLayout
+      isMobile={isMobile}
+      userSection={<UserSection user={user} />}
+      welcomeSection={<WelcomeSection user={user} />}
+      mainSection={<MainSection user={user} />}
+    />
   );
 };
 
