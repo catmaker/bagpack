@@ -49,7 +49,15 @@ const MoodDistributionChart = ({ moodCounts }: MoodDistributionChartProps) => {
     <div className={styles.mainSectionStatisticsItem}>
       <p className={styles.mainSectionStatisticsItemTitle}>감정 분포</p>
       <div className={styles.mainSectionStatisticsChart}>
-        <Doughnut data={chartData} options={chartOptions} height={300} />
+        {moodCounts.happy === 0 &&
+        moodCounts.smile === 0 &&
+        moodCounts.neutral === 0 &&
+        moodCounts.sad === 0 &&
+        moodCounts.terrible === 0 ? (
+          <p>작성한 글이 없어 감정 분포를 확인할 수 없습니다.</p>
+        ) : (
+          <Doughnut data={chartData} options={chartOptions} height={300} />
+        )}
       </div>
     </div>
   );

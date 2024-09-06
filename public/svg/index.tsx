@@ -1,7 +1,9 @@
 import Analysis from "./anal.svg";
+import ArrowHorizontal from "./ArrowHorizontal.svg";
 import Blockquote from "./blockquote.svg";
 import Bold from "./bold.svg";
 import BulletList from "./bullet-list.svg";
+import Cat from "./cat.svg";
 import Code from "./code.svg";
 import Color from "./color.svg";
 import EyeSlash from "./eye-slash.svg";
@@ -47,5 +49,7 @@ export {
   Color,
   Menu,
   Analysis,
+  ArrowHorizontal,
   Save,
+  Cat,
 };

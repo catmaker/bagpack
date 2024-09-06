@@ -1,13 +1,9 @@
 import React, { useState, useCallback } from "react";
+import { NicknameFormProps } from "@/types/mypage";
 import { updateUserNickname } from "@/utils/axios/fetcher/mypage";
 import { nicknameRegex } from "@/utils/regexPatterns";
 import Save from "../../../../public/svg/save.svg";
 import styles from "./NicknameForm.module.scss";
-
-interface NicknameFormProps {
-  userEmail: string;
-  initialNickname: string;
-}
 
 const NicknameForm: React.FC<NicknameFormProps> = ({
   userEmail,

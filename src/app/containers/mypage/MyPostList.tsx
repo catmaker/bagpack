@@ -44,21 +44,25 @@ const MyPostList = ({ posts, user }: { posts: Post[]; user: User }) => {
       <button onClick={handlePriority} className={styles.myPostListButton}>
         {isPriorityReverse ? "중요도 낮은 순" : "중요도 높은 순"}
       </button>
-      <div className={styles.myPostList}>
-        {priorityPosts.map((post) => (
-          <Link href={`/schedule/${post.id}`} key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.priority}</p>
-            {post.startDate === post.endDate ? (
-              <p>{formatDate(post.startDate)}</p>
-            ) : (
-              <p>
-                {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
-              </p>
-            )}
-          </Link>
-        ))}
-      </div>
+      {priorityPosts.length === 0 ? (
+        <p>작성한 글이 없습니다.</p>
+      ) : (
+        <div className={styles.myPostList}>
+          {priorityPosts.map((post) => (
+            <Link href={`/schedule/${post.id}`} key={post.id}>
+              <h2>{post.title}</h2>
+              <p>{post.priority}</p>
+              {post.startDate === post.endDate ? (
+                <p>{formatDate(post.startDate)}</p>
+              ) : (
+                <p>
+                  {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
+                </p>
+              )}
+            </Link>
+          ))}
+        </div>
+      )}
       <EditProfile user={user} />
     </div>
   );

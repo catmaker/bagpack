@@ -1,15 +1,40 @@
 @import "@/styles/variables.scss";
-
+@font-face {
+  font-family: "Yellowtail";
+  src: url("/fonts/Yellowtail-Regular.ttf") format("ttf");
+}
 .loginPageContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   overflow: hidden;
-  background-color: $input-color;
 }
-
+.loginCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 80px;
+}
+.title {
+  color: #333;
+  position: relative;
+  display: inline-block;
+  font-family: "Yellowtail";
+  font-weight: 400;
+  margin: 0;
+}
+.subtitle {
+  font-weight: 400;
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
 .loginCard {
   transition: 0.3s all ease-in-out;
 }
@@ -21,14 +46,8 @@
   height: 100%;
 }
 
-@media (max-width: 580px) {
+@media (max-width: $tablet) {
   .loginCard {
-    width: 400px;
-  }
-}
-
-@media (max-width: 480px) {
-  .loginCard {
-    width: 280px;
+    margin-top: 20px;
   }
 }

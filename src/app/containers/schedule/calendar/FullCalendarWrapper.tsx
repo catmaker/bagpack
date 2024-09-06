@@ -87,6 +87,7 @@ const FullCalendarWrapper: React.FC<FullCalendarWrapperProps> = ({
       contentHeight="100%"
       fixedWeekCount={false}
       dayMaxEventRows={maxEventRows}
+      longPressDelay={500}
     />
   );
 };

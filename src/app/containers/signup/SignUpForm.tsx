@@ -1,25 +1,27 @@
 import React from "react";
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
-import { LoginFormProps } from "@/types/login";
+import { SignUpFormProps } from "@/types/signUp";
 import { ArrowHorizontal, Eye, EyeSlash } from "../../../../public/svg";
-import styles from "./LoginForm.module.scss";
+import styles from "./SignUpForm.module.scss";
 
-const LoginForm: React.FC<LoginFormProps> = ({
+const SignUpForm: React.FC<SignUpFormProps> = ({
   email,
   setEmail,
   password,
   setPassword,
   passwordVisible,
   togglePasswordVisible,
-  handleLogin,
+  registerHandler,
+  nickname,
+  setNickname,
 }) => {
   return (
-    <form className={styles.loginForm} onSubmit={handleLogin}>
+    <form className={styles.signUpForm} onSubmit={registerHandler}>
       <InputField
         className={styles.formControl}
-        type="text"
         id="email"
+        type="text"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       >
@@ -36,8 +38,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </InputField>
       <InputField
         className={styles.formControl}
-        type={passwordVisible ? "text" : "password"}
         id="password"
+        type={passwordVisible ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       >
@@ -51,29 +53,31 @@ const LoginForm: React.FC<LoginFormProps> = ({
             </span>
           ))}
         </label>
-        {passwordVisible ? (
-          <Eye
-            className={styles.passwordToggleIcon}
-            width={23}
-            height={23}
-            onClick={togglePasswordVisible}
-          />
-        ) : (
-          <EyeSlash
-            className={styles.passwordToggleIcon}
-            width={23}
-            height={23}
-            onClick={togglePasswordVisible}
-          />
-        )}
       </InputField>
-
+      <InputField
+        className={styles.formControl}
+        id="nickname"
+        type="text"
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+      >
+        <label htmlFor="nickname">
+          {"Nickname".split("").map((char, index) => (
+            <span
+              key={`nickname-${char}`}
+              style={{ transitionDelay: `${index * 50}ms` }}
+            >
+              {char}
+            </span>
+          ))}
+        </label>
+      </InputField>
       <Button className={styles.submitButton} type="submit">
-        <span className={styles.hoverUnderlineAnimation}>로그인</span>
+        <span className={styles.hoverUnderlineAnimation}>회원가입</span>
         <ArrowHorizontal width={30} height={10} />
       </Button>
     </form>
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

@@ -1,6 +1,6 @@
 @import "@/styles/variables.scss";
 
-.loginForm {
+.signUpForm {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -127,10 +127,5 @@
   input:valid + label span {
     color: lightblue;
     transform: translateY(-30px);
-  }
-}
-@media (max-width: $mobile) {
-  .inputField {
-    width: 200px;
   }
 }
