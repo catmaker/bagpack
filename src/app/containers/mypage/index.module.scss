@@ -6,6 +6,7 @@
   margin-top: 100px;
   background-color: $white;
   transition: all 0.2s;
+  box-sizing: border-box;
 }
 
 @media (max-width: $tablet) {

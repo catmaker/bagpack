@@ -64,8 +64,8 @@ const Modal = ({
             onClick={(e) => e.stopPropagation()}
             style={{
               width: isMobile ? "100%" : width,
-              height: isMobile ? "70vh" : height,
-              minHeight: isMobile ? "50vh" : minHeight,
+              height: isMobile ? "auto" : height,
+              minHeight: isMobile ? "auto" : "auto",
               minWidth: isMobile ? "auto" : minWidth,
               maxHeight: isMobile ? "80vh" : maxHeight,
               maxWidth: isMobile ? "100%" : maxWidth,

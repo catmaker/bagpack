@@ -21,13 +21,10 @@ const MyPageContainer = () => {
     return null; // 또는 로딩 컴포넌트를 반환
   }
   return (
-    <>
-      <Header />
-      <div className={styles.mypageContainer}>
-        <UserSection user={user} />
-        <MyPostList posts={posts} user={user} />
-      </div>
-    </>
+    <div className={styles.mypageContainer}>
+      <UserSection user={user} />
+      <MyPostList posts={posts} user={user} />
+    </div>
   );
 };
 
