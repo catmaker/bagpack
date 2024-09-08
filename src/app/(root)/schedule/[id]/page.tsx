@@ -1,7 +1,6 @@
 import React from "react";
 import ScheduleDetail from "@/app/containers/schedule/[id]/";
 import Header from "@/components/ui/header/Header";
-import { getPostById } from "@/utils/axios/fetcher/schedule";
 
 interface Props {
   params: {
@@ -9,20 +8,11 @@ interface Props {
   };
 }
 
-const ScheduleDetailPage: React.FC<Props> = async ({ params }: Props) => {
-  const { id } = params;
-  let post;
-
-  try {
-    post = await getPostById(id);
-  } catch (error) {
-    console.error("ScheduleDetailPage Error fetching post", error);
-  }
-
+const ScheduleDetailPage: React.FC<Props> = ({ params }: Props) => {
   return (
     <>
       <Header />
-      <ScheduleDetail params={params} data={post} />
+      <ScheduleDetail id={params.id} />
     </>
   );
 };
