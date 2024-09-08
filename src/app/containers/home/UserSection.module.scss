@@ -42,7 +42,21 @@
   font-weight: $font-weight-bold;
   color: $grey-color;
 }
-
+.editProfileButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: $border-color;
+  color: $white;
+  font-size: $font-size-m;
+  font-weight: $font-weight-bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.editProfileButton:hover {
+  background-color: $primary-color-hover;
+}
 @media (max-width: $tablet) {
   .userSectionContainer {
     border-right: none;

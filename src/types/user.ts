@@ -21,6 +21,8 @@ export type User = {
   palette?: string[];
   created_at: Timestamp;
   posts?: Post[];
+  id: string;
+  profilePictureUrl: string;
 };
 
 export type UserProps = {

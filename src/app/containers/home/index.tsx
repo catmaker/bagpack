@@ -12,7 +12,7 @@ import WelcomeSection from "./WelcomeSection";
 const HomeClient: React.FC = () => {
   const user = useContext(UserContext);
   const [isMobile, setIsMobile] = useState(false);
-
+  console.log(user);
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);

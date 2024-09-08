@@ -1,0 +1,70 @@
+@import "@/styles/variables.scss";
+.profileImageContainer {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+}
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.profilePreview {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
+}
+
+.imageOverlay span {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.imageWrapper:hover .imageOverlay {
+  opacity: 1;
+}
+
+.placeholderImage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #666;
+}
+.formButton {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 2rem;
+  width: 10rem;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+.formButton:hover {
+  background-color: $primary-color;
+  color: $white;
+  border: 1px solid $primary-color;
+}
