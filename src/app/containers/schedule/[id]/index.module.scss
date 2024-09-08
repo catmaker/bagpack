@@ -1,21 +1,89 @@
 @import "@/styles/variables.scss";
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  overflow: hidden;
-  background-color: #ebecf1;
+.card {
+  width: 80%;
+  min-height: 100vh; // 최소 높이를 뷰포트 높이로 설정
+  margin: 50px auto; // 상하 마진 통합
+  box-sizing: border-box;
+  padding: 20px;
+  position: relative;
 }
+
+.container {
+  width: 100%;
+  min-height: 100vh; // 최소 높이를 뷰포트 높이로 설정
+  display: flex;
+  overflow: visible; // 오버플로우를 허용
+}
+
 .content_wrapper {
   width: 100%;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
+
 .content {
   width: 100%;
-  height: 100%;
-  border: 2px solid $primary-color;
-  padding: 20px;
+  flex-grow: 1; // 남은 공간을 채우도록 설정
   box-sizing: border-box;
   border-radius: 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  white-space: normal;
+}
+
+.button_wrapper {
+  margin-top: auto; // 버튼을 콘텐츠 아래로 밀어냄
+  display: flex;
+  gap: 15px;
+  padding-top: 30px;
+}
+.button {
+  cursor: pointer;
+  background-color: #e6e6e6;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: 0.3s all ease-in-out !important;
+  text-decoration: none;
+  color: $black;
+  font-size: $font-size-s;
+}
+.delete_button {
+  background-color: $primary-color;
+  color: $white;
+}
+.button:hover {
+  color: white !important;
+  background-color: $primary-color !important;
+}
+.delete_button:hover {
+  background-color: $error-color !important;
+}
+.content {
+  p {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    white-space: normal !important;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+}
+@media (max-width: $mobile) {
+  .container {
+    width: 90%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10px;
+    position: relative;
+    height: 100%;
+  }
+  .button_wrapper {
+    margin-bottom: 0px;
+    position: relative;
+  }
 }

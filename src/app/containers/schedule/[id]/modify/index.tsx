@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import Tiptap from "@/components/tiptap/Tiptap";
 import { Post, ModifyProps } from "@/types/schedule";
+import styles from "./index.module.scss";
 
 const Modify = ({ params, data }: ModifyProps) => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const Modify = ({ params, data }: ModifyProps) => {
   }, [data, router]);
 
   return (
-    <div style={{ width: "80%", margin: "auto" }}>
+    <div className={styles.container}>
       {post?.content ? (
         <Tiptap
           contents={post?.content}

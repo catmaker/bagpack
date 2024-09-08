@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import styles from "@/app/containers/schedule/[id]/index.module.scss";
 import { UserContext } from "@/app/provider/UserProvider";
-import SideBar from "@/components/ui/SideBar/SideBar";
+import Card from "@/components/ui/Card";
 import { Post, ScheduleDetailProps } from "@/types/schedule";
 import { deletePost } from "@/utils/axios/fetcher/schedule";
 
@@ -22,9 +22,23 @@ const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
       router.push("/schedule");
     }
   }, [data, router]);
+  const [isMobile, setIsMobile] = useState(false);
+  console.log(user);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
   const handleDeletePost = async () => {
     try {
       await deletePost(email, id);
+      alert("게시물이 삭제되었습니다.");
+      router.push("/schedule");
     } catch (err) {
       console.error(err);
     }
@@ -39,31 +53,80 @@ const ScheduleDetail = ({ params, data }: ScheduleDetailProps) => {
     }
     return format(date, "yyyy-MM-dd HH:mm");
   };
-
-  return (
-    <div className={styles.container}>
-      <SideBar />
-      <div className={styles.content_wrapper}>
-        <div className={styles.content}>
-          <h1>{post?.title}</h1>
-          {post?.startDate === post?.endDate ? (
-            <p>{formatDate(post?.startDate || "")}</p>
-          ) : (
-            <>
+  if (isMobile) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.content_wrapper}>
+          <div className={styles.content}>
+            <h1>{post?.title}</h1>
+            {post?.startDate === post?.endDate ? (
               <p>{formatDate(post?.startDate || "")}</p>
-              <p>{formatDate(post?.endDate || "")}</p>
-            </>
-          )}
-          <div dangerouslySetInnerHTML={{ __html: post?.content || "" }} />
-          <Link href={`/schedule/${id}/modify`}>
-            <button type="button">수정</button>
-          </Link>
-          <button type="button" onClick={handleDeletePost}>
-            삭제
-          </button>
+            ) : (
+              <>
+                <p>{formatDate(post?.startDate || "")}</p>
+                <p>{formatDate(post?.endDate || "")}</p>
+              </>
+            )}
+            <p
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: post?.content || "" }}
+            />
+            <div className={styles.button_wrapper}>
+              <Link href={`/schedule/${id}/modify`} className={styles.button}>
+                수정
+              </Link>
+              <button
+                className={`${styles.button} ${styles.delete_button}`}
+                type="button"
+                onClick={handleDeletePost}
+              >
+                삭제
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    );
+  }
+  return (
+    <Card
+      width="80%"
+      height="100%"
+      boxShadow="0px 0px 10px 0px rgba(0, 0, 0, 0.1)"
+      className={styles.card}
+    >
+      <div className={styles.container}>
+        <div className={styles.content_wrapper}>
+          <div className={styles.content}>
+            <h1>{post?.title}</h1>
+            {post?.startDate === post?.endDate ? (
+              <p>{formatDate(post?.startDate || "")}</p>
+            ) : (
+              <>
+                <p>{formatDate(post?.startDate || "")}</p>
+                <p>{formatDate(post?.endDate || "")}</p>
+              </>
+            )}
+            <p
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: post?.content || "" }}
+            />
+            <div className={styles.button_wrapper}>
+              <Link href={`/schedule/${id}/modify`} className={styles.button}>
+                수정
+              </Link>
+              <button
+                className={`${styles.button} ${styles.delete_button}`}
+                type="button"
+                onClick={handleDeletePost}
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };
 
