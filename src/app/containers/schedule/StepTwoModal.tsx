@@ -95,7 +95,13 @@ const StepTwoModal = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
+      <Modal
+        className={styles.modal}
+        isOpen={isOpen}
+        onClose={onClose}
+        width="1000px"
+        minHeight="90vh"
+      >
         <div>
           <div className={styles.nextModal_header}>
             <h1 className={styles.nextModal_h1}>새로운 경험 기록하기</h1>
@@ -108,8 +114,10 @@ const StepTwoModal = ({
               onClick={() => setIsPostModalOpen(true)}
             />
           </div>
-          <div>
-            <p>선택한 기간의 작성한 글 목록</p>
+          <div className={styles.filterPostListContainer}>
+            <p className={styles.filterPostListContainer_p}>
+              선택한 기간의 작성한 글 목록
+            </p>
             <button onClick={handleSortToggle} className={styles.sortButton}>
               {isDescending ? "중요도 ▲" : "중요도 ▼"}
             </button>

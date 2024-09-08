@@ -147,3 +147,18 @@
 .fc-daygrid-day-frame {
   height: 100% !important;
 }
+
+@media screen and (max-width: 768px) {
+  .tiptap-button-group {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .ProseMirror {
+    min-height: 20rem;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+}

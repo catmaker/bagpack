@@ -74,3 +74,18 @@
   color: white !important;
   background-color: $primary-color !important;
 }
+
+@media screen and (max-width: $tablet) {
+  .modal {
+    padding: 0;
+  }
+  .modal_h1 {
+    font-size: $font-size-l;
+  }
+  .datePickerBox {
+    flex-direction: column;
+  }
+  .modal_footer {
+    padding-bottom: 30px;
+  }
+}

@@ -72,3 +72,30 @@
     color: $primary-color;
   }
 }
+
+@media screen and (max-width: $tablet) {
+  .modal {
+    padding: 0;
+  }
+  .nextModal_header {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    justify-content: center;
+    gap: 20px;
+  }
+  .nextModal_h1 {
+    font-size: $font-size-l;
+  }
+  .filterPostListContainer {
+    margin: auto;
+    width: 90%;
+  }
+  .prevButton {
+    margin-left: 5%;
+    padding-left: 2%;
+    margin-bottom: 20px;
+  }
+  .filterPostListContainer_p {
+    text-align: center;
+  }
+}

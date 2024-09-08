@@ -65,3 +65,22 @@
   margin: 0px;
   margin-bottom: 10px;
 }
+
+@media screen and (max-width: $tablet) {
+  .title_h1 {
+    font-size: $font-size-l;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .form {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .title_input {
+    width: 90%;
+  }
+  .modal_footer {
+    box-sizing: border-box;
+    padding: 20px;
+  }
+}

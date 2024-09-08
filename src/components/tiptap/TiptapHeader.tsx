@@ -15,6 +15,7 @@ import {
   Undo,
   Redo,
 } from "../../../public/svg";
+import "./styles.css";
 
 const MenuBar = () => {
   const [color, setColor] = useState("#958DF1");
