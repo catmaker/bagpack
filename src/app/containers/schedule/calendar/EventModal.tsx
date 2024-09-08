@@ -45,9 +45,8 @@ const EventModal: React.FC<EventModalProps> = ({
       className={styles.modal}
       isOpen={isOpen}
       onClose={onClose}
-      maxHeight={isMobile ? "80vh" : "600px"}
       minWidth={isMobile ? "100%" : "60vw"}
-      minHeight={isMobile ? "auto" : "60vh"}
+      minHeight={isMobile ? "auto" : "auto"}
       isMobile={isMobile}
     >
       <h2 className={styles.modal_title}>{selectedEvent.title}</h2>

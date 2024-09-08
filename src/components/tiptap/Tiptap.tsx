@@ -192,7 +192,7 @@ const EditorComponent = ({
     <>
       <EditorProvider
         slotBefore={
-          <>
+          <form className={styles.form}>
             <h1 className={styles.title_h1}>글 작성하기</h1>
             <p className={styles.title_label}>제목을 입력해주세요.</p>
             <input
@@ -252,7 +252,7 @@ const EditorComponent = ({
             )}
 
             <MenuBar />
-          </>
+          </form>
         }
         extensions={extensions}
         content={currentContent || content}

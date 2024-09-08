@@ -1,10 +1,9 @@
 import React from "react";
-// components
 import Tiptap from "@/components/tiptap/Tiptap";
 import Modal from "@/components/ui/modal/Modal";
-// zustand
 import useScheduleStore from "@/store/schedule";
 import { PostModalProps } from "@/types/schedule";
+import styles from "./PostModal.module.scss";
 
 const PostModal = ({ isOpen, onClose }: PostModalProps) => {
   const { selectedDate, selectedDayOfWeek, selectedMood } = useScheduleStore(
@@ -19,7 +18,13 @@ const PostModal = ({ isOpen, onClose }: PostModalProps) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} width="1000px" minHeight="90vh">
+    <Modal
+      className={styles.modal}
+      isOpen={isOpen}
+      onClose={onClose}
+      width="1000px"
+      minHeight="90vh"
+    >
       <form onSubmit={(e) => e.preventDefault()}>
         <Tiptap onClose={onClose} />
       </form>

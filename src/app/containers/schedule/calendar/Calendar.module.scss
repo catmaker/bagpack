@@ -31,8 +31,7 @@
 .button_box {
   display: flex;
   gap: 10px;
-  position: absolute;
-  bottom: 20px;
+  margin-bottom: 20px;
   button {
     cursor: pointer;
     background-color: #e6e6e6;

@@ -1,5 +1,6 @@
 import React from "react";
 import Modify from "@/app/containers/schedule/[id]/modify";
+import Header from "@/components/ui/header/Header";
 import { getPostById } from "@/utils/axios/fetcher/schedule";
 
 interface Props {
@@ -17,7 +18,12 @@ const ModifyPage: React.FC<Props> = async ({ params }: Props) => {
   } catch (error) {
     console.error("ModifyPage Error fetching post:", error);
   }
-  return <Modify params={params} data={post} />;
+  return (
+    <>
+      <Header />
+      <Modify params={params} data={post} />
+    </>
+  );
 };
 
 export default ModifyPage;
