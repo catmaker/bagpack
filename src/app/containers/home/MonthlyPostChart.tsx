@@ -71,7 +71,6 @@ const MonthlyPostChart = ({ monthlyPostCounts }: MonthlyPostChartProps) => {
       },
     },
   };
-  console.log(monthlyPostCounts);
   // 데이터가 없으면 0으로 채워지기 때문에 length가 0이면 조건은 사용불가
   let isEmpty = true;
   for (let i = 0; i < monthlyPostCounts.length; i++) {

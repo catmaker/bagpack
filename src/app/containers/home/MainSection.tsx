@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Loading from "@/components/Loading/index";
 import useCurrentSchedules from "@/hooks/useCurrentSchedules";
 import usePostStatistics from "@/hooks/usePostStatistics";
 import useScheduleStore from "@/store/schedule";
@@ -12,12 +13,14 @@ import styles from "./MainSection.module.scss";
 const MainSection = ({ user }: { user: User }) => {
   const { posts, fetchPosts } = useScheduleStore();
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const loadPosts = async () => {
       setIsLoading(true);
-      await fetchPosts(user);
-      setIsLoading(false);
+      try {
+        await fetchPosts(user);
+      } finally {
+        setIsLoading(false);
+      }
     };
     loadPosts();
   }, [fetchPosts, user]);
@@ -27,14 +30,22 @@ const MainSection = ({ user }: { user: User }) => {
     usePostStatistics(posts);
 
   return (
-    <section className={styles.mainSectionContainer}>
+    <section
+      className={styles.mainSectionContainer}
+      aria-labelledby="statistics-title"
+    >
       <div className={styles.mainSectionWrapper}>
         <div className={styles.mainSectionStatistics}>
-          <h2 className={styles.mainSectionStatisticsTitle}>통계</h2>
+          <h2
+            id="statistics-title"
+            className={styles.mainSectionStatisticsTitle}
+          >
+            통계
+          </h2>
           <div className={styles.mainSectionStatisticsContent}>
             <StatisticsItem title="총 글 수" value={totalPosts} />
             <CurrentSchedules schedules={currentSchedules} />
-            <div className={styles.flex}>
+            <div className={styles.flex} role="group" aria-label="차트 통계">
               <MonthlyPostChart monthlyPostCounts={monthlyPostCounts} />
               <MoodDistributionChart moodCounts={moodCounts} />
             </div>
