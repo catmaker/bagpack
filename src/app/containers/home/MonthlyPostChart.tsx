@@ -81,16 +81,29 @@ const MonthlyPostChart = ({ monthlyPostCounts }: MonthlyPostChartProps) => {
     }
   }
   return (
-    <div className={styles.mainSectionStatisticsItem}>
-      <p className={styles.mainSectionStatisticsItemTitle}>월별 글 수</p>
+    <section
+      className={styles.mainSectionStatisticsItem}
+      aria-labelledby="monthly-post-chart-title"
+    >
+      <h2
+        id="monthly-post-chart-title"
+        className={styles.mainSectionStatisticsItemTitle}
+      >
+        월별 글 수
+      </h2>
       <div className={styles.mainSectionStatisticsChart}>
         {isEmpty ? (
-          <p>작성한 글이 없어 월별 글 수를 확인할 수 없습니다.</p>
+          <p role="status">작성한 글이 없어 월별 글 수를 확인할 수 없습니다.</p>
         ) : (
-          <Bar data={chartData} options={chartOptions} height={300} />
+          <Bar
+            data={chartData}
+            options={chartOptions}
+            height={300}
+            aria-label="월별 글 수 차트"
+          />
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
