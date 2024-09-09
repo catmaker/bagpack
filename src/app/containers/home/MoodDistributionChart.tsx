@@ -45,21 +45,32 @@ const MoodDistributionChart = ({ moodCounts }: MoodDistributionChartProps) => {
     },
   };
 
+  const isEmpty = Object.values(moodCounts).every((count) => count === 0);
+
   return (
-    <div className={styles.mainSectionStatisticsItem}>
-      <p className={styles.mainSectionStatisticsItemTitle}>감정 분포</p>
+    <section
+      className={styles.mainSectionStatisticsItem}
+      aria-labelledby="mood-distribution-title"
+    >
+      <h2
+        id="mood-distribution-title"
+        className={styles.mainSectionStatisticsItemTitle}
+      >
+        감정 분포
+      </h2>
       <div className={styles.mainSectionStatisticsChart}>
-        {moodCounts.happy === 0 &&
-        moodCounts.smile === 0 &&
-        moodCounts.neutral === 0 &&
-        moodCounts.sad === 0 &&
-        moodCounts.terrible === 0 ? (
-          <p>작성한 글이 없어 감정 분포를 확인할 수 없습니다.</p>
+        {isEmpty ? (
+          <p role="status">작성한 글이 없어 감정 분포를 확인할 수 없습니다.</p>
         ) : (
-          <Doughnut data={chartData} options={chartOptions} height={300} />
+          <Doughnut
+            data={chartData}
+            options={chartOptions}
+            height={300}
+            aria-label="감정 분포 차트"
+          />
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
