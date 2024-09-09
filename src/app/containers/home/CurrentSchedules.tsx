@@ -4,22 +4,39 @@ import styles from "./MainSection.module.scss";
 
 const ScheduleItem = ({ id, title }: Schedule) => (
   <li>
-    <Link href={`/schedule/${id}`}>{title}</Link>
+    <Link href={`/schedule/${id}`}>
+      <span className={styles.srOnly}>일정: </span>
+      {title}
+    </Link>
   </li>
 );
 
 const CurrentSchedules = ({ schedules }: CurrentSchedulesProps) => {
-  if (schedules.length === 0) return null;
-
   return (
-    <div className={styles.mainSectionCurrentSchedules}>
-      <h3>현재 진행 중인 일정</h3>
-      <ul>
-        {schedules.map((schedule) => (
-          <ScheduleItem key={schedule.id} {...schedule} />
-        ))}
-      </ul>
-    </div>
+    <section
+      className={styles.mainSectionCurrentSchedules}
+      aria-labelledby="current-schedules-heading"
+    >
+      <h2
+        id="current-schedules-heading"
+        className={styles.currentSchedulesHeading}
+      >
+        현재 진행 중인 일정
+      </h2>
+      {schedules.length === 0 ? (
+        <p role="status" aria-live="polite">
+          현재 진행 중인 일정이 없습니다.
+        </p>
+      ) : (
+        <nav aria-label="현재 일정 목록">
+          <ul>
+            {schedules.map((schedule) => (
+              <ScheduleItem key={schedule.id} {...schedule} />
+            ))}
+          </ul>
+        </nav>
+      )}
+    </section>
   );
 };
 
