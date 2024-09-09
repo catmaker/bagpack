@@ -3,8 +3,13 @@ import styles from "./MainSection.module.scss";
 
 const StatisticsItem = ({ title, value }: StatisticsItemProps) => (
   <div className={styles.mainSectionStatisticsItem}>
-    <p className={styles.mainSectionStatisticsItemTitle}>{title}</p>
-    <p className={styles.mainSectionStatisticsItemValue}>{value}</p>
+    <h3 className={styles.mainSectionStatisticsItemTitle}>{title}</h3>
+    <span
+      className={styles.mainSectionStatisticsItemValue}
+      aria-label={`${title}: ${value}`}
+    >
+      {value}
+    </span>
   </div>
 );
 
