@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
+import { motivationalQuotes } from "@/data/motivation";
 import { User } from "@/types/user";
 import styles from "./WelcomeSection.module.scss";
-
-const motivationalQuotes = [
-  "오늘 하루를 열심히 살면 내일에 대한 걱정은 줄어든다.",
-  "작은 진전이라도 매일 이루어낸다면, 그것이 곧 성공이다.",
-  "당신의 미래는 지금 무엇을 하느냐에 달려있다.",
-  "꿈을 믿고 그 꿈을 이루기 위해 노력하라.",
-  "실패는 성공으로 가는 과정일 뿐이다.",
-];
 
 const WelcomeSection = ({ user }: { user: User }) => {
   const [quote, setQuote] = useState("");
