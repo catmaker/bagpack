@@ -33,3 +33,42 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+*.egg
+
+
+# Ignore all directories named __pycache__ anywhere in the project
+**/__pycache__/
+
+# Ignore all .pyc files anywhere in the project
+**/*.pyc
+
+# Ignore all directories named venv anywhere in the project
+**/venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Ignore all .log files
+**/*.log
