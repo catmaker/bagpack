@@ -15,13 +15,13 @@ class Query(BaseModel):
 async def ai_chat(query: Query):
     input_text = query.message
 
-        # 문법 교정
+    # 문법 교정
     correction_prompt = f"Correct the grammar: {input_text}"
     correction_input = tokenizer(correction_prompt, return_tensors="pt")
     correction_output = model.generate(**correction_input, max_length=100)
     correction = tokenizer.decode(correction_output[0], skip_special_tokens=True)
 
-        # 오류 확인
+    # 오류 확인
     has_errors = input_text.lower().strip() != correction.lower().strip()
 
     # 대화 응답 생성
@@ -35,8 +35,4 @@ async def ai_chat(query: Query):
         "correction": correction,
         "has_errors": has_errors,
         "response": response
-        }
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    }
