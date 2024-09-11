@@ -4,7 +4,7 @@ import asyncio
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
 # 로깅 설정
@@ -22,16 +22,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# AI 모델 로드 (더 작은 문법 교정 모델)
-MODEL_NAME = "vennify/t5-small-grammar-correction"
+# AI 모델 로드 (공개적으로 사용 가능한 문법 교정 모델)
+MODEL_NAME = "prithivida/grammar_error_correcter_v1"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True).to(device)
+model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True).to(device)
 
 # 메모리 사용량 최적화
 torch.cuda.empty_cache()
 model.eval()
-model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
 
 logger.info(f"Model loaded on {device}")
 
