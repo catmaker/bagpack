@@ -4,7 +4,7 @@ import asyncio
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, T5ForConditionalGeneration
 import torch
 
 # 로깅 설정
@@ -23,10 +23,15 @@ app.add_middleware(
 )
 
 # AI 모델 로드 (더 작은 문법 교정 모델)
-MODEL_NAME = "vennify/t5-base-grammar-correction"
+MODEL_NAME = "vennify/t5-small-grammar-correction"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME).to(device)
+model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True).to(device)
+
+# 메모리 사용량 최적화
+torch.cuda.empty_cache()
+model.eval()
+model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
 
 logger.info(f"Model loaded on {device}")
 
@@ -35,8 +40,9 @@ class Query(BaseModel):
 
 async def process_correction(text: str) -> str:
     try:
-        inputs = tokenizer(f"grammar: {text}", return_tensors="pt", truncation=True, max_length=512).to(device)
-        outputs = model.generate(**inputs, max_length=512, num_beams=4, early_stopping=True)
+        inputs = tokenizer(f"grammar: {text}", return_tensors="pt", truncation=True, max_length=128).to(device)
+        with torch.no_grad():
+            outputs = model.generate(**inputs, max_length=128, num_beams=2, early_stopping=True)
         corrected = tokenizer.decode(outputs[0], skip_special_tokens=True)
         return corrected
     except Exception as e:
