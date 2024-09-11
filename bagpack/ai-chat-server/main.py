@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -10,6 +11,14 @@ model = AutoModelForSeq2SeqLM.from_pretrained("google/flan-t5-base")
 
 class Query(BaseModel):
     message: str
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the AI Chat API"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
 
 @app.post("/ai-chat")
 async def ai_chat(query: Query):
@@ -36,3 +45,8 @@ async def ai_chat(query: Query):
         "has_errors": has_errors,
         "response": response
     }
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
