@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
+from accelerate import init_empty_weights, load_checkpoint_and_dispatch
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +27,14 @@ app.add_middleware(
 MODEL_NAME = "prithivida/grammar_error_correcter_v1"
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True).to(device)
+
+# Accelerate를 사용한 모델 로딩
+with init_empty_weights():
+    model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True)
+
+model = load_checkpoint_and_dispatch(
+    model, MODEL_NAME, device_map="auto", no_split_module_classes=["T5Block"]
+)
 
 # 메모리 사용량 최적화
 torch.cuda.empty_cache()
