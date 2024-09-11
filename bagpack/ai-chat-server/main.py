@@ -1,11 +1,11 @@
 import os
 import logging
 import asyncio
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from starlette.requests import Request
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO)
@@ -16,7 +16,7 @@ app = FastAPI()
 # CORS 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://bagpack.vercel.app"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,9 +26,16 @@ app.add_middleware(
 @app.middleware("http")
 async def timeout_middleware(request: Request, call_next):
     try:
-        return await asyncio.wait_for(call_next(request), timeout=25.0)
+        return await asyncio.wait_for(call_next(request), timeout=60.0)
     except asyncio.TimeoutError:
         raise HTTPException(status_code=504, detail="Request timeout")
+
+# 요청 로깅 미들웨어
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Received {request.method} request to {request.url}")
+    response = await call_next(request)
+    return response
 
 # AI 모델 로드
 try:
@@ -54,32 +61,39 @@ async def health_check():
 async def ai_chat(query: Query):
     try:
         input_text = query.message
+        logger.info(f"Processing input: {input_text}")
 
-        # 문법 교정
-        correction_prompt = f"Correct the grammar: {input_text}"
-        correction_input = tokenizer(correction_prompt, return_tensors="pt")
-        correction_output = model.generate(**correction_input, max_length=100)
-        correction = tokenizer.decode(correction_output[0], skip_special_tokens=True)
-
-        # 오류 확인
-        has_errors = input_text.lower().strip() != correction.lower().strip()
-
-        # 대화 응답 생성
-        conversation_prompt = f"Respond to this message: {input_text}"
-        conversation_input = tokenizer(conversation_prompt, return_tensors="pt")
-        conversation_output = model.generate(**conversation_input, max_length=100)
-        response = tokenizer.decode(conversation_output[0], skip_special_tokens=True)
+        # 비동기로 AI 모델 처리
+        correction = await asyncio.to_thread(process_correction, input_text)
+        response = await asyncio.to_thread(process_response, input_text)
 
         logger.info("Request processed successfully")
         return {
             "original": input_text,
             "correction": correction,
-            "has_errors": has_errors,
+            "has_errors": input_text.lower().strip() != correction.lower().strip(),
             "response": response
         }
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
+
+def process_correction(text):
+    correction_prompt = f"Correct the grammar: {text}"
+    correction_input = tokenizer(correction_prompt, return_tensors="pt")
+    correction_output = model.generate(**correction_input, max_length=100)
+    return tokenizer.decode(correction_output[0], skip_special_tokens=True)
+
+def process_response(text):
+    conversation_prompt = f"Respond to this message: {text}"
+    conversation_input = tokenizer(conversation_prompt, return_tensors="pt")
+    conversation_output = model.generate(**conversation_input, max_length=100)
+    return tokenizer.decode(conversation_output[0], skip_special_tokens=True)
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {str(exc)}")
+    return JSONResponse(status_code=500, content={"detail": "Internal server error"})
 
 if __name__ == "__main__":
     import uvicorn
