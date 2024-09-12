@@ -1,88 +1,107 @@
+from flask import Flask, request, jsonify
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+import numpy as np
+import joblib
 import os
 import logging
-import asyncio
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import torch
-from accelerate import init_empty_weights, load_checkpoint_and_dispatch
+
+app = Flask(__name__)
 
 # 로깅 설정
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-app = FastAPI()
+# 카테고리 정의
+categories = ['업무', '개인', '운동', '학습', '여가']
 
-# CORS 설정
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# 모델 및 벡터라이저 초기화
+vectorizer = CountVectorizer()
+model = MultinomialNB()
 
-# AI 모델 로드 (공개적으로 사용 가능한 문법 교정 모델)
-MODEL_NAME = "prithivida/grammar_error_correcter_v1"
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+# 데이터 로드 및 전처리 함수
+def load_data():
+    texts = []
+    labels = []
+    with open('training_data.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            text, label = line.strip().split('\t')
+            texts.append(text)
+            labels.append(categories.index(label))
+    logging.info(f"Loaded {len(texts)} training examples")
+    return texts, labels
 
-# Accelerate를 사용한 모델 로딩
-with init_empty_weights():
-    model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME, low_cpu_mem_usage=True)
+# 모델 학습 함수
+def train_model():
+    texts, labels = load_data()
+    X = vectorizer.fit_transform(texts)
+    X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
+    model.fit(X_train, y_train)
+    accuracy = model.score(X_test, y_test)
+    logging.info(f"Model trained. Accuracy: {accuracy:.2f}")
+    
+    # 모델 저장
+    joblib.dump(vectorizer, 'vectorizer.joblib')
+    joblib.dump(model, 'model.joblib')
+    logging.info("Model and vectorizer saved")
 
-model = load_checkpoint_and_dispatch(
-    model, MODEL_NAME, device_map="auto", no_split_module_classes=["T5Block"]
-)
+# 예측 함수
+def predict(text):
+    X = vectorizer.transform([text])
+    prediction = model.predict(X)[0]
+    probabilities = model.predict_proba(X)[0]
+    confidence = probabilities[prediction]
+    return categories[prediction], confidence
 
-# 메모리 사용량 최적화
-torch.cuda.empty_cache()
-model.eval()
+# 모델 로드 (있는 경우)
+if os.path.exists('model.joblib') and os.path.exists('vectorizer.joblib'):
+    vectorizer = joblib.load('vectorizer.joblib')
+    model = joblib.load('model.joblib')
+    logging.info("Existing model and vectorizer loaded")
+else:
+    logging.info("No existing model found. Training new model.")
+    train_model()
 
-logger.info(f"Model loaded on {device}")
+@app.route('/classify', methods=['POST'])
+def classify_activity():
+    data = request.json
+    text = data['text']
+    category, confidence = predict(text)
+    
+    logging.info(f"Classified '{text}' as '{category}' with confidence {confidence:.2f}")
+    
+    return jsonify({
+        'text': text,
+        'predicted_category': category,
+        'confidence': float(confidence)
+    })
 
-class Query(BaseModel):
-    message: str
+@app.route('/feedback', methods=['POST'])
+def feedback():
+    data = request.json
+    if isinstance(data, list):
+        # 여러 항목 처리
+        logging.info(f"Received feedback for {len(data)} items")
+        for item in data:
+            text = item['text']
+            correct_category = item['category']
+            with open('training_data.txt', 'a', encoding='utf-8') as f:
+                f.write(f"{text}\t{correct_category}\n")
+            logging.info(f"Added feedback: '{text}' - '{correct_category}'")
+    else:
+        # 단일 항목 처리
+        text = data['text']
+        correct_category = data['category']
+        with open('training_data.txt', 'a', encoding='utf-8') as f:
+            f.write(f"{text}\t{correct_category}\n")
+        logging.info(f"Added feedback: '{text}' - '{correct_category}'")
+    
+    # 모델 재학습
+    logging.info("Retraining model with new data")
+    train_model()
+    
+    return jsonify({'message': 'Feedback received and model retrained'})
 
-async def process_correction(text: str) -> str:
-    try:
-        inputs = tokenizer(f"grammar: {text}", return_tensors="pt", truncation=True, max_length=128).to(device)
-        with torch.no_grad():
-            outputs = model.generate(**inputs, max_length=128, num_beams=2, early_stopping=True)
-        corrected = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        return corrected
-    except Exception as e:
-        logger.error(f"Error in process_correction: {str(e)}")
-        return text  # 오류 발생 시 원본 텍스트 반환
-
-@app.post("/ai-chat")
-async def ai_chat(query: Query):
-    try:
-        corrected = await process_correction(query.message)
-        has_errors = query.message.lower().strip() != corrected.lower().strip()
-        
-        return {
-            "original": query.message,
-            "correction": corrected,
-            "has_errors": has_errors
-        }
-    except Exception as e:
-        logger.error(f"Error processing request: {str(e)}")
-        raise HTTPException(status_code=500, detail="Internal server error")
-
-@app.get("/health")
-async def health_check():
-    try:
-        # 간단한 모델 테스트
-        test_input = "This is test sentence."
-        corrected = await process_correction(test_input)
-        return {"status": "healthy", "model": "operational"}
-    except Exception as e:
-        logger.error(f"Health check failed: {str(e)}")
-        return {"status": "unhealthy", "error": str(e)}
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    logging.info("Starting the server")
+    app.run(host='0.0.0.0', port=5000)
