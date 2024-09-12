@@ -101,6 +101,9 @@ def feedback():
     train_model()
     
     return jsonify({'message': 'Feedback received and model retrained'})
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({'status': 'healthy'}), 200
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
