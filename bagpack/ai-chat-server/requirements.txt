@@ -1,5 +1,4 @@
- flask
- transformers
- torch
- numpy
-datasets
+flask
+scikit-learn
+numpy
+joblib
