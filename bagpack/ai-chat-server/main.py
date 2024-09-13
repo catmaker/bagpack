@@ -65,16 +65,31 @@ else:
 @app.route('/classify', methods=['POST'])
 def classify_activity():
     data = request.json
-    text = data['text']
-    category, confidence = predict(text)
-    
-    logging.info(f"Classified '{text}' as '{category}' with confidence {confidence:.2f}")
-    
-    return jsonify({
-        'text': text,
-        'predicted_category': category,
-        'confidence': float(confidence)
-    })
+    if isinstance(data, list):
+        # 여러 항목 처리
+        results = []
+        for item in data:
+            text = item['text']
+            category, confidence = predict(text)
+            results.append({
+                'text': text,
+                'predicted_category': category,
+                'confidence': float(confidence)
+            })
+        logging.info(f"Classified {len(results)} items")
+        return jsonify(results)
+    elif isinstance(data, dict):
+        # 단일 항목 처리
+        text = data['text']
+        category, confidence = predict(text)
+        logging.info(f"Classified '{text}' as '{category}' with confidence {confidence:.2f}")
+        return jsonify({
+            'text': text,
+            'predicted_category': category,
+            'confidence': float(confidence)
+        })
+    else:
+        return jsonify({'error': 'Invalid input format'}), 400
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
