@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
@@ -8,6 +9,8 @@ import os
 import logging
 
 app = Flask(__name__)
+# CORS 설정
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://bagpack.vercel.app"]}})
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
