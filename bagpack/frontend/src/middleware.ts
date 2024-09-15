@@ -41,7 +41,17 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 설정
 export const config = {
-  matcher: ["/home", "/schedule", "/mypage", "/login"],
+  matcher: [
+    "/home",
+    "/schedule",
+    "/mypage",
+    "/login",
+    "/schedule/:id",
+    "/schedule/:id/modify",
+    "/smart",
+    "/dashboard",
+    "/todo",
+  ],
 };
 
 console.log("미들웨어 설정 완료. 매칭 경로: ", config.matcher);
