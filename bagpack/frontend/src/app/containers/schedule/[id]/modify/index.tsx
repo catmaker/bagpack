@@ -5,21 +5,28 @@ import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import Tiptap from "@/components/tiptap/Tiptap";
 import { Post, ModifyProps } from "@/types/schedule";
+import { getPostById } from "@/utils/axios/fetcher/schedule";
 import styles from "./index.module.scss";
 
-const Modify = ({ params, data }: ModifyProps) => {
+const Modify = ({ id }: ModifyProps) => {
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
-  const { id } = params;
-  console.log("data: ", data);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    if (data === undefined) {
-      alert("해당 게시물이 존재하지 않습니다.");
-      router.push("/schedule");
-    } else {
-      setPost(data);
-    }
-  }, [data, router]);
+    const fetchPost = async () => {
+      try {
+        const fetchedPost = await getPostById(id);
+        setPost(fetchedPost);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+        alert("게시물을 불러오는데 실패했습니다.");
+        router.push("/schedule");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPost();
+  }, [id, router]);
 
   return (
     <div className={styles.container}>

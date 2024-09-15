@@ -10,18 +10,10 @@ interface Props {
 }
 
 const ModifyPage: React.FC<Props> = async ({ params }: Props) => {
-  const { id } = params;
-  let post;
-
-  try {
-    post = await getPostById(id);
-  } catch (error) {
-    console.error("ModifyPage Error fetching post:", error);
-  }
   return (
     <>
       <Header />
-      <Modify params={params} data={post} />
+      <Modify id={params.id} />
     </>
   );
 };

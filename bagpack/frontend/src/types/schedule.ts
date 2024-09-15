@@ -39,8 +39,5 @@ export type ScheduleDetailProps = {
 
 // [id]/modify
 export type ModifyProps = {
-  params: {
-    id: string;
-  };
-  data: Post;
+  id: string;
 };
