@@ -89,13 +89,13 @@ const Header = () => {
             {isDropdownVisible && (
               <ul className={styles.dropdownMenu}>
                 <li>
-                  <Link href="/schedule">일정</Link>
+                  <Link href="/smart">스마트 분류 (AI)</Link>
                 </li>
                 <li>
                   <Link href="/dashboard">대시보드</Link>
                 </li>
                 <li>
-                  <Link href="/setting">설정</Link>
+                  <Link href="/todo">TODO</Link>
                 </li>
               </ul>
             )}
