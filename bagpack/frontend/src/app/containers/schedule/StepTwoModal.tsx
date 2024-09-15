@@ -33,10 +33,12 @@ const StepTwoModal = ({
 
     return posts.filter((item) => {
       const postStartDate = new Date(item.startDate);
-      return isWithinInterval(postStartDate, {
-        start: startDate,
-        end: addDays(endDate, 1),
-      });
+      const postEndDate = new Date(item.endDate);
+      return (
+        (postStartDate >= startDate && postStartDate <= endDate) ||
+        (postEndDate >= startDate && postEndDate <= endDate) ||
+        (postStartDate <= startDate && postEndDate >= endDate)
+      );
     });
   }, [posts, startDate, endDate]);
 
