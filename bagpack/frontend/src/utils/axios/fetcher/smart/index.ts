@@ -27,7 +27,7 @@ export const feedback = async (title: string, category: string) => {
   try {
     const response = await axios.post(`${baseURL}/feedback`, {
       text: title,
-      category: category,
+      category,
     });
     return response.data;
   } catch (error) {

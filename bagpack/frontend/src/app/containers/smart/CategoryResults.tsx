@@ -1,15 +1,13 @@
-import React from "react";
-import { useState, useEffect, useCallback, useContext } from "react";
-import { UserContext } from "@/app/provider/UserProvider";
-import useSchedule from "@/store/schedule";
-import { classify } from "@/utils/axios/fetcher/smart";
-import { feedback } from "@/utils/axios/fetcher/smart";
-import { PostWithClassification } from "@/types/smart";
-import { ClassificationResult } from "@/types/smart";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Link from "next/link";
-import styles from "./CategoryResults.module.scss";
+import { UserContext } from "@/app/provider/UserProvider";
 import DragDropContainer from "@/components/DragDrop";
 import Loading from "@/components/Loading";
+import useSchedule from "@/store/schedule";
+import { PostWithClassification, ClassificationResult } from "@/types/smart";
+import { classify, feedback } from "@/utils/axios/fetcher/smart";
+import styles from "./CategoryResults.module.scss";
+
 const CategoryResults = () => {
   const categories = ["여가", "운동", "학습", "개인", "업무"];
 
@@ -25,7 +23,24 @@ const CategoryResults = () => {
       fetchPosts(user);
     }
   }, [fetchPosts, user]);
-
+  const fetchAICategory = async () => {
+    setIsLoading(true);
+    try {
+      const itemsToClassify = posts.map((post) => ({ text: post.title }));
+      const response = await classify(itemsToClassify);
+      const resultsWithId = response.map(
+        (result: ClassificationResult, index: number) => ({
+          ...result,
+          id: posts[index].id,
+        }),
+      );
+      setClassificationResults(resultsWithId);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
     if (posts.length > 0) {
       fetchAICategory();
@@ -84,24 +99,7 @@ const CategoryResults = () => {
     ),
     [],
   );
-  const fetchAICategory = async () => {
-    setIsLoading(true);
-    try {
-      const itemsToClassify = posts.map((post) => ({ text: post.title }));
-      const response = await classify(itemsToClassify);
-      const resultsWithId = response.map(
-        (result: ClassificationResult, index: number) => ({
-          ...result,
-          id: posts[index].id,
-        }),
-      );
-      setClassificationResults(resultsWithId);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
   return (
     <div className={styles.container}>
       <h1>스마트 분류 (AI)</h1>

@@ -28,7 +28,7 @@ const MainSection = ({ user }: { user: User }) => {
 
   return (
     <section className={styles.mainSectionContainer}>
-      <div className={styles.mainSectionWrapper}></div>
+      <div className={styles.mainSectionWrapper} />
     </section>
   );
 };

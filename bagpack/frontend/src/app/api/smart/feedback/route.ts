@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+// /* eslint-disable @typescript-eslint/camelcase */
+
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

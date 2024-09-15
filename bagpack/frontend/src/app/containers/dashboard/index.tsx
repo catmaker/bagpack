@@ -1,15 +1,17 @@
 "use client";
-import styles from "./index.module.scss";
-import useScheduleStore from "@/store/schedule";
+
 import { useState, useEffect, useContext } from "react";
+import MonthlyPostChart from "@/app/containers/home/MonthlyPostChart";
+import MoodDistributionChart from "@/app/containers/home/MoodDistributionChart";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
-import MonthlyPostChart from "@/app/containers/home/MonthlyPostChart";
 import usePostStatistics from "@/hooks/usePostStatistics";
-import MoodDistributionChart from "@/app/containers/home/MoodDistributionChart";
-import { classify } from "@/utils/axios/fetcher/smart";
+import useScheduleStore from "@/store/schedule";
 import { ClassificationResult } from "@/types/smart";
+import { classify } from "@/utils/axios/fetcher/smart";
 import CategoryDistributionChart from "./CategoryDistributionChart";
+import styles from "./index.module.scss";
+
 const Dashboard = () => {
   const { posts, fetchPosts } = useScheduleStore();
   const [isLoading, setIsLoading] = useState(true);

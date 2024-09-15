@@ -1,7 +1,8 @@
 import React from "react";
-import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 import styles from "./CategoryDistributionChart.module.scss";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface CategoryDistributionChartProps {

@@ -1,14 +1,14 @@
 import React from "react";
-import Smart from "@/app/containers/smart";
+import Todo from "@/app/containers/todo";
 import Header from "@/components/ui/header/Header";
 
-const SmartPage = () => {
+const TodoPage = () => {
   return (
     <>
       <Header />
-      <Smart />
+      <Todo />
     </>
   );
 };
 
-export default SmartPage;
+export default TodoPage;
