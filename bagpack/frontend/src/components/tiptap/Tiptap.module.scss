@@ -1,7 +1,6 @@
 @import "@/styles/variables.scss";
 .title_h1 {
   font-size: 1.5rem;
-  margin-top: 50px;
 }
 
 .title_label {
@@ -19,7 +18,7 @@
 .modal_footer {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .button {
@@ -70,8 +69,7 @@
 @media screen and (max-width: $tablet) {
   .title_h1 {
     font-size: $font-size-l;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 30px;
   }
   .form {
     width: 90%;
@@ -85,6 +83,7 @@
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 @media screen and (max-width: $mobile) {
@@ -93,6 +92,11 @@
     gap: 0px;
   }
   .title_h1 {
-    margin-top: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .modal_footer {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
