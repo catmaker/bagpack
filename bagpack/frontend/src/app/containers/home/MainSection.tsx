@@ -28,19 +28,7 @@ const MainSection = ({ user }: { user: User }) => {
 
   return (
     <section className={styles.mainSectionContainer}>
-      <div className={styles.mainSectionWrapper}>
-        <div className={styles.mainSectionStatistics}>
-          <h2 className={styles.mainSectionStatisticsTitle}>통계</h2>
-          <div className={styles.mainSectionStatisticsContent}>
-            <StatisticsItem title="총 글 수" value={totalPosts} />
-            <CurrentSchedules schedules={currentSchedules} />
-            <div className={styles.flex}>
-              <MonthlyPostChart monthlyPostCounts={monthlyPostCounts} />
-              <MoodDistributionChart moodCounts={moodCounts} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className={styles.mainSectionWrapper} />
     </section>
   );
 };

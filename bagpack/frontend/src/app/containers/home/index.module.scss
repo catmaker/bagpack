@@ -3,13 +3,13 @@
 .homeContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   overflow: hidden;
   width: calc(100% - 80px); // 전체 너비에서 양쪽으로 20px씩 뺀 값
   margin-left: max(20px, calc((100% - 1200px) / 2));
   margin-right: max(20px, calc((100% - 1200px) / 2));
   padding-bottom: 2rem;
+  min-height: 100vh;
 }
 .homeHeader {
   display: flex;

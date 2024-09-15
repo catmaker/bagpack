@@ -11,13 +11,7 @@ const ResponsiveMobileLayout: React.FC<ResponsiveMobileLayoutProps> = ({
   mainSection,
 }) => {
   if (isMobile) {
-    return (
-      <div className={styles.homeContainer}>
-        {userSection}
-        {welcomeSection}
-        {mainSection}
-      </div>
-    );
+    return <div className={styles.homeContainer}>{userSection}</div>;
   }
 
   return (
@@ -30,14 +24,6 @@ const ResponsiveMobileLayout: React.FC<ResponsiveMobileLayoutProps> = ({
       >
         {userSection}
         {welcomeSection}
-      </Card>
-      <Card
-        width="80%"
-        height="100%"
-        className={`${styles.homeMain} ${styles.card}`}
-        boxShadow="0px 0px 10px 0px rgba(0, 0, 0, 0.1)"
-      >
-        {mainSection}
       </Card>
     </div>
   );
