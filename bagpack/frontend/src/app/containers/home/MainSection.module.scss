@@ -46,7 +46,10 @@
   margin: 0;
 }
 .mainSectionStatisticsChart {
-  margin-top: 1rem;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  padding-top: 1.5rem;
 }
 .flex {
   margin-top: 2rem;
@@ -99,13 +102,6 @@
     padding: 0;
   }
 
-  .mainSectionStatisticsChart {
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
   .mainSectionContainer {
     margin-top: 1rem;
     display: flex;
@@ -115,5 +111,13 @@
   }
   .mainSectionStatistics {
     margin: 0 auto;
+  }
+}
+@media (max-width: $desktop) {
+  .mainSectionStatisticsItemTitle {
+    text-align: center;
+  }
+  .mainSectionStatisticsChart {
+    scale: 0.9;
   }
 }
