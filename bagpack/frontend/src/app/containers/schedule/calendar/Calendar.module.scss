@@ -27,11 +27,12 @@
   margin-left: 5px;
   color: $black;
 }
-
+.modal_title {
+  margin: 0;
+}
 .button_box {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
   button {
     cursor: pointer;
     background-color: #e6e6e6;
@@ -50,10 +51,7 @@
   .modal {
     position: relative;
   }
-  .modal_title {
-    font-size: 2rem;
-    margin: 10px 0 0 0;
-  }
+
   .modal_day {
     font-size: 0.9rem;
     color: $black;
