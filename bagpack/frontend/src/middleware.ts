@@ -9,7 +9,16 @@ export async function middleware(request: NextRequest) {
   console.log("인증 상태 쿠키: ", authStatus ? "존재" : "없음");
 
   // 보호된 경로 목록
-  const protectedPaths = ["/home", "/schedule", "/mypage"];
+  const protectedPaths = [
+    "/home",
+    "/schedule",
+    "/mypage",
+    "/schedule/:id",
+    "/schedule/:id/modify",
+    "/smart",
+    "/dashboard",
+    "/todo",
+  ];
   console.log("보호된 경로 목록: ", protectedPaths);
 
   // 현재 경로가 보호된 경로인지 확인
