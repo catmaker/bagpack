@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import styles from "@/app/containers/schedule/[id]/index.module.scss";
 import { UserContext } from "@/app/provider/UserProvider";
 import Card from "@/components/ui/Card";
+import Loading from "@/components/Loading";
 import { Post } from "@/types/schedule";
 import { deletePost, getPostById } from "@/utils/axios/fetcher/schedule";
 
@@ -72,7 +73,7 @@ const ScheduleDetail = ({ id }: ScheduleDetailProps): React.JSX.Element => {
   };
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading />;
   }
 
   if (!post) {
