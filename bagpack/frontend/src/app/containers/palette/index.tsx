@@ -12,8 +12,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Circle from "@/components/ui/Circle";
 import Pallette from "@/components/ui/Pallette";
-import { addPalette } from "@/lib/firebase/firestore";
-import styles from "./PalletteClient.module.scss";
+import styles from "./index.module.scss";
 
 const PaletteClient = () => {
   const router = useRouter();
@@ -40,6 +39,8 @@ const PaletteClient = () => {
   const iconStyle = { width: "25px", height: "25px" };
   // 팔레트 추적 상태
   const [selectedPalette, setSelectedPalette] = useState(-1);
+  const [isSaving, setIsSaving] = useState(false);
+
   useEffect(() => {
     console.log("selectedPalette:", selectedPalette);
   }, [selectedPalette]);
@@ -48,20 +49,36 @@ const PaletteClient = () => {
     setSelectedPalette(paletteIndex);
     console.log(paletteColors[paletteIndex]);
   };
+
   useEffect(() => {
     console.log(user);
   }, [user]);
+
   const handleSavePalette = async () => {
-    if (user) {
-      await addPalette(user.email, paletteColors[selectedPalette].colors);
-      console.log("팔레트 저장 완료");
-      alert("언제나 당신의 마음을 표현할 수 있도록 도와줘서 감사합니다.");
-      router.push("/home");
+    if (user && selectedPalette !== -1) {
+      setIsSaving(true);
+      try {
+        // 동적 임포트
+        const { addPalette } = await import("@/lib/firebase/firestore");
+        await addPalette(user.email, paletteColors[selectedPalette].colors);
+        console.log("팔레트 저장 완료");
+        alert("언제나 당신의 마음을 표현할 수 있도록 도와줘서 감사합니다.");
+        router.push("/home");
+      } catch (error) {
+        console.error("팔레트 저장 중 오류 발생:", error);
+        alert("팔레트 저장에 실패했습니다. 다시 시도해 주세요.");
+      } finally {
+        setIsSaving(false);
+      }
+    } else {
+      alert("팔레트를 선택해주세요.");
     }
   };
+
   function getColor(palletteIndex: number, circleIndex: number) {
     return paletteColors[palletteIndex].colors[circleIndex];
   }
+
   return (
     <div className={styles.container}>
       <Card className="card">
@@ -110,7 +127,9 @@ const PaletteClient = () => {
           ))}
         </div>
         <div className={styles.button_container}>
-          <Button onClick={handleSavePalette}>저장하기</Button>
+          <Button onClick={handleSavePalette} disabled={isSaving}>
+            {isSaving ? "저장 중..." : "저장하기"}
+          </Button>
         </div>
       </Card>
     </div>
