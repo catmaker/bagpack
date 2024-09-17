@@ -20,14 +20,16 @@ const FeaturesSection = () => (
           description="여행 중의 특별한 순간들을 사진과 함께 기록할 수 있습니다."
         />
       </div>
-      <Image
-        src="/bagpackIcon/world.gif"
-        width={444}
-        height={444}
-        style={{ objectFit: "contain" }}
-        alt="세계 지도 애니메이션"
-        className={styles.worldMapImage}
-      />
+      <div className={styles.worldMapContainer}>
+        <Image
+          src="/bagpackIcon/world.webp"
+          alt="세계 지도 애니메이션"
+          fill
+          sizes="300px"
+          style={{ objectFit: "contain" }}
+          className={styles.worldMapImage}
+        />
+      </div>
       <div className={styles.featureColumn}>
         <FeatureItem
           iconSrc="/bagpackIcon/interface.png"

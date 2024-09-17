@@ -28,9 +28,18 @@
   flex: 1;
   gap: 40px;
 }
+.worldMapContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
 
+.worldMapImage {
+  object-fit: contain !important;
+}
 @media (max-width: 600px) {
-  .featuresContainer > img {
+  .worldMapContainer {
     display: none;
   }
   .featuresContainer {
