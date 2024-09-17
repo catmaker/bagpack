@@ -1,5 +1,5 @@
 import React from "react";
-import { signOutClient, sendPasswordReset } from "@/lib/firebase/firestore";
+import { signOutClient, sendPasswordReset } from "@/lib/firebase/auth";
 import styles from "./PasswordForm.module.scss";
 
 interface PasswordFormProps {

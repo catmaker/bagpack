@@ -1,7 +1,6 @@
 import React from "react";
 import Modify from "@/app/containers/schedule/[id]/modify";
 import Header from "@/components/ui/header/Header";
-import { getPostById } from "@/utils/axios/fetcher/schedule";
 
 interface Props {
   params: {

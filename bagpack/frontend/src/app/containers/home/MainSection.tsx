@@ -3,10 +3,6 @@ import useCurrentSchedules from "@/hooks/useCurrentSchedules";
 import usePostStatistics from "@/hooks/usePostStatistics";
 import useScheduleStore from "@/store/schedule";
 import { User } from "@/types/user";
-import CurrentSchedules from "./CurrentSchedules";
-import MonthlyPostChart from "./MonthlyPostChart";
-import MoodDistributionChart from "./MoodDistributionChart";
-import StatisticsItem from "./StatisticsItems";
 import styles from "./MainSection.module.scss";
 
 const MainSection = ({ user }: { user: User }) => {

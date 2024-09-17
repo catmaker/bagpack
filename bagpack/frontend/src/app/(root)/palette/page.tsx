@@ -1,5 +1,5 @@
 import React from "react";
-import PaletteClient from "./PaletteClient";
+import PaletteClient from "@/app/containers/palette";
 
 const page = () => {
   return <PaletteClient />;

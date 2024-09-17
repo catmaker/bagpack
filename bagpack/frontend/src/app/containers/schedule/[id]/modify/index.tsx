@@ -2,16 +2,22 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import Loading from "@/components/Loading";
-import Tiptap from "@/components/tiptap/Tiptap";
 import { Post, ModifyProps } from "@/types/schedule";
 import { getPostById } from "@/utils/axios/fetcher/schedule";
 import styles from "./index.module.scss";
+
+// Tiptap 컴포넌트를 동적으로 임포트
+const DynamicTiptap = dynamic(() => import("@/components/tiptap/Tiptap"), {
+  loading: () => <Loading />,
+});
 
 const Modify = ({ id }: ModifyProps) => {
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -28,19 +34,19 @@ const Modify = ({ id }: ModifyProps) => {
     fetchPost();
   }, [id, router]);
 
+  if (isLoading) return <Loading />;
+
   return (
     <div className={styles.container}>
       {post?.content ? (
-        <Tiptap
-          contents={post?.content}
-          contentStartDate={post?.startDate}
-          contentEndDate={post?.endDate}
+        <DynamicTiptap
+          contents={post.content}
+          contentStartDate={post.startDate}
+          contentEndDate={post.endDate}
           title={post.title}
           id={id}
         />
-      ) : (
-        <Loading />
-      )}
+      ) : null}
     </div>
   );
 };

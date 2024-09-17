@@ -5,7 +5,6 @@ import { useLoginForm } from "@/hooks/useLoginForm";
 import AuthLinks from "./AuthLinks";
 import LoginForm from "./LoginForm";
 import LoginHeader from "./LoginHeader";
-import { Cat } from "../../../../public/svg";
 import styles from "./index.module.scss";
 
 const Login = () => {

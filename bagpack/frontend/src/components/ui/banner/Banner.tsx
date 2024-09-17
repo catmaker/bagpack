@@ -60,6 +60,7 @@ const Banner: React.FC<BannerProps> = ({ slides, interval = 5000 }) => {
             alt="Banner Image"
             layout="fill"
             objectFit="cover"
+            priority
           />
         </div>
       ))}

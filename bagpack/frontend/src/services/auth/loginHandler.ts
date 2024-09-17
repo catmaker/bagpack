@@ -1,5 +1,3 @@
-import { setCookie } from "cookies-next";
-import { signIn } from "@/lib/firebase/firestore";
 import { emailRegex, passwordRegex } from "@/utils/regexPatterns";
 
 // Props 인터페이스 정의
@@ -22,6 +20,12 @@ export const loginHandler = async ({ email, password }: Props) => {
   }
 
   try {
+    // 동적 임포트
+    const [{ setCookie }, { signIn }] = await Promise.all([
+      import("cookies-next"),
+      import("@/lib/firebase/auth"),
+    ]);
+
     const response = await signIn(email, password);
     if (response) {
       // 로그인 성공 시 쿠키 설정

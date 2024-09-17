@@ -1,10 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
 import { Post } from "@/types/schedule";
 import { User } from "@/types/user";
-import EditProfile from "./EditProfile";
 import styles from "./MyPostList.module.scss";
+import { lazy } from "react";
+
+const EditProfile = lazy(() => import("./EditProfile"));
 
 const MyPostList = ({ posts, user }: { posts: Post[]; user: User }) => {
   const [isPriorityReverse, setIsPriorityReverse] = useState(false);
@@ -63,7 +65,9 @@ const MyPostList = ({ posts, user }: { posts: Post[]; user: User }) => {
           ))}
         </div>
       )}
-      <EditProfile user={user} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <EditProfile user={user} />
+      </Suspense>
     </div>
   );
 };

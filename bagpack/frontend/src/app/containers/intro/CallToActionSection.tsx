@@ -26,13 +26,16 @@ const CallToActionSection = () => {
           TimeInk 로그인
         </Link>
       </div>
-      <Image
-        src="/bagpackIcon/vacations.gif"
-        alt="여행 가방 아이콘"
-        width={500}
-        height={500}
-        className={styles.illustrationImage}
-      />
+      <div style={{ position: "relative", width: "100%", height: "400px" }}>
+        <Image
+          src="/bagpackIcon/vacations.webp"
+          alt="여행 가방 아이콘"
+          fill
+          style={{ objectFit: "contain" }}
+          className={styles.illustrationImage}
+          loading="eager"
+        />
+      </div>
     </section>
   );
 };

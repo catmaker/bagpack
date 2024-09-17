@@ -22,6 +22,7 @@ const moodIcons = [
   { Icon: SmileIcon, mood: "smile", paletteIndex: 3, label: "좋음" },
   { Icon: HappyIcon, mood: "happy", paletteIndex: 1, label: "매우 좋음" },
 ];
+const defaultColors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8"];
 
 const StepOneModal: React.FC<StepOneModalProps> = ({
   isOpen,
@@ -89,19 +90,23 @@ const StepOneModal: React.FC<StepOneModalProps> = ({
         <div>
           <p className={styles.moodPicker}>오늘의 기분을 선택해 주세요</p>
           <div className={styles.iconBox}>
-            {user?.palette &&
-              moodIcons.map(({ Icon, mood: iconMood, paletteIndex, label }) => (
-                <Icon
-                  key={iconMood}
-                  className={
-                    mood === iconMood ? styles.modal_moodIcon_selected : ""
-                  }
-                  style={{ ...iconStyle, color: user.palette[paletteIndex] }}
-                  viewBox="0 0 478.125 478.125"
-                  onClick={() => handleMoodClick(iconMood)}
-                  aria-label={label}
-                />
-              ))}
+            {moodIcons.map(({ Icon, mood: iconMood, paletteIndex, label }) => (
+              <Icon
+                key={iconMood}
+                className={
+                  mood === iconMood ? styles.modal_moodIcon_selected : ""
+                }
+                style={{
+                  ...iconStyle,
+                  color: user?.palette
+                    ? user.palette[paletteIndex]
+                    : defaultColors[paletteIndex],
+                }}
+                viewBox="0 0 478.125 478.125"
+                onClick={() => handleMoodClick(iconMood)}
+                aria-label={label}
+              />
+            ))}
           </div>
         </div>
       </div>

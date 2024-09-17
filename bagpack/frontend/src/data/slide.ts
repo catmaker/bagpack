@@ -2,7 +2,7 @@ export const introSlides = [
   {
     title: "Welcome to Our TimeInK",
     subtitle: "We are glad to have you here!",
-    imageUrl: "/bagpackIcon/banner.jpg",
+    imageUrl: "/bagpackIcon/banner.png",
   },
   {
     title: "Our Services",
