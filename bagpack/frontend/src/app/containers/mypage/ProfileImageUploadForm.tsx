@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getAuth } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase/firestore";
+import { db, storage } from "@/lib/firebase/firebaseConfig";
 import styles from "./ProfileImageUploadForm.module.scss";
 
 interface ProfileImageUploadProps {

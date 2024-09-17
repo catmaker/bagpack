@@ -3,7 +3,6 @@
 import { useContext, useEffect } from "react";
 import UserSection from "@/app/containers/home/UserSection";
 import { UserContext } from "@/app/provider/UserProvider";
-import Header from "@/components/ui/header/Header";
 import useScheduleStore from "@/store/schedule";
 import MyPostList from "./MyPostList";
 import styles from "./index.module.scss";
