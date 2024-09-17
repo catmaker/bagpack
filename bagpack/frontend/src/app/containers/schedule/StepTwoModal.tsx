@@ -1,13 +1,19 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { isWithinInterval, addDays, format } from "date-fns";
+import { format } from "date-fns";
+import dynamic from "next/dynamic";
 import Modal from "@/components/ui/modal/Modal";
 import { useDateManagement } from "@/hooks/useDateManagement";
 import useScheduleStore from "@/store/schedule";
 import { StepTwoModalProps, Post } from "@/types/schedule";
-import PostModal from "./PostModal";
 import styles from "./StepTwoModal.module.scss";
+
+// PostModal을 동적으로 임포트합니다.
+const PostModal = dynamic(() => import("./PostModal"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
 const StepTwoModal = ({
   isOpen,
@@ -16,9 +22,11 @@ const StepTwoModal = ({
   setIsModalOpen,
 }: StepTwoModalProps) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [PostModalComponent, setPostModalComponent] =
+    useState<React.ComponentType<any> | null>(null);
   const { startDate, endDate } = useDateManagement();
   const [sortedPosts, setSortedPosts] = useState<Post[]>([]);
-  const [isDescending, setIsDescending] = useState(true); // 정렬 순서를 추적하는 상태
+  const [isDescending, setIsDescending] = useState(true);
 
   const { posts } = useScheduleStore((state) => ({
     selectedMood: state.selectedMood,
@@ -27,6 +35,15 @@ const StepTwoModal = ({
     posts: state.posts,
     setPosts: state.setPosts,
   }));
+
+  useEffect(() => {
+    // StepTwoModal이 열릴 때 PostModal을 동적으로 임포트합니다.
+    if (isOpen) {
+      import("./PostModal").then((module) => {
+        setPostModalComponent(() => module.default);
+      });
+    }
+  }, [isOpen]);
 
   const filteredPosts = useMemo(() => {
     if (!startDate || !endDate) return [];
@@ -55,7 +72,7 @@ const StepTwoModal = ({
       case "low":
         return "#46a4fc";
       default:
-        return "#000"; // 기본 색상
+        return "#000";
     }
   };
 
@@ -72,7 +89,7 @@ const StepTwoModal = ({
       case "smile":
         return "#57f338";
       default:
-        return "#000"; // 기본 색상
+        return "#000";
     }
   };
 
@@ -89,7 +106,7 @@ const StepTwoModal = ({
         : priorityOrder[b.priority] - priorityOrder[a.priority];
     });
     setSortedPosts(sorted);
-    setIsDescending(!isDescending); // 정렬 순서를 토글합니다.
+    setIsDescending(!isDescending);
     if (process.env.NODE_ENV === "development") {
       console.log(sorted);
     }
@@ -162,8 +179,8 @@ const StepTwoModal = ({
           <button
             type="button"
             onClick={() => {
-              setIsNextModalOpen(false); // 현재 모달 닫기
-              setIsModalOpen(true); // 이전 모달 열기
+              setIsNextModalOpen(false);
+              setIsModalOpen(true);
             }}
             className={styles.prevButton}
           >
@@ -171,8 +188,8 @@ const StepTwoModal = ({
           </button>
         </div>
       </Modal>
-      {isPostModalOpen && (
-        <PostModal
+      {isPostModalOpen && PostModalComponent && (
+        <PostModalComponent
           isOpen={isPostModalOpen}
           onClose={() => setIsPostModalOpen(false)}
         />

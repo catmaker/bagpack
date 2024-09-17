@@ -3,16 +3,10 @@
   width: 100% !important;
   background-color: white;
   height: calc(100vh - 100px);
-}
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
-  font-weight: normal;
-  font-style: normal;
+  font-family: $font-family-pretendard !important;
 }
 
 .event-content {
-  font-family: "Pretendard-Regular", sans-serif !important;
   background-color: $primary-color;
   padding: 3px;
   border-radius: 4px;
@@ -21,7 +15,6 @@
   color: $black;
 }
 .title {
-  font-family: "Pretendard-Regular", sans-serif !important;
   font-weight: bold;
   font-style: normal !important;
   margin-left: 5px;

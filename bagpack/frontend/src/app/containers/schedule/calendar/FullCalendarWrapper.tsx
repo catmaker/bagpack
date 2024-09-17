@@ -11,7 +11,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { Event } from "@/types/calendar";
 import DayCellContent from "./DayCellContent";
 import EventContent from "./EventContent";
-import styles from "./Calendar.module.scss";
 
 interface FullCalendarWrapperProps {
   onDateClick?: (arg: DateSelectArg) => void;
