@@ -1,16 +1,44 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
-import MonthlyPostChart from "@/app/containers/home/MonthlyPostChart";
-import MoodDistributionChart from "@/app/containers/home/MoodDistributionChart";
+import { useState, useEffect, useContext, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
 import usePostStatistics from "@/hooks/usePostStatistics";
 import useScheduleStore from "@/store/schedule";
 import { ClassificationResult } from "@/types/smart";
 import { classify } from "@/utils/axios/fetcher/smart";
-import CategoryDistributionChart from "./CategoryDistributionChart";
 import styles from "./index.module.scss";
+
+const DynamicMonthlyPostChart = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "monthlyPostChart" */ "@/app/containers/home/MonthlyPostChart"
+    ),
+  {
+    loading: () => <Loading />,
+  },
+);
+
+const DynamicMoodDistributionChart = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "moodDistributionChart" */ "@/app/containers/home/MoodDistributionChart"
+    ),
+  {
+    loading: () => <Loading />,
+  },
+);
+
+const DynamicCategoryDistributionChart = dynamic(
+  () =>
+    import(
+      /* webpackChunkName: "categoryDistributionChart" */ "./CategoryDistributionChart"
+    ),
+  {
+    loading: () => <Loading />,
+  },
+);
 
 const Dashboard = () => {
   const { posts, fetchPosts } = useScheduleStore();
@@ -24,6 +52,7 @@ const Dashboard = () => {
   const [classificationResults, setClassificationResults] = useState<
     ClassificationResult[]
   >([]);
+
   useEffect(() => {
     const loadPosts = async () => {
       setIsLoading(true);
@@ -53,6 +82,7 @@ const Dashboard = () => {
     };
     classifyPosts();
   }, [posts]);
+
   useEffect(() => {
     if (classificationResults.length > 0) {
       const categoryResults = classificationResults.map(
@@ -81,13 +111,23 @@ const Dashboard = () => {
           </p>
           <div className={styles.chartContainer}>
             <div className={styles.chartWrapper}>
-              <MonthlyPostChart monthlyPostCounts={monthlyPostCounts} />
+              <Suspense fallback={<Loading />}>
+                <DynamicMonthlyPostChart
+                  monthlyPostCounts={monthlyPostCounts}
+                />
+              </Suspense>
             </div>
             <div className={styles.chartWrapper}>
-              <MoodDistributionChart moodCounts={moodCounts} />
+              <Suspense fallback={<Loading />}>
+                <DynamicMoodDistributionChart moodCounts={moodCounts} />
+              </Suspense>
             </div>
             <div className={styles.chartWrapper}>
-              <CategoryDistributionChart categoryCounts={categoryCounts} />
+              <Suspense fallback={<Loading />}>
+                <DynamicCategoryDistributionChart
+                  categoryCounts={categoryCounts}
+                />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -95,4 +135,5 @@ const Dashboard = () => {
     </div>
   );
 };
+
 export default Dashboard;
