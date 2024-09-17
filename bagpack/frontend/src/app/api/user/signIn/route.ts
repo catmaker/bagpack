@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { signIn } from "@/lib/firebase/firestore";
+import { signIn } from "@/lib/firebase/auth";
 
 export async function POST(request: NextRequest) {
   const { email, password } = await request.json();

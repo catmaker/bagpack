@@ -3,20 +3,18 @@
 import React, { useContext, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { UserContext } from "@/app/provider/UserProvider";
-import { signOutClient } from "@/lib/firebase/firestore";
 import styles from "./Header.module.scss";
 
 const Header = () => {
   const user = useContext(UserContext);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const router = useRouter();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleLogout = async () => {
     try {
+      const { signOutClient } = await import("@/lib/firebase/auth");
       await signOutClient();
       deleteCookie("auth-status");
       window.location.href = "/intro";
@@ -25,7 +23,6 @@ const Header = () => {
       alert("로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     }
   };
-
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
