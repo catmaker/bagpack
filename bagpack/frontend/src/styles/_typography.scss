@@ -9,13 +9,26 @@ $font-size-xs: 0.75rem; // 12px
 $font-weight-bold: 700;
 $font-weight-regular: 400;
 $font-family-yellowtail: "Yellowtail-Regular";
-$font-family-pretendard: "Pretendard-Regular";
+$font-family-pretendard: "Pretendard", sans-serif;
 // Used in UserSection.module.scss
+/* 한글 */
 @font-face {
-  font-family: "Pretendard-Regular";
-  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
-  font-weight: normal;
+  font-family: "Pretendard";
   font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+  unicode-range: U+AC00-D7A3; /* 한글 유니코드 범위 */
+}
+
+/* 영문 및 기본 라틴 문자 */
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Pretendard-Regular.woff2") format("woff2");
+  unicode-range: U+0000-00FF; /* 기본 라틴 문자 유니코드 범위 */
 }
 @font-face {
   font-family: "Yellowtail-Regular";
