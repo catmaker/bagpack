@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useContext, useEffect, useState, Suspense } from "react";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
 import Header from "@/components/ui/header/Header";

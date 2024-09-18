@@ -1,0 +1,132 @@
+Coverage Analysis Results:
+
+File: http://localhost:3000/_next/static/chunks/3257-0fd7e2f136523fdf.js
+Total bytes: 14166
+Used bytes: 478 (3.37%)
+Unused bytes: 13688 (96.63%)
+---
+File: http://localhost:3000/_next/static/chunks/app/(root)/login/page-7843130bccd4f2be.js
+Total bytes: 11435
+Used bytes: 1706 (14.92%)
+Unused bytes: 9729 (85.08%)
+---
+File: http://localhost:3000/_next/static/chunks/6844-c8542d3654c66e48.js
+Total bytes: 120056
+Used bytes: 23925 (19.93%)
+Unused bytes: 96131 (80.07%)
+---
+File: http://localhost:3000/_next/static/chunks/app/(root)/signup/page-8664a1354bcc5531.js
+Total bytes: 12236
+Used bytes: 3146 (25.71%)
+Unused bytes: 9090 (74.29%)
+---
+File: http://localhost:3000/_next/static/chunks/8019.3c1803749c449616.js
+Total bytes: 1217
+Used bytes: 317 (26.05%)
+Unused bytes: 900 (73.95%)
+---
+File: http://localhost:3000/_next/static/chunks/4829-c3fa98aacc894d22.js
+Total bytes: 38068
+Used bytes: 10216 (26.84%)
+Unused bytes: 27852 (73.16%)
+---
+File: http://localhost:3000/_next/static/chunks/bc9e92e6-57454474ee373fb8.js
+Total bytes: 258537
+Used bytes: 73097 (28.27%)
+Unused bytes: 185440 (71.73%)
+---
+File: http://localhost:3000/_next/static/chunks/8568-5de42431a0c10fbe.js
+Total bytes: 152971
+Used bytes: 46887 (30.65%)
+Unused bytes: 106084 (69.35%)
+---
+File: http://localhost:3000/_next/static/chunks/fd9d1056-03e1c3e7c7a036f3.js
+Total bytes: 163908
+Used bytes: 58052 (35.42%)
+Unused bytes: 105856 (64.58%)
+---
+File: http://localhost:3000/_next/static/chunks/8591-d9fdc4dd6ceaab60.js
+Total bytes: 42838
+Used bytes: 16654 (38.88%)
+Unused bytes: 26184 (61.12%)
+---
+File: http://localhost:3000/_next/static/css/3dad6ba20cfa52f4.css
+Total bytes: 927
+Used bytes: 368 (39.70%)
+Unused bytes: 559 (60.30%)
+---
+File: http://localhost:3000/_next/static/chunks/db5416bc-3d0b220d2db70e30.js
+Total bytes: 133063
+Used bytes: 59726 (44.89%)
+Unused bytes: 73337 (55.11%)
+---
+File: http://localhost:3000/_next/static/css/ed778f622ffc0bdb.css
+Total bytes: 10096
+Used bytes: 4580 (45.36%)
+Unused bytes: 5516 (54.64%)
+---
+File: http://localhost:3000/_next/static/chunks/7864-dee63fd75b188b9f.js
+Total bytes: 110876
+Used bytes: 54067 (48.76%)
+Unused bytes: 56809 (51.24%)
+---
+File: http://localhost:3000/_next/static/chunks/webpack-6c4ea2f420e52fcc.js
+Total bytes: 7291
+Used bytes: 4706 (64.55%)
+Unused bytes: 2585 (35.45%)
+---
+File: http://localhost:3000/_next/static/chunks/8672-0a97f8490a337ca6.js
+Total bytes: 12303
+Used bytes: 10295 (83.68%)
+Unused bytes: 2008 (16.32%)
+---
+File: http://localhost:3000/_next/static/chunks/app/layout-de349e458e0fdd3d.js
+Total bytes: 1788
+Used bytes: 1650 (92.28%)
+Unused bytes: 138 (7.72%)
+---
+File: http://localhost:3000/_next/static/chunks/app/page-78488a4bea26ceda.js
+Total bytes: 183
+Used bytes: 179 (97.81%)
+Unused bytes: 4 (2.19%)
+---
+File: http://localhost:3000/_next/static/chunks/main-app-11a7aa60cdf04da4.js
+Total bytes: 518
+Used bytes: 514 (99.23%)
+Unused bytes: 4 (0.77%)
+---
+File: http://localhost:3000/
+Total bytes: 72
+Used bytes: 72 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 120
+Used bytes: 120 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 109
+Used bytes: 109 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 195
+Used bytes: 195 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 2384
+Used bytes: 2384 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 605
+Used bytes: 605 (100.00%)
+Unused bytes: 0 (0.00%)
+---
+File: http://localhost:3000/
+Total bytes: 248
+Used bytes: 248 (100.00%)
+Unused bytes: 0 (0.00%)
+---

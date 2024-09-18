@@ -1,6 +1,6 @@
-const puppeteer = require("puppeteer");
 const fs = require("fs").promises;
 const path = require("path");
+const puppeteer = require("puppeteer");
 
 async function analyzeCoverage() {
   const browser = await puppeteer.launch();

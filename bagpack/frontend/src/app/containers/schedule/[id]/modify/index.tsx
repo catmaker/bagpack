@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import { Post, ModifyProps } from "@/types/schedule";
 import { getPostById } from "@/utils/axios/fetcher/schedule";
