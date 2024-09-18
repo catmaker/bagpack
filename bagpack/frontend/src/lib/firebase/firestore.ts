@@ -1,3 +1,4 @@
+import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   query,
@@ -7,10 +8,10 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
-import { db, auth } from "./firebaseConfig";
-import type { User } from "@/types/user";
 import type { Post } from "@/types/schedule";
+import type { User } from "@/types/user";
+import { db, auth } from "./firebaseConfig";
+
 export async function getUser(uid: string): Promise<User> {
   const userDocRef = doc(db, "users", uid);
   const userDocSnap = await getDoc(userDocRef);

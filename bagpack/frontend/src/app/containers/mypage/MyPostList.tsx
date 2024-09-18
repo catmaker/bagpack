@@ -1,10 +1,9 @@
-import { useMemo, useState, Suspense } from "react";
+import { useMemo, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
 import { Post } from "@/types/schedule";
 import { User } from "@/types/user";
 import styles from "./MyPostList.module.scss";
-import { lazy } from "react";
 
 const EditProfile = lazy(() => import("./EditProfile"));
 

@@ -28,16 +28,16 @@
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "import/resolver": {
       "node": {
-        "paths": ["src"],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       },
       "typescript": {
         "alwaysTryTypes": true,
-        "project": "./tsconfig.json"
+        "project": "C:/bagpack/bagpack/frontend/tsconfig.json"
       }
     }
   },
   "rules": {
+    "react/no-array-index-key": "off",
     "react/button-has-type": "off",
     "no-multiple-empty-lines": [
       "error",
