@@ -1,5 +1,5 @@
 import React from "react";
-import Todo from "@/app/containers/todo/index";
+import Todo from "@/app/containers/todo";
 import Header from "@/components/ui/header/Header";
 
 const TodoPage = () => {
