@@ -23,7 +23,7 @@ export const signUp = async (
 
     // HTTP 상태 코드가 200-299 범위에 있는지 확인
     if (response.status < 200 || response.status >= 300) {
-      await Swal.fire({
+      Swal.fire({
         title: "이미 존재하는 이메일입니다.",
         icon: "error",
       });
@@ -34,18 +34,17 @@ export const signUp = async (
     console.log(data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error("회원가입 중 에러 발생:", {
-        message: error.message,
-        response: error.response
-          ? {
-              status: error.response.status,
-              data: error.response.data,
-            }
-          : null,
-        config: error.config,
+      Swal.fire({
+        title: "회원가입 중 에러 발생:",
+        text: error.message,
+        icon: "error",
       });
     } else {
-      console.error("예상치 못한 에러:", error);
+      Swal.fire({
+        title: "예상치 못한 에러:",
+        text: "error.message",
+        icon: "error",
+      });
     }
   }
 };

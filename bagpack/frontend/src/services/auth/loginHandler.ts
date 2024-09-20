@@ -9,7 +9,7 @@ interface Props {
 export const loginHandler = async ({ email, password }: Props) => {
   // 이메일 형식 검사
   if (!emailRegex.test(email)) {
-    await Swal.fire({
+    Swal.fire({
       title: "이메일 형식이 올바르지 않습니다.",
       icon: "error",
     });
@@ -18,7 +18,7 @@ export const loginHandler = async ({ email, password }: Props) => {
 
   // 비밀번호 형식 검사
   if (!passwordRegex.test(password)) {
-    await Swal.fire({
+    Swal.fire({
       title: "비밀번호는 최소 8자리 이상, 문자 및 숫자를 포함해야 합니다.",
       icon: "error",
     });
@@ -49,14 +49,18 @@ export const loginHandler = async ({ email, password }: Props) => {
       window.location.href = "/home";
       return true;
     }
-    await Swal.fire({
+    Swal.fire({
       title:
         "로그인에 실패하였습니다. 존재하지 않는 계정이거나 비밀번호가 틀렸습니다.",
       icon: "error",
     });
     return false;
   } catch (error) {
-    console.error(error);
+    Swal.fire({
+      title: "로그인 중 에러 발생:",
+      text: "error.message",
+      icon: "error",
+    });
     return false;
   }
 };
