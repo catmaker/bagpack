@@ -63,11 +63,7 @@ const NicknameForm: React.FC<NicknameFormProps> = ({
           onChange={handleNicknameChange}
         />
       </div>
-      <button
-        className={styles.formButton}
-        type="button"
-        onClick={handleSubmit}
-      >
+      <button className={styles.formButton} type="submit">
         저장하기
       </button>
     </form>
