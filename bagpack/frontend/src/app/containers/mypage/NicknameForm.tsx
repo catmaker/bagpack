@@ -63,11 +63,12 @@ const NicknameForm: React.FC<NicknameFormProps> = ({
           onChange={handleNicknameChange}
         />
       </div>
-      <button className={styles.formButton}>
-        <div className={styles.svgWrapper}>
-          <Save width={30} height={30} />
-          <span>저장하기</span>
-        </div>
+      <button
+        className={styles.formButton}
+        type="button"
+        onClick={handleSubmit}
+      >
+        저장하기
       </button>
     </form>
   );
