@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 import Loading from "@/components/Loading";
 import { Post, ModifyProps } from "@/types/schedule";
 import { getPostById } from "@/utils/axios/fetcher/schedule";
 import styles from "./index.module.scss";
-
 // Tiptap 컴포넌트를 동적으로 임포트
 const DynamicTiptap = dynamic(() => import("@/components/tiptap/Tiptap"), {
   loading: () => <Loading />,
@@ -25,7 +25,10 @@ const Modify = ({ id }: ModifyProps) => {
         setPost(fetchedPost);
       } catch (error) {
         console.error("Error fetching post:", error);
-        alert("게시물을 불러오는데 실패했습니다.");
+        await Swal.fire({
+          title: "게시물을 불러오는데 실패했습니다.",
+          icon: "error",
+        });
         router.push("/schedule");
       } finally {
         setIsLoading(false);

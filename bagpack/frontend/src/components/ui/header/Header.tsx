@@ -4,6 +4,7 @@ import React, { useContext, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteCookie } from "cookies-next";
+import Swal from "sweetalert2";
 import { UserContext } from "@/app/provider/UserProvider";
 import styles from "./Header.module.scss";
 
@@ -20,7 +21,10 @@ const Header = () => {
       window.location.href = "/intro";
     } catch (error) {
       console.error("로그아웃 중 오류 발생 :", error);
-      alert("로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      await Swal.fire({
+        title: "로그아웃 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        icon: "error",
+      });
     }
   };
   const handleMouseEnter = () => {

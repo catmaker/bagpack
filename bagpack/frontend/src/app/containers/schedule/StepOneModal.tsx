@@ -3,6 +3,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 import HappyIcon from "@/asset/svg/happy.svg";
 import NaturalIcon from "@/asset/svg/natural.svg";
 import SadIcon from "@/asset/svg/sad.svg";
@@ -39,7 +40,10 @@ const StepOneModal: React.FC<StepOneModalProps> = ({
 
   const handleNextClick = () => {
     if (!mood) {
-      alert("기분을 선택해 주세요.");
+      Swal.fire({
+        title: "기분을 선택해 주세요.",
+        icon: "warning",
+      });
       return;
     }
     handleGoToNextModal();

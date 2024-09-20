@@ -10,6 +10,7 @@ import { EditorProvider } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { parseISO } from "date-fns";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
 import { UserContext } from "@/app/provider/UserProvider";
 import useScheduleStore from "@/store/schedule";
 import { savePost, updatePost } from "@/utils/axios/fetcher/schedule";
@@ -96,11 +97,17 @@ const EditorComponent = ({
     e.preventDefault();
 
     if (!currentContent) {
-      alert("내용을 입력해주세요.");
+      await Swal.fire({
+        title: "내용을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
     if (!currentTitle) {
-      alert("제목을 입력해주세요.");
+      await Swal.fire({
+        title: "제목을 입력해주세요.",
+        icon: "warning",
+      });
       return;
     }
 
@@ -133,11 +140,17 @@ const EditorComponent = ({
         payload.priority,
       );
       setPostsUpdate(true);
-      alert("저장에 성공했습니다!");
+      await Swal.fire({
+        title: "저장에 성공했습니다!",
+        icon: "success",
+      });
       window.location.reload();
     } catch (error) {
       console.error("Error:", error);
-      alert("저장 중 오류가 발생했습니다.");
+      await Swal.fire({
+        title: "저장 중 오류가 발생했습니다.",
+        icon: "error",
+      });
     }
   };
 
@@ -178,11 +191,17 @@ const EditorComponent = ({
         payload.priority,
       );
       setPostsUpdate(true);
-      alert("수정에 성공했습니다!");
+      await Swal.fire({
+        title: "수정에 성공했습니다!",
+        icon: "success",
+      });
       router.push("/schedule");
     } catch (error) {
       console.error("Error:", error);
-      alert("수정 중 오류가 발생했습니다.");
+      await Swal.fire({
+        title: "수정 중 오류가 발생했습니다.",
+        icon: "error",
+      });
     }
   };
   if (process.env.NODE_ENV === "development") {

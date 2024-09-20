@@ -4,6 +4,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import Swal from "sweetalert2";
 import styles from "@/app/containers/schedule/[id]/index.module.scss";
 import { UserContext } from "@/app/provider/UserProvider";
 import Loading from "@/components/Loading";
@@ -30,7 +31,10 @@ const ScheduleDetail = ({ id }: ScheduleDetailProps): React.JSX.Element => {
         setPost(fetchedPost);
       } catch (error) {
         console.error("Error fetching post:", error);
-        alert("게시물을 불러오는데 실패했습니다.");
+        await Swal.fire({
+          title: "게시물을 불러오는데 실패했습니다.",
+          icon: "error",
+        });
         router.push("/schedule");
       } finally {
         setIsLoading(false);
@@ -54,11 +58,17 @@ const ScheduleDetail = ({ id }: ScheduleDetailProps): React.JSX.Element => {
   const handleDeletePost = async () => {
     try {
       await deletePost(email, id);
-      alert("게시물이 삭제되었습니다.");
+      await Swal.fire({
+        title: "게시물이 삭제되었습니다.",
+        icon: "success",
+      });
       router.push("/schedule");
     } catch (err) {
       console.error(err);
-      alert("게시물 삭제에 실패했습니다.");
+      await Swal.fire({
+        title: "게시물 삭제에 실패했습니다.",
+        icon: "error",
+      });
     }
   };
 

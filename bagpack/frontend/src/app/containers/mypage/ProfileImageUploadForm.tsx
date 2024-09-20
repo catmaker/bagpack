@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getAuth } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
 import { db, storage } from "@/lib/firebase/firebaseConfig";
 import styles from "./ProfileImageUploadForm.module.scss";
 
@@ -25,7 +26,11 @@ const ProfileImageUploadForm: React.FC<ProfileImageUploadProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > MAX_FILE_SIZE) {
-        alert("파일 크기는 5MB를 초과할 수 없습니다.");
+        Swal.fire({
+          title: "파일 크기 초과",
+          text: "파일 크기는 5MB를 초과할 수 없습니다.",
+          icon: "error",
+        });
         e.target.value = "";
         return;
       }
@@ -67,11 +72,17 @@ const ProfileImageUploadForm: React.FC<ProfileImageUploadProps> = ({
         "프로필 사진이 성공적으로 업데이트되었습니다. 사용자 ID:",
         userId,
       );
-      alert("프로필 사진이 성공적으로 업데이트되었습니다.");
+      await Swal.fire({
+        title: "프로필 사진이 성공적으로 업데이트되었습니다.",
+        icon: "success",
+      });
       window.location.reload();
     } catch (error) {
       console.error("이미지 업로드 중 오류 발생:", error);
-      alert("이미지 업로드 중 오류가 발생했습니다.");
+      Swal.fire({
+        title: "이미지 업로드 중 오류가 발생했습니다.",
+        icon: "error",
+      });
     }
   };
 
