@@ -1,6 +1,7 @@
 import { useMemo, useState, Suspense, lazy } from "react";
 import Link from "next/link";
 import { parseISO, format } from "date-fns";
+import Loading from "@/components/Loading";
 import { Post } from "@/types/schedule";
 import { User } from "@/types/user";
 import styles from "./MyPostList.module.scss";
@@ -40,34 +41,34 @@ const MyPostList = ({ posts, user }: { posts: Post[]; user: User }) => {
   };
 
   return (
-    <div className={styles.myPostListContainer}>
-      <h1 className={styles.myPostListTitle}>My Post List</h1>
-      <button onClick={handlePriority} className={styles.myPostListButton}>
-        {isPriorityReverse ? "중요도 낮은 순" : "중요도 높은 순"}
-      </button>
-      {priorityPosts.length === 0 ? (
-        <p>작성한 글이 없습니다.</p>
-      ) : (
-        <div className={styles.myPostList}>
-          {priorityPosts.map((post) => (
-            <Link href={`/schedule/${post.id}`} key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.priority}</p>
-              {post.startDate === post.endDate ? (
-                <p>{formatDate(post.startDate)}</p>
-              ) : (
-                <p>
-                  {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
-                </p>
-              )}
-            </Link>
-          ))}
-        </div>
-      )}
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>사용자 정보를 불러오는 중... </div>}>
+      <div className={styles.myPostListContainer}>
+        <h1 className={styles.myPostListTitle}>My Post List</h1>
+        <button onClick={handlePriority} className={styles.myPostListButton}>
+          {isPriorityReverse ? "중요도 낮은 순" : "중요도 높은 순"}
+        </button>
+        {priorityPosts.length === 0 ? (
+          <p>작성한 글이 없습니다.</p>
+        ) : (
+          <div className={styles.myPostList}>
+            {priorityPosts.map((post) => (
+              <Link href={`/schedule/${post.id}`} key={post.id}>
+                <h2>{post.title}</h2>
+                <p>{post.priority}</p>
+                {post.startDate === post.endDate ? (
+                  <p>{formatDate(post.startDate)}</p>
+                ) : (
+                  <p>
+                    {formatDate(post.startDate)} ~ {formatDate(post.endDate)}
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
         <EditProfile user={user} />
-      </Suspense>
-    </div>
+      </div>
+    </Suspense>
   );
 };
 

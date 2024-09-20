@@ -7,7 +7,6 @@ import styles from "./EditProfile.module.scss";
 
 const EditProfile = ({ user }: { user: User }) => {
   const handleImageUpdate = (newImageUrl: string) => {
-    // 필요한 경우 여기서 상위 컴포넌트의 상태를 업데이트하거나 다른 작업을 수행할 수 있습니다.
     console.log("New profile image URL:", newImageUrl);
   };
 
@@ -15,7 +14,11 @@ const EditProfile = ({ user }: { user: User }) => {
     <div className={styles.editProfileContainer}>
       <h1 className={styles.editProfileTitle}>Edit Profile</h1>
       <ProfileImageUploadForm
-        initialImageUrl={user.profilePictureUrl}
+        initialImageUrl={
+          user.profilePictureUrl === undefined
+            ? "/bagpackIcon/user.png"
+            : user.profilePictureUrl
+        }
         onImageUpdate={handleImageUpdate}
       />
       <div className={styles.editProfileFormItem}>

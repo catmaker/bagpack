@@ -7,7 +7,11 @@ const UserSection = ({ user }: { user: User }) => {
     <section className={styles.userSectionContainer}>
       <div className={styles.avatarWrapper}>
         <Image
-          src={user?.profilePictureUrl}
+          src={
+            user.profilePictureUrl === undefined
+              ? "/bagpackIcon/user.png"
+              : user.profilePictureUrl
+          }
           width={250}
           height={250}
           alt="userProfile"
