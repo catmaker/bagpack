@@ -2,6 +2,7 @@
 
 TimeInK는 사용자가 **일정**과 **감정**을 함께 **기록**하는 웹으로, **AI**가 일정을 **자동**으로 분류해줍니다. 축적된 데이터를 통해 사용자의 감정 패턴과 생산성을 분석하여 **인사이트**를 제공하는 **1인** 프로젝트 입니다.
 
+### TimeInK 시연 영상 (youtube)
 <a href="https://youtu.be/VGhBWgkYJtU">
   <img src="https://img.youtube.com/vi/VGhBWgkYJtU/0.jpg" width="200" />
 </a>
