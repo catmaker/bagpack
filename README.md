@@ -1,6 +1,32 @@
-# Bagpack
+# TimeInK
 
-Bagpack은 AI 기반 일정 관리 및 분류 기능을 제공하는 혁신적인 웹 애플리케이션입니다. 사용자 친화적인 인터페이스와 강력한 백엔드 기능을 결합하여 개인 및 팀의 생산성을 극대화합니다.
+TimeInK는 사용자가 **일정**과 **감정**을 함께 **기록**하는 웹으로, **AI**가 일정을 **자동**으로 분류해줍니다. 축적된 데이터를 통해 사용자의 감정 패턴과 생산성을 분석하여 **인사이트**를 제공하는 **1인** 프로젝트 입니다.
+
+<a href="https://youtu.be/VGhBWgkYJtU">
+  <img src="https://img.youtube.com/vi/VGhBWgkYJtU/0.jpg" width="200" />
+</a>
+<a href="https://youtu.be/UQyWzpY6ynQ">
+  <img src="https://img.youtube.com/vi/UQyWzpY6ynQ/0.jpg" width="200" />
+</a>
+<a href="https://youtu.be/0kvWxrh7RHg">
+  <img src="https://img.youtube.com/vi/0kvWxrh7RHg/0.jpg" width="200" />
+</a>
+<a href="https://youtu.be/NXkemx0XNaM">
+  <img src="https://img.youtube.com/vi/NXkemx0XNaM/0.jpg" width="200" />
+</a>
+
+### TimeInK 둘러보기
+
+---
+
+- 🔗 [timeink.vercel.app](http://bagpack.vercel.app) (client)
+- 🔗 [timeink.onrender.com/health](https://timeink.onrender.com/health) (server)
+
+- 🔗 [Github repository](https://github.com/catmaker/bagpack)
+- 🔗 [TimeInK API](https://www.notion.so/43d3e4a17e794630b4b5d9b76caf3fcf?pvs=21)
+
+### TimeInK 개발 아카이브
+🔗 [TimeInK 개발 아카이브](https://sinjisoo.oopy.io/portfolio/timeink)
 
 ## 주요 기능
 
