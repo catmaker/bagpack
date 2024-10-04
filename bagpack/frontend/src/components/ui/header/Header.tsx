@@ -3,12 +3,14 @@
 import React, { useContext, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import Swal from "sweetalert2";
 import { UserContext } from "@/app/provider/UserProvider";
 import styles from "./Header.module.scss";
 
-const Header = () => {
+const Header = ({ params }: { params?: any }) => {
+  const pathname = usePathname();
   const user = useContext(UserContext);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -81,26 +83,28 @@ const Header = () => {
               </>
             )}
           </li>
-          <li
-            className={styles.menuItemWrapper}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <span className={styles.menuItem}>메뉴</span>
-            {isDropdownVisible && (
-              <ul className={styles.dropdownMenu}>
-                <li>
-                  <Link href="/smart">스마트 분류 (AI)</Link>
-                </li>
-                <li>
-                  <Link href="/dashboard">대시보드</Link>
-                </li>
-                <li>
-                  <Link href="/todo">TODO</Link>
-                </li>
-              </ul>
-            )}
-          </li>
+          {pathname !== "/intro" && (
+            <li
+              className={styles.menuItemWrapper}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span className={styles.menuItem}>메뉴</span>
+              {isDropdownVisible && (
+                <ul className={styles.dropdownMenu}>
+                  <li>
+                    <Link href="/smart">스마트 분류 (AI)</Link>
+                  </li>
+                  <li>
+                    <Link href="/dashboard">대시보드</Link>
+                  </li>
+                  <li>
+                    <Link href="/todo">TODO</Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          )}
         </ul>
       </div>
     </header>
